@@ -17,22 +17,20 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import { Button } from '@/components/ui/button'
-import { shoesData } from '@/lib/shoesData'
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { SIZE_RANGES } from '@/lib/constants'
+import { calculatePrice } from '@/lib/utils'
+import { Product } from '@/lib/types'
 import Link from 'next/link'
 
-const calculatePrice = (price: number, discount: number) => {
-  if (discount) {
-    const discountedPrice = price - (price * discount) / 100
-    return { discountedPrice, originalPrice: price }
-  }
-  return { discountedPrice: price }
+interface ProductCardProps {
+  item: Product
 }
 
-const ProductCard = () => {
-  const { name, price, discountPercent, variants, male } = shoesData
-  const { discountedPrice, originalPrice } = calculatePrice(price, discountPercent)
+const ProductCard: FC<ProductCardProps> = ({ item }) => {
+  const { name, price, discountPercent, variants, male } = item
+  const { discountedPrice, originalPrice, hasDiscount } = calculatePrice(price, discountPercent)
+  const sizes = SIZE_RANGES[male as keyof typeof SIZE_RANGES]
 
   const [selectedImage, setSelectedImage] = useState(variants[0]?.images[0])
   const [activeVariantIndex, setActiveVariantIndex] = useState(0)
@@ -53,19 +51,17 @@ const ProductCard = () => {
     console.log(productInfo)
   }
 
-  const sizes = SIZE_RANGES[male as keyof typeof SIZE_RANGES]
-
   return (
     <Card className="w-[350px] relative border-none rounded-none shadow-none hover:shadow-xl overflow-visible h-[500px] group">
       <Link href="/product/1" aria-label="Product">
         <CardContent>
-          <Image src={selectedImage} width="400" height="400" alt={name} />
+          <Image src={selectedImage} width="400" height="400" className="bg-[#F6F6F6]" alt={name} />
         </CardContent>
       </Link>
       <CardHeader>
         <CardTitle>{name}</CardTitle>
         <CardDescription>
-          {discountPercent ? (
+          {hasDiscount ? (
             <div className="flex items-center gap-2">
               <span className="text-red-600 font-bold">€{discountedPrice}</span>
               <span className="text-gray-500 line-through">€{originalPrice}</span>
@@ -79,7 +75,7 @@ const ProductCard = () => {
             {variants.map((variant, index) => (
               <CarouselItem key={index} className="basis-1/4">
                 <div
-                  className={`border rounded-none cursor-pointer !p-0 hover:border-black ${
+                  className={`border rounded-none bg-[#F6F6F6] cursor-pointer !p-0 hover:border-black ${
                     index === activeVariantIndex ? 'border-black' : 'border-gray-300'
                   }`}
                   onClick={() => handleVariantClick(index, variant.images[0])}

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ShoppingCart, X } from 'lucide-react'
-import { useBodyLock } from '@/lib/hooks'
+import { useBodyLock } from '@/lib/utils.client'
 
 const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false)

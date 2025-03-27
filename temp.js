@@ -16,12 +16,12 @@ export const data = [
       {
         img: 'https://i.ibb.co/FqL2Bdgr/Allbirds-Spring-Shoot-City-MW-Shot55-6672.jpg',
         title: 'Springy Support',
-        text: 'Made with even more foam cushioning to deliver a plusher and bouncier feel that upgrades your ride—all day, everyday',
+        text: 'Made with even more foam cushioning to deliver a plusher and bouncier feel that upgrades your ride all day, everyday',
       },
       {
         img: 'https://i.ibb.co/6c9C7Sgy/Allbirds-Spring-Shoot-Studio-MW-Shot02-0142-1.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -47,7 +47,7 @@ export const data = [
           'https://i.ibb.co/RpkWYMqQ/A10645-S24-Q2-Tree-Runner-GO-Blizzard-Blizzard-PDP-BACK-b790f37c-23c9-4028-b91f.jpg',
           'https://i.ibb.co/spXr16T8/A10645-S24-Q2-Tree-Runner-GO-Blizzard-Blizzard-PDP-SOLE-28be7d90-69aa-4ead-9126.jpg',
         ],
-        sizes: ['40', '41', '43', '44', '47'],
+        sizes: ['39', '40', '41', '43', '44', '47'],
       },
       {
         color: {
@@ -217,7 +217,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/wNxS3SV6/FINAL3M.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -477,7 +477,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/SD44P4rS/FINAL3MW.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -928,12 +928,12 @@ export const data = [
       {
         img: 'https://i.ibb.co/KjVf0DqS/WRGO-M1.jpg',
         title: 'Springy Support',
-        text: 'Made with even more foam cushioning to deliver a plusher and bouncier feel that upgrades your ride—all day, everyday',
+        text: 'Made with even more foam cushioning to deliver a plusher and bouncier feel that upgrades your ride all day, everyday',
       },
       {
         img: 'https://i.ibb.co/xqyPvdmp/WRGO-M2.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -1049,13 +1049,13 @@ export const data = [
       {
         img: 'https://i.ibb.co/WpnpF6n5/25-Q1-T3-Evergreen-Tree-Dasher-Relay-Blizzard-AA004-E-M-Off-Body-00496.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
       'Seamless one-piece upper provides maximum comfort. Lightly padded heel collar locks ankle in place. Flexible, cushioned midsole offers a smoother ride.',
     details:
-      'Comfort lovers on the go, meet the Tree Dasher Relay — our laceless running shoes made from earth-friendly materials like leftover stock yarns, each pair features slight variations in color for a one-of-a-kind design. Great sports shoes, just slip ‘em on and get outside. Best For: Walks, travel, and light workouts. On-the-Go Convenience: A stretch one-piece upper, functional heel tabs, and comfortable heel construction make this the perfect shoe to leave by your door for a quick getaway. Sock-Like Fit: Flat knit one-piece upper provides breathability and comfortably hugs your foot for extra support. Where It’s Made: Vietnam.',
+      'Comfort lovers on the go, meet the Tree Dasher Relay   our laceless running shoes made from earth-friendly materials like leftover stock yarns, each pair features slight variations in color for a one-of-a-kind design. Great sports shoes, just slip ‘em on and get outside. Best For: Walks, travel, and light workouts. On-the-Go Convenience: A stretch one-piece upper, functional heel tabs, and comfortable heel construction make this the perfect shoe to leave by your door for a quick getaway. Sock-Like Fit: Flat knit one-piece upper provides breathability and comfortably hugs your foot for extra support. Where It’s Made: Vietnam.',
     sustainability:
       'Sustainable Materials: FSC-certified TENCEL™ Lyocell (eucalyptus tree fibre) upper. SweetFoam® midsole made with sugarcane-based green EVA. Bio-based TPU eyelets. Shoe laces made from recycled plastic bottles. Castor bean oil-based insole foam. Some models may include a wool-lined insole instead of the TENCEL™-lined insole featured in the image',
     care_guide:
@@ -1180,7 +1180,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/4bQVPjV/FINALM3.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -1264,7 +1264,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/ynkQgMGP/MW-SWT3.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -1348,7 +1348,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/0VqCFD00/Allbirds19374.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -1416,7 +1416,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/xS2gc4nT/FINALMW1.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -1548,7 +1548,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/ynNMqjMh/FINALM1.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -1718,7 +1718,7 @@ export const data = [
     highlights:
       'Our fan-fave trainer style gets a makeover in classically cosy corduroy. Standout softness meets the world’s most touchable texture. Cloudlike cushioning delivers all-day wearability',
     details:
-      'Cosy organic cotton corduroy blend hits the replay button with throwback vibes while totally reinventing our signature soft feel. Best For: Cold weather wear and everyday outings—from morning commutes to late-night after-parties. Comfy Material: Cords for your feet? You got it. Everybody’s favorite layer gives nothing but warm hugs from one season to the next. Groovy Design: Ribbed organic cotton gives any ensemble a pop of touchable texture in standout style. Where It’s Made: Made in Vietnam.',
+      'Cosy organic cotton corduroy blend hits the replay button with throwback vibes while totally reinventing our signature soft feel. Best For: Cold weather wear and everyday outings from morning commutes to late-night after-parties. Comfy Material: Cords for your feet? You got it. Everybody’s favorite layer gives nothing but warm hugs from one season to the next. Groovy Design: Ribbed organic cotton gives any ensemble a pop of touchable texture in standout style. Where It’s Made: Made in Vietnam.',
     sustainability:
       'Sustainable Materials: Organic cotton corduroy blend uppers. SweetFoam® midsole made with sugarcane-based green EVA',
     care_guide:
@@ -1932,7 +1932,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/xKn4WxZP/FINALMW3.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -2016,7 +2016,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/QvCP1QRJ/Cait-Oppermann-041823-All-Birds-SU23-Shot-05-001745-CO.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -2300,7 +2300,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/0yjBD4vB/Lake-Maracaibo.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -2532,7 +2532,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/JjtrXLZF/24-Q3-Wool-Piper-Go-Site-Desktop-BTF-PDP-830x1150-6-1.jpg',
         title: 'First-Class Durability',
-        text: 'Every stitch is made to handle life’s demands, including the washing machine—so your shoes last longer and look great doing it.',
+        text: 'Every stitch is made to handle life’s demands, including the washing machine so your shoes last longer and look great doing it.',
       },
     ],
     highlights:
@@ -2595,12 +2595,12 @@ export const data = [
       {
         img: 'https://i.ibb.co/dJbK2Zy0/25-Q1-Canvas-Piper-Site-PDP-BTF-1600x2000-1.jpg',
         title: 'Versatile Style',
-        text: 'A sneaker that can do it all—dress it up, dress it down, take it everywhere.',
+        text: 'A sneaker that can do it all dress it up, dress it down, take it everywhere.',
       },
       {
         img: 'https://i.ibb.co/YBvpQ3JR/25-Q1-Canvas-Piper-Site-PDP-BTF-1600x2000-4.jpg',
         title: 'Machine Washable',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -2716,7 +2716,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/3yG75Zjt/TP-MW1.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -2875,12 +2875,12 @@ export const data = [
       {
         img: 'https://i.ibb.co/0jj2drXj/TRGOW2-1.jpg',
         title: 'Springy Support',
-        text: 'Made with even more foam cushioning to deliver a plusher and bouncier feel that upgrades your ride—all day, everyday',
+        text: 'Made with even more foam cushioning to deliver a plusher and bouncier feel that upgrades your ride all day, everyday',
       },
       {
         img: 'https://i.ibb.co/rKnxfrGD/TRGOW2.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -3044,7 +3044,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/Kp1v5C6Z/FINAL3W.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -3368,7 +3368,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/d005959t/FINAL2W.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -3888,7 +3888,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/TDjTDsFH/FINAL3.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -4099,13 +4099,13 @@ export const data = [
       {
         img: 'https://i.ibb.co/YFqLZ6z2/Allbirds-SP23-Lookbook-PR-12-01-23-1298.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
       'Seamless one-piece upper provides maximum comfort. Lightly padded heel collar locks ankle in place. Flexible, cushioned midsole offers a smoother ride.',
     details:
-      'Comfort lovers on the go, meet the Tree Dasher Relay — our laceless running shoes made from earth-friendly materials like leftover stock yarns, each pair features slight variations in color for a one-of-a-kind design. Great sports shoes, just slip ‘em on and get outside. Best For: Walks, travel, and light workouts. On-the-Go Convenience: A stretch one-piece upper, functional heel tabs, and comfortable heel construction make this the perfect shoe to leave by your door for a quick getaway. Sock-Like Fit: Flat knit one-piece upper provides breathability and comfortably hugs your foot for extra support. Where It’s Made: Vietnam.',
+      'Comfort lovers on the go, meet the Tree Dasher Relay   our laceless running shoes made from earth-friendly materials like leftover stock yarns, each pair features slight variations in color for a one-of-a-kind design. Great sports shoes, just slip ‘em on and get outside. Best For: Walks, travel, and light workouts. On-the-Go Convenience: A stretch one-piece upper, functional heel tabs, and comfortable heel construction make this the perfect shoe to leave by your door for a quick getaway. Sock-Like Fit: Flat knit one-piece upper provides breathability and comfortably hugs your foot for extra support. Where It’s Made: Vietnam.',
     sustainability:
       'Sustainable Materials: FSC-certified TENCEL™ Lyocell (eucalyptus tree fibre) upper. SweetFoam® midsole made with sugarcane-based green EVA. Bio-based TPU eyelets. Shoe laces made from recycled plastic bottles. Castor bean oil-based insole foam. Some models may include a wool-lined insole instead of the TENCEL™-lined insole featured in the image',
     care_guide:
@@ -4156,7 +4156,7 @@ export const data = [
           'https://i.ibb.co/FbH3GPJy/A10465-W080-Tree-Dasher-Relay-Heel-Global-Womens-Tree-Natural-Black-Natural-Black-f3f033f7-f33b-49a2.png',
           'https://i.ibb.co/Y46G6Bj4/A10465-W080-Tree-Dasher-Relay-Bottom-Global-Womens-Tree-Natural-Black-Natural-Black-f3da329b-1165-43.png',
         ],
-        sizes: ['36', '37', '38', '39', , '41', '42', '43', '44'],
+        sizes: ['36', '37', '38', '39', '41', '42', '43', '44'],
       },
       {
         color: {
@@ -4257,12 +4257,12 @@ export const data = [
       {
         img: 'https://i.ibb.co/HDDdRc9N/WRGO-W1.jpg',
         title: 'Springy Support',
-        text: 'Made with even more foam cushioning to deliver a plusher and bouncier feel that upgrades your ride—all day, everyday',
+        text: 'Made with even more foam cushioning to deliver a plusher and bouncier feel that upgrades your ride all day, everyday',
       },
       {
         img: 'https://i.ibb.co/Zp2dR1W8/WRGO-W2.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -4394,7 +4394,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/s95gwNCZ/FINALW2.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -4494,7 +4494,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/0yjBD4vB/Lake-Maracaibo.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -4626,7 +4626,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/8VWgnCj/Allbirds-Spring-Shoot-Home-MW-Shot42-3384-1.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -4684,7 +4684,7 @@ export const data = [
     highlights:
       'Our fan-fave trainer style gets a makeover in classically cosy corduroy. Standout softness meets the world’s most touchable texture. Cloudlike cushioning delivers all-day wearability',
     details:
-      'Cosy organic cotton corduroy blend hits the replay button with throwback vibes while totally reinventing our signature soft feel. Best For: Cold weather wear and everyday outings—from morning commutes to late-night after-parties. Comfy Material: Cords for your feet? You got it. Everybody’s favorite layer gives nothing but warm hugs from one season to the next. Groovy Design: Ribbed organic cotton gives any ensemble a pop of touchable texture in standout style. Where It’s Made: Made in Vietnam.',
+      'Cosy organic cotton corduroy blend hits the replay button with throwback vibes while totally reinventing our signature soft feel. Best For: Cold weather wear and everyday outings from morning commutes to late-night after-parties. Comfy Material: Cords for your feet? You got it. Everybody’s favorite layer gives nothing but warm hugs from one season to the next. Groovy Design: Ribbed organic cotton gives any ensemble a pop of touchable texture in standout style. Where It’s Made: Made in Vietnam.',
     sustainability:
       'Sustainable Materials: Organic cotton corduroy blend uppers. SweetFoam® midsole made with sugarcane-based green EVA',
     care_guide:
@@ -4746,7 +4746,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/xtDt3z0n/W-SWT1.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -4846,7 +4846,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/NgDGWVT5/Cait-Oppermann-041823-All-Birds-SU23-Shot-05-001745-CO.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -5110,7 +5110,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/nskSvT8J/FINALW2.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -5294,7 +5294,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/xS2gc4nT/FINALMW1.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -5473,7 +5473,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/zTsGvpcs/FINAL3MW.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -5784,7 +5784,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/JjtrXLZF/24-Q3-Wool-Piper-Go-Site-Desktop-BTF-PDP-830x1150-6-1.jpg',
         title: 'First-Class Durability',
-        text: 'Every stitch is made to handle life’s demands, including the washing machine—so your shoes last longer and look great doing it.',
+        text: 'Every stitch is made to handle life’s demands, including the washing machine so your shoes last longer and look great doing it.',
       },
     ],
     highlights:
@@ -5847,12 +5847,12 @@ export const data = [
       {
         img: 'https://i.ibb.co/R4d5BMbX/25-Q1-Canvas-Piper-Site-PDP-BTF-1600x2000-1.jpg',
         title: 'Versatile Style',
-        text: 'A sneaker that can do it all—dress it up, dress it down, take it everywhere.',
+        text: 'A sneaker that can do it all dress it up, dress it down, take it everywhere.',
       },
       {
         img: 'https://i.ibb.co/Nnmjz88w/25-Q1-Canvas-Piper-Site-PDP-BTF-1600x2000-2.jpg',
         title: 'Machine Washable',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:
@@ -5968,7 +5968,7 @@ export const data = [
       {
         img: 'https://i.ibb.co/8Lk4Vwbk/TP-W2.jpg',
         title: 'Easy to Clean',
-        text: 'Our shoes are machine washable—just remove the insoles and hand wash them separately—to keep every step as fresh as the first.',
+        text: 'Our shoes are machine washable just remove the insoles and hand wash them separately to keep every step as fresh as the first.',
       },
     ],
     highlights:

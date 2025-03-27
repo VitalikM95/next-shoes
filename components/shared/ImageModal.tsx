@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
-import { useBodyLock } from '@/lib/hooks'
+import { useBodyLock } from '@/lib/utils.client'
 
 interface IProps {
   active: boolean

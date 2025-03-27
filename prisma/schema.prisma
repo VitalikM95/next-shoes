@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  fullName  String
+  email     String   @unique
+  password  String
+  address   String? // Додається при першому замовленні
+  phone     String? // Додається при першому замовленні
+  role      UserRole @default(USER) // За замовчуванням всі - покупці
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[] // Всі замовлення користувача
+  cart      Cart? // Корзина користувача (одна)
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model Product {
+  id              Int       @id @default(autoincrement())
+  name            String
+  male            String
+  type            String[] // Масив категорій
+  bestFor         String[]
+  material        String
+  price           Int
+  discountPercent Int       @default(0)
+  highlights      String
+  details         String
+  sustainability  String
+  careGuide       String
+  otherInfo       Json
+  variants        Variant[]
+}
+
+model Variant {
+  id        Int      @id @default(autoincrement())
+  colorType String
+  colorName String
+  colorHash String
+  images    String[]
+  sizes     String[]
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+}
+
+model Cart {
+  id     Int        @id @default(autoincrement())
+  userId Int        @unique
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items  CartItem[]
+}
+
+model CartItem {
+  id        Int     @id @default(autoincrement())
+  cartId    Int
+  variantId Int
+  size      String // Обраний розмір
+  quantity  Int     @default(1)
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  variant   Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, variantId, size]) // Один розмір одного варіанта не може дублюватися
+}
+
+model Order {
+  id         Int         @id @default(autoincrement())
+  userId     Int
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  totalPrice Int
+  createdAt  DateTime    @default(now())
+  status     OrderStatus @default(PROCESSING)
+  items      OrderItem[]
+}
+
+enum OrderStatus {
+  PROCESSING
+  CANCELED
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  COMPLETED
+  RETURNED
+}
+
+model OrderItem {
+  id                 Int     @id @default(autoincrement())
+  orderId            Int
+  variantId          Int
+  size               String // Обраний розмір
+  quantity           Int
+  priceAtPurchase    Int // Ціна на момент покупки
+  discountAtPurchase Int     @default(0) // Знижка на момент покупки
+  order              Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variant            Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@unique([orderId, variantId, size]) // Один розмір одного варіанта не може дублюватися в одному замовленні
+}

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Ubuntu } from 'next/font/google'
-import { TheHeader } from '@/components/TheHeader'
-import { TheFooter } from '@/components/TheFooter'
+import { TheHeader } from '@/components/shared/TheHeader'
+import { TheFooter } from '@/components/shared/TheFooter'
 import '../globals.css'
-import { CartDrawer } from '@/components/CartDrawer'
+import { CartDrawer } from '@/components/shared/CartDrawer'
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
@@ -16,7 +16,9 @@ export const metadata: Metadata = {
   description: 'Created as a test project',
 }
 
-export default function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function MainLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className={ubuntu.className}>
       <TheHeader />
