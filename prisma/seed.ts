@@ -52,9 +52,13 @@ async function generateProducts() {
 }
 
 async function clear() {
-  await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`
-  await prisma.$executeRaw`TRUNCATE TABLE "Product" RESTART IDENTITY CASCADE`
-  await prisma.$executeRaw`TRUNCATE TABLE "Variant" RESTART IDENTITY CASCADE`
+  await prisma.orderItem.deleteMany()
+  await prisma.order.deleteMany()
+  await prisma.cartItem.deleteMany()
+  await prisma.cart.deleteMany()
+  await prisma.variant.deleteMany()
+  await prisma.product.deleteMany()
+  await prisma.user.deleteMany()
 }
 
 async function main() {

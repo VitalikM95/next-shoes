@@ -1,62 +1,64 @@
 import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
-// import { getServerSession } from 'next-auth/next'
+import { getServerSession } from 'next-auth'
+import { authConfig } from '@/lib/auth/config'
 
-// GET /api/cart - отримати корзину користувача
-// export async function GET(request: NextRequest) {
-//   try {
-//     // Отримуємо userId з сесії/токена
-//     const session = await getServerSession() // або інший спосіб отримання сесії
-//     const userId = session?.user?.id
-
-//     if (!userId) {
-//       return NextResponse.json(
-//         { error: 'Необхідно авторизуватися' },
-//         { status: 401 }
-//       )
-//     }
-
-//     const cart = await prisma.cart.findUnique({
-//       where: {
-//         userId: parseInt(userId),
-//       },
-//       include: {
-//         items: {
-//           include: {
-//             variant: {
-//               include: {
-//                 product: true,
-//               },
-//             },
-//           },
-//         },
-//       },
-//     })
-
-//     if (!cart) {
-//       return NextResponse.json(
-//         { error: 'Корзина не знайдена' },
-//         { status: 404 }
-//       )
-//     }
-
-//     return NextResponse.json(cart)
-//   } catch (error) {
-//     return NextResponse.json(
-//       { error: 'Помилка отримання корзини' },
-//       { status: 500 }
-//     )
-//   }
-// }
-
-// POST /api/cart - синхронізація корзини
-export async function POST(request: NextRequest) {
+// GET /api/cart - get user's cart
+const getCart = async (request: NextRequest) => {
   try {
-    const { userId, localCart } = await request.json()
+    const session = await getServerSession(authConfig)
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      )
+    }
+
+    const cart = await prisma.cart.findUnique({
+      where: {
+        userId: session.user.id,
+      },
+      include: {
+        items: {
+          include: {
+            variant: {
+              include: {
+                product: true,
+              },
+            },
+          },
+        },
+      },
+    })
+
+    if (!cart) {
+      return NextResponse.json({ error: 'Cart not found' }, { status: 404 })
+    }
+
+    return NextResponse.json(cart)
+  } catch (error) {
+    return NextResponse.json({ error: 'Error getting cart' }, { status: 500 })
+  }
+}
+
+// POST /api/cart - sync cart
+const syncCart = async (request: NextRequest) => {
+  try {
+    const session = await getServerSession(authConfig)
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      )
+    }
+
+    const { localCart } = await request.json()
 
     const cart = await prisma.cart.create({
       data: {
-        userId,
+        userId: session.user.id,
         items: {
           create: localCart.map((item: any) => ({
             variantId: item.variantId,
@@ -76,9 +78,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(cart)
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Помилка синхронізації корзини' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Error syncing cart' }, { status: 500 })
   }
 }
+
+// Export functions for Next.js API routes
+export const GET = getCart
+export const POST = syncCart
