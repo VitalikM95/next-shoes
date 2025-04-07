@@ -1,84 +1,88 @@
 import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
+import { handleApiError, apiErrors } from '@/lib/api/error-handler'
 
 // GET /api/products - отримати список продуктів
-export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url)
+const getProducts = async (request: NextRequest) => {
+  const { searchParams } = new URL(request.url)
 
-    // Отримуємо параметри фільтрації
-    const male = searchParams.get('male')
-    const type = searchParams.get('type')
-    const sizes = searchParams.getAll('size')
-    const colorType = searchParams.get('colorType')
-    const bestFor = searchParams.getAll('bestFor')
-    const material = searchParams.get('material')
+  // Отримуємо параметри фільтрації
+  const male = searchParams.get('male')
+  const type = searchParams.get('type')
+  const sizes = searchParams.getAll('size')
+  const colorType = searchParams.get('colorType')
+  const bestFor = searchParams.getAll('bestFor')
+  const material = searchParams.get('material')
 
-    // Перевіряємо наявність обов'язкового параметру male
-    if (!male || !['man', 'woman'].includes(male)) {
-      return NextResponse.json(
-        {
-          error: 'The male parameter is required',
-        },
-        { status: 400 }
-      )
-    }
+  // Перевіряємо наявність обов'язкового параметру male
+  if (!male || !['man', 'woman'].includes(male)) {
+    throw apiErrors.validation('The male parameter is required')
+  }
 
-    // Формуємо умови фільтрації
-    const where = {
-      male,
-      ...(type && { type: { has: type } }),
-      ...(bestFor.length > 0 && { bestFor: { hasEvery: bestFor } }),
-      ...(material && { material }),
-      ...(sizes.length > 0 && {
-        variants: {
-          some: {
-            sizes: { hasSome: sizes },
-          },
-        },
-      }),
-      ...(colorType && {
-        variants: {
-          some: {
-            colorType,
-          },
-        },
-      }),
-    }
-
-    const products = await prisma.product.findMany({
-      where,
-      include: {
-        variants: {
-          select: {
-            id: true,
-            colorType: true,
-            sizes: true,
-            images: true,
-          },
-          where: colorType
-            ? {
-                colorType: colorType,
-              }
-            : undefined,
+  // Формуємо умови фільтрації
+  const where = {
+    male,
+    ...(type && { type: { has: type } }),
+    ...(bestFor.length > 0 && { bestFor: { hasEvery: bestFor } }),
+    ...(material && { material }),
+    ...(sizes.length > 0 && {
+      variants: {
+        some: {
+          sizes: { hasSome: sizes },
         },
       },
-    })
+    }),
+    ...(colorType && {
+      variants: {
+        some: {
+          colorType,
+        },
+      },
+    }),
+  }
 
-    // Трансформуємо дані для відповіді
-    const transformedProducts = products.map(product => ({
-      ...product,
-      mainImage: product.variants[0]?.images[0],
-      variants: product.variants.map(variant => ({
-        id: variant.id,
-        colorType: variant.colorType,
-        sizes: variant.sizes,
-        image: variant.images[0],
-      })),
-    }))
+  const products = await prisma.product.findMany({
+    where,
+    include: {
+      variants: {
+        select: {
+          id: true,
+          colorType: true,
+          colorName: true,
+          colorHash: true,
+          sizes: true,
+          images: true,
+        },
+        where: colorType
+          ? {
+              colorType: colorType,
+            }
+          : undefined,
+      },
+    },
+  })
 
-    return NextResponse.json(transformedProducts)
+  // Трансформуємо дані для відповіді
+  const transformedProducts = products.map(product => ({
+    ...product,
+    variants: product.variants.map(variant => ({
+      ...variant,
+      color: {
+        type: variant.colorType,
+        name: variant.colorName,
+        hash: variant.colorHash,
+      },
+    })),
+  }))
+
+  return NextResponse.json(transformedProducts)
+}
+
+// Export functions for Next.js API routes
+export const GET = async (req: NextRequest) => {
+  try {
+    return await getProducts(req)
   } catch (error) {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
+    return handleApiError(error)
   }
 }

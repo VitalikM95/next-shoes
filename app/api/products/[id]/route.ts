@@ -1,43 +1,58 @@
 import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
+import { handleApiError, apiErrors } from '@/lib/api/error-handler'
 
 // GET /api/products/[id] - отримати конкретний товар
-export async function GET(
+const getProduct = async (
   request: NextRequest,
   { params }: { params: { id: string } }
-) {
-  try {
-    const id = parseInt(params.id)
+) => {
+  const { id } = params
 
-    if (isNaN(id)) {
-      return NextResponse.json(
-        { error: 'ID must be a number' },
-        { status: 400 }
-      )
-    }
+  if (!id) {
+    throw apiErrors.validation('Product ID is required')
+  }
 
-    const product = await prisma.product.findUnique({
-      where: { id },
-      include: {
-        variants: {
-          select: {
-            id: true,
-            colorType: true,
-            colorName: true,
-            colorHash: true,
-            sizes: true,
-            images: true,
-          },
+  const product = await prisma.product.findUnique({
+    where: { id },
+    include: {
+      variants: {
+        select: {
+          id: true,
+          colorType: true,
+          sizes: true,
+          images: true,
         },
       },
-    })
+    },
+  })
 
-    if (!product) {
-      return NextResponse.json({ error: 'Product not found' }, { status: 404 })
-    }
+  if (!product) {
+    throw apiErrors.notFound('Product')
+  }
 
-    return NextResponse.json(product)
+  // Трансформуємо дані для відповіді
+  const transformedProduct = {
+    ...product,
+    mainImage: product.variants[0]?.images[0],
+    variants: product.variants.map(variant => ({
+      id: variant.id,
+      colorType: variant.colorType,
+      sizes: variant.sizes,
+      image: variant.images[0],
+    })),
+  }
+
+  return NextResponse.json(transformedProduct)
+}
+
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) => {
+  try {
+    return await getProduct(request, { params })
   } catch (error) {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
+    return handleApiError(error)
   }
 }

@@ -1,16 +1,20 @@
-import {
-  ColorCategories,
-  TitleCategories,
-} from '@/components/shared/Categories'
+import { getProductsByCategory } from './get-products'
+import { ProductsList } from '@/components/shared/ProductsList'
+import { TitleCategories } from '@/components/shared/Categories'
 import { Breadcrumbs } from '@/components/shared/BreadCrumbs'
-import { ProductCard } from '@/components/shared/ProductCard'
 import { CheckboxStandard } from '@/components/ui/checkbox-custom'
 import { SwitchButton } from '@/components/shared/SwitchButton'
 import { SizeSelector } from '@/components/shared/SizeSelector'
 import { BEST_FOR, MATERIAL } from '@/lib/constants'
-import { data } from '@/temp'
+import { ColorCategories } from '@/components/shared/Categories'
 
-const page = () => {
+export default async function Page({
+  params,
+}: {
+  params: { category: string }
+}) {
+  const transformedProducts = await getProductsByCategory(params.category)
+
   return (
     <main className='px-16 py-10 flex'>
       <aside className='flex flex-col w-1/5'>
@@ -20,7 +24,7 @@ const page = () => {
         <hr />
         <div className='uppercase font-bold my-4'>sizes</div>
         <p className='text-xs mb-4'>
-          Most of our shoes only come in full sizes. If you’re a half size,
+          Most of our shoes only come in full sizes. If you're a half size,
           select your nearest whole size too.
         </p>
         <SizeSelector />
@@ -46,14 +50,11 @@ const page = () => {
         <div className='flex justify-end'>
           <SwitchButton />
         </div>
-        <div className='flex flex-wrap items-start gap-4 pl-4'>
-          {data.map((product, i) => (
-            <ProductCard key={i} item={product} />
-          ))}
-        </div>
+        <ProductsList
+          initialProducts={transformedProducts}
+          category={params.category as 'man' | 'woman'}
+        />
       </div>
     </main>
   )
 }
-
-export default page

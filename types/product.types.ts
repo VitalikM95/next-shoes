@@ -1,6 +1,7 @@
 export type ProductListType = Product[]
 
 export interface Product {
+  id: string
   name: string
   male: string
   type: string[]
@@ -16,19 +17,19 @@ export interface Product {
   variants: Variant[]
 }
 
-interface OtherInfo {
+export interface OtherInfo {
   img: string
   title: string
   text: string
 }
 
-interface Variant {
+export interface Variant {
   color: Color
   images: string[]
   sizes: string[]
 }
 
-interface Color {
+export interface Color {
   type: string
   name: string
   hash: string
