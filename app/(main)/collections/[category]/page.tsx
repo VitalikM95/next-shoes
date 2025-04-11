@@ -1,19 +1,23 @@
 import { getProductsByCategory } from './get-products'
-import { ProductsList } from '@/components/shared/ProductsList'
-import { TitleCategories } from '@/components/shared/Categories'
-import { Breadcrumbs } from '@/components/shared/BreadCrumbs'
+import { ProductsList } from './components/ProductsList'
+import { TitleCategories, ColorCategories } from './components/Categories'
+import { Breadcrumbs } from './components/BreadCrumbs'
 import { CheckboxStandard } from '@/components/ui/checkbox-custom'
-import { SwitchButton } from '@/components/shared/SwitchButton'
-import { SizeSelector } from '@/components/shared/SizeSelector'
+import { SwitchButton } from './components/SwitchButton'
+import { SizeSelector } from './components/SizeSelector'
 import { BEST_FOR, MATERIAL } from '@/lib/constants'
-import { ColorCategories } from '@/components/shared/Categories'
 
 export default async function Page({
   params,
+  searchParams,
 }: {
-  params: { category: string }
+  params: { category: 'man' | 'woman' }
+  searchParams: { type?: string }
 }) {
-  const transformedProducts = await getProductsByCategory(params.category)
+  const transformedProducts = await getProductsByCategory(
+    await Promise.resolve(params.category),
+    await Promise.resolve(searchParams.type)
+  )
 
   return (
     <main className='px-16 py-10 flex'>
@@ -52,7 +56,7 @@ export default async function Page({
         </div>
         <ProductsList
           initialProducts={transformedProducts}
-          category={params.category as 'man' | 'woman'}
+          category={params.category}
         />
       </div>
     </main>

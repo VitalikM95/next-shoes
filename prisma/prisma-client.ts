@@ -1,13 +1,27 @@
-import { PrismaClient } from '@prisma/client';
-
-const PrismaClientSingleton = () => {
-  return new PrismaClient()
-}
+import { PrismaClient } from '@prisma/client'
 
 declare global {
-  var prismaGlobal: undefined | ReturnType<typeof PrismaClientSingleton>
+  var prisma: PrismaClient | undefined
 }
 
-export const prisma = globalThis.prismaGlobal ?? PrismaClientSingleton()
+const prisma =
+  global.prisma ||
+  new PrismaClient({
+    log: ['error', 'warn'],
+    datasources: {
+      db: {
+        url: process.env.POSTGRES_URL_NON_POOLING,
+      },
+    },
+  })
 
-if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma
+if (process.env.NODE_ENV !== 'production') {
+  global.prisma = prisma
+}
+
+// Додаємо обробку помилок при закритті з'єднання
+process.on('beforeExit', async () => {
+  await prisma.$disconnect()
+})
+
+export { prisma }

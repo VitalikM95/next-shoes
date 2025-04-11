@@ -41,6 +41,24 @@ const shoes = [
   },
 ]
 
+const shoeItems = [
+  {
+    image: '/images/sample-shoes1.avif',
+    title: 'Tree Runner Go',
+    description: 'Light, Breezy, Ready For Anything',
+  },
+  {
+    image: '/images/sample-shoes2.avif',
+    title: 'Tree Dasher 2',
+    description: 'Bouncy, Everyday Active Sneaker',
+  },
+  {
+    image: '/images/sample-shoes3.avif',
+    title: 'Runner-Up Protect',
+    description: 'Water-Repellent, High Top Style',
+  },
+]
+
 const images = [
   {
     link: '/images/big-img1.avif',
@@ -61,13 +79,10 @@ export default function Home() {
         <nav>
           <ul className='flex justify-center items-center gap-4 h-14 pl-20'>
             <li className='navlink-animation min-w-24 text-center'>
-              <Link href='/profile'>Shop Women</Link>
+              <Link href='/collections/woman'>Shop Women</Link>
             </li>
             <li className='navlink-animation min-w-24 text-center'>
-              <Link href='/'>Shop Men</Link>
-            </li>
-            <li className='navlink-animation min-w-24 text-center'>
-              <Link href='/'>New Arrivals</Link>
+              <Link href='/collections/man'>Shop Men</Link>
             </li>
           </ul>
         </nav>
@@ -87,95 +102,43 @@ export default function Home() {
             </div>
             <div>
               <Button className='min-w-40 mr-4' size='lg'>
-                Shop Men
+                <Link href='/collections/man'>Shop Men</Link>
               </Button>
               <Button className='min-w-40 mr-4' size='lg'>
-                Shop Women
+                <Link href='/collections/woman'>Shop Women</Link>
               </Button>
             </div>
           </div>
         </div>
       </div>
-      <div className='p-10 flex gap-2'>
-        <div className='relative group overflow-hidden'>
-          <Image
-            src='/images/sample-shoes1.avif'
-            alt='#'
-            width={1080}
-            height={1000}
-            className='transition-transform duration-200 group-hover:scale-105'
-          />
-          <div className='absolute h-full w-full pb-12 pt-16 text-white left-0 top-0 flex flex-col justify-between items-center bg-black bg-opacity-15'>
-            <div>
-              <div className='font-bold text-center text-xl'>
-                Tree Runner Go
+      <div className='m-10 flex gap-2'>
+        {shoeItems.map((item, index) => (
+          <div key={index} className='relative group overflow-hidden'>
+            <Image
+              src={item.image}
+              alt={item.title}
+              width={1080}
+              height={1000}
+              className='transition-transform duration-200 group-hover:scale-105'
+            />
+            <div className='absolute h-full w-full pb-12 pt-16 text-white left-0 top-0 flex flex-col justify-between items-center bg-black bg-opacity-15'>
+              <div>
+                <div className='font-bold text-center text-xl'>
+                  {item.title}
+                </div>
+                <p className='text-center mt-2'>{item.description}</p>
               </div>
-              <p className='text-center mt-2'>
-                Light, Breezy, Ready For Anything
-              </p>
-            </div>
-            <div className='space-x-2 opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible'>
-              <Button className='min-w-40' size='lg'>
-                Shop Men
-              </Button>
-              <Button className='min-w-40' size='lg'>
-                Shop Women
-              </Button>
-            </div>
-          </div>
-        </div>
-        <div className='relative group overflow-hidden'>
-          <Image
-            src='/images/sample-shoes2.avif'
-            alt='#'
-            width={1080}
-            height={1000}
-            className='transition-transform duration-200 group-hover:scale-105'
-          />
-          <div className='absolute h-full w-full pb-12 pt-16 text-white left-0 top-0 flex flex-col justify-between items-center bg-black bg-opacity-15'>
-            <div>
-              <div className='font-bold text-center text-xl'>Tree Dasher 2</div>
-              <p className='text-center mt-2'>
-                Bouncy, Everyday Active Sneaker
-              </p>
-            </div>
-            <div className='space-x-2 opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible'>
-              <Button className='min-w-40' size='lg'>
-                Shop Men
-              </Button>
-              <Button className='min-w-40' size='lg'>
-                Shop Women
-              </Button>
-            </div>
-          </div>
-        </div>
-        <div className='relative group overflow-hidden'>
-          <Image
-            src='/images/sample-shoes3.avif'
-            alt='#'
-            width={1080}
-            height={1000}
-            className='transition-transform duration-200 group-hover:scale-105'
-          />
-          <div className='absolute h-full w-full pb-12 pt-16 text-white left-0 top-0 flex flex-col justify-between items-center bg-black bg-opacity-15'>
-            <div>
-              <div className='font-bold text-center text-xl'>
-                Runner-Up Protect
+              <div className='space-x-2 opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible'>
+                <Button className='min-w-40' size='lg'>
+                  <Link href='/collections/man'>Shop Men</Link>
+                </Button>
+                <Button className='min-w-40' size='lg'>
+                  <Link href='/collections/woman'>Shop Women</Link>
+                </Button>
               </div>
-              <p className='text-center mt-2'>
-                Water-Repellent, High Top Style
-              </p>
-            </div>
-            <div className='space-x-2 opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible'>
-              <Button className='min-w-40' size='lg'>
-                Shop Men
-              </Button>
-              <Button className='min-w-40' size='lg'>
-                Shop Women
-              </Button>
             </div>
           </div>
-        </div>
+        ))}
       </div>
       <section className='relative'>
         <Image
@@ -217,10 +180,10 @@ export default function Home() {
             </div>
             <div className='space-x-4 mt-7'>
               <Button className='min-w-40' size='lg'>
-                Shop Men
+                <Link href='/collections/man'>Shop Men</Link>
               </Button>
               <Button className='min-w-40' size='lg'>
-                Shop Women
+                <Link href='/collections/woman'>Shop Women</Link>
               </Button>
             </div>
           </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
   Breadcrumb,
@@ -11,9 +11,10 @@ import {
 
 const Breadcrumbs = () => {
   const pathname = usePathname()
+  const router = useRouter()
   const segments = pathname
     .split('/')
-    .filter((segment) => segment !== '' && segment !== 'collections')
+    .filter(segment => segment !== '' && segment !== 'collections')
 
   const DISPLAY_NAMES: Record<string, string> = {
     man: "Men's Shoes",
@@ -24,15 +25,19 @@ const Breadcrumbs = () => {
     return DISPLAY_NAMES[segment] || segment
   }
 
+  const handleResetFilters = (category: string) => {
+    router.push(`/collections/${category}`)
+  }
+
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/">Home</Link>
+            <Link href='/'>Home</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <span className="px-2 hover:no-underline">/</span>
+        <span className='px-2 hover:no-underline'>/</span>
 
         {segments.map((segment, i) => {
           const href = `/${segments.slice(0, i + 1).join('/')}`
@@ -42,7 +47,14 @@ const Breadcrumbs = () => {
           return (
             <BreadcrumbItem key={href}>
               {isLast ? (
-                <span>{displayName}</span>
+                <BreadcrumbLink asChild>
+                  <button
+                    onClick={() => handleResetFilters(segment)}
+                    className='hover:underline cursor-pointer'
+                  >
+                    {displayName}
+                  </button>
+                </BreadcrumbLink>
               ) : (
                 <BreadcrumbLink asChild>
                   <Link href={href}>{displayName}</Link>

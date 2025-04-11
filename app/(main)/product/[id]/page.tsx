@@ -7,7 +7,7 @@ import {
   RadioGroupItemSquare,
 } from '@/components/ui/radio-group-custom'
 import { data } from '@/temp'
-import ProductGallery from '@/components/shared/ProductGallery'
+import ProductGallery from './components/ProductGallery'
 import ReactMarkdown from 'react-markdown'
 
 import { SIZE_RANGES } from '@/lib/constants'

@@ -7,7 +7,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
-import SignOutButton from '@/components/shared/SignOutButton'
+import SignOutButton from './components/SignOutButton'
 
 import Image from 'next/image'
 

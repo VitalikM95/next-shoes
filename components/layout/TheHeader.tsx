@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ShoppingCart, User } from 'lucide-react'
 import { Button } from '../ui/button'
-import { Navigation } from './Navigation'
+import { Navigation } from '../shared/Navigation'
 
 const TheHeader = () => {
   return (

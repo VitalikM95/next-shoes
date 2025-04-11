@@ -1,5 +1,6 @@
-import RegisterForm from './RegisterForm'
 import { GoogleButton } from '@/components/shared/GoogleButton'
+import RegisterForm from './components/RegisterForm'
+
 export default function RegisterPage() {
   return (
     <div className='p-8 bg-white rounded-lg shadow-md'>

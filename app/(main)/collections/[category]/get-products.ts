@@ -1,32 +1,45 @@
 import { prisma } from '@/prisma/prisma-client'
 import { Product, OtherInfo, Variant } from '@/types/product.types'
 
-// Функція для отримання продуктів за категорією
-export async function getProductsByCategory(category: string) {
-  const initialProducts = await prisma.product.findMany({
-    where: { male: category },
-    include: {
-      variants: {
-        select: {
-          id: true,
-          colorType: true,
-          colorName: true,
-          colorHash: true,
-          sizes: true,
-          images: true,
+export async function getProductsByCategory(category: string, type?: string) {
+  try {
+    const where: any = { male: category }
+    if (type) where.type = { has: type }
+
+    const initialProducts = await prisma.product.findMany({
+      where,
+      include: {
+        variants: {
+          select: {
+            id: true,
+            colorType: true,
+            colorName: true,
+            colorHash: true,
+            sizes: true,
+            images: true,
+          },
         },
       },
-    },
-  })
+    })
 
-  return transformProducts(initialProducts)
+    if (!initialProducts) {
+      throw new Error('No products found')
+    }
+
+    return transformProducts(initialProducts)
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error fetching products:', error.message)
+    } else {
+      console.error('Unknown error occurred')
+    }
+    throw error
+  }
 }
 
-// Функція для трансформації продуктів
 export function transformProducts(products: any[]): Product[] {
   return products.map(product => {
     const otherInfo = product.otherInfo as unknown as OtherInfo[]
-
     return {
       id: product.id,
       name: product.name,
