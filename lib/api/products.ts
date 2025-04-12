@@ -38,10 +38,15 @@ const fetcher = async (url: string) => {
 export const useProducts = (
   male: 'man' | 'woman',
   type?: string,
-  initialData?: Product[]
+  initialData?: Product[],
+  bestFor?: string[],
+  materials?: string[]
 ) => {
   const query = [`male=${male}`]
   if (type) query.push(`type=${type}`)
+  if (bestFor && bestFor.length > 0) query.push(`bestFor=${bestFor.join(',')}`)
+  if (materials && materials.length > 0)
+    query.push(`materials=${materials.join(',')}`)
 
   const url = `/api/products?${query.join('&')}`
 

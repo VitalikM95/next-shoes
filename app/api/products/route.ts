@@ -23,8 +23,8 @@ const getProducts = async (request: NextRequest) => {
   const where = {
     male,
     ...(type && { type: { has: type } }),
-    ...(bestFor.length > 0 && { bestFor: { hasEvery: bestFor } }),
-    ...(material && { material }),
+    ...(bestFor.length > 0 && { bestFor: { hasSome: bestFor } }),
+    ...(material && { material: { in: material.split(',') } }),
     ...(sizes.length > 0 && {
       variants: {
         some: {

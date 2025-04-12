@@ -1,12 +1,60 @@
 import { prisma } from '@/prisma/prisma-client'
-import { Product, OtherInfo, Variant } from '@/types/product.types'
+import { Product, OtherInfo, Variant, Color } from '@/types/product.types'
 
-export async function getProductsByCategory(category: string, type?: string) {
+const transformOtherInfo = (otherInfo: any): OtherInfo[] => {
+  if (!otherInfo) return []
+
   try {
-    const where: any = { male: category }
-    if (type) where.type = { has: type }
+    const parsed =
+      typeof otherInfo === 'string' ? JSON.parse(otherInfo) : otherInfo
 
-    const initialProducts = await prisma.product.findMany({
+    if (Array.isArray(parsed)) {
+      return parsed.map(item => ({
+        img: item.img || '',
+        title: item.title || '',
+        text: item.text || '',
+      }))
+    }
+    return []
+  } catch {
+    return []
+  }
+}
+
+export const getProducts = async (
+  male: 'man' | 'woman',
+  type?: string,
+  bestFor?: string[],
+  materials?: string[]
+): Promise<Product[]> => {
+  try {
+    console.log('Filtering with params:', { male, type, bestFor, materials })
+
+    const where: any = {
+      male,
+    }
+
+    if (type) {
+      where.type = {
+        has: type,
+      }
+    }
+
+    if (bestFor && bestFor.length > 0) {
+      where.bestFor = {
+        hasSome: bestFor,
+      }
+    }
+
+    if (materials && materials.length > 0) {
+      where.material = {
+        in: materials,
+      }
+    }
+
+    console.log('Prisma where clause:', where)
+
+    const products = await prisma.product.findMany({
       where,
       include: {
         variants: {
@@ -16,24 +64,35 @@ export async function getProductsByCategory(category: string, type?: string) {
             colorName: true,
             colorHash: true,
             sizes: true,
-            images: true,
           },
         },
       },
     })
 
-    if (!initialProducts) {
-      throw new Error('No products found')
-    }
+    console.log('Found products:', products.length)
 
-    return transformProducts(initialProducts)
+    return products.map(product => {
+      const variants: Variant[] = product.variants.map(variant => ({
+        color: {
+          type: variant.colorType,
+          name: variant.colorName,
+          hash: variant.colorHash,
+        } as Color,
+        images: [],
+        sizes: variant.sizes,
+      }))
+
+      return {
+        ...product,
+        best_for: product.bestFor,
+        other_info: transformOtherInfo(product.otherInfo),
+        care_guide: product.careGuide,
+        variants,
+      } as Product
+    })
   } catch (error) {
-    if (error instanceof Error) {
-      console.error('Error fetching products:', error.message)
-    } else {
-      console.error('Unknown error occurred')
-    }
-    throw error
+    console.error('Error fetching products:', error)
+    return []
   }
 }
 
