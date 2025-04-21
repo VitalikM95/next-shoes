@@ -42,7 +42,7 @@ const data = [
   },
 ]
 
-export const page = () => {
+const ProfilePage = () => {
   return (
     <div className='flex flex-col px-5 max-w-screen-xl mx-auto my-5'>
       <div className='flex justify-end px-5 py-2 border-b-2 border-black'>
@@ -99,4 +99,5 @@ export const page = () => {
     </div>
   )
 }
-export default page
+
+export default ProfilePage

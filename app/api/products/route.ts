@@ -1,6 +1,7 @@
 import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
 import { handleApiError, apiErrors } from '@/lib/api/error-handler'
+import { Prisma } from '@prisma/client'
 
 // GET /api/products - отримати список продуктів
 const getProducts = async (request: NextRequest) => {
@@ -9,10 +10,14 @@ const getProducts = async (request: NextRequest) => {
   // Отримуємо параметри фільтрації
   const male = searchParams.get('male')
   const type = searchParams.get('type')
-  const sizes = searchParams.getAll('size')
-  const colorType = searchParams.get('colorType')
-  const bestFor = searchParams.getAll('bestFor')
-  const material = searchParams.get('material')
+  const bestForRaw = searchParams.getAll('bestFor')
+  const bestFor: string[] = bestForRaw.flatMap(val => val.split(','))
+  const materialsRaw = searchParams.getAll('materials')
+  const materials: string[] = materialsRaw.flatMap(val => val.split(','))
+  const sizesRaw = searchParams.getAll('sizes')
+  const sizes: string[] = sizesRaw.flatMap(val => val.split(','))
+  const colorTypeRaw = searchParams.getAll('colorType')
+  const colorType: string[] = colorTypeRaw.flatMap(val => val.split(','))
 
   // Перевіряємо наявність обов'язкового параметру male
   if (!male || !['man', 'woman'].includes(male)) {
@@ -20,11 +25,11 @@ const getProducts = async (request: NextRequest) => {
   }
 
   // Формуємо умови фільтрації
-  const where = {
+  const where: Prisma.ProductWhereInput = {
     male,
     ...(type && { type: { has: type } }),
     ...(bestFor.length > 0 && { bestFor: { hasSome: bestFor } }),
-    ...(material && { material: { in: material.split(',') } }),
+    ...(materials.length > 0 && { material: { in: materials } }),
     ...(sizes.length > 0 && {
       variants: {
         some: {
@@ -32,10 +37,10 @@ const getProducts = async (request: NextRequest) => {
         },
       },
     }),
-    ...(colorType && {
+    ...(colorType.length > 0 && {
       variants: {
         some: {
-          colorType,
+          colorType: { in: colorType },
         },
       },
     }),
@@ -53,11 +58,12 @@ const getProducts = async (request: NextRequest) => {
           sizes: true,
           images: true,
         },
-        where: colorType
-          ? {
-              colorType: colorType,
-            }
-          : undefined,
+        where: {
+          AND: [
+            ...(colorType.length > 0 ? [{ colorType: { in: colorType } }] : []),
+            ...(sizes.length > 0 ? [{ sizes: { hasSome: sizes } }] : []),
+          ],
+        },
       },
     },
   })

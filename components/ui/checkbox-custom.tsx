@@ -8,9 +8,11 @@ import { cn } from '@/lib/utils'
 
 const CheckboxStandard = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & { label: string }
+  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
+    label: string
+  }
 >(({ className, label, ...props }, ref) => (
-  <label className="flex items-center gap-2 cursor-pointer">
+  <label className='flex items-center gap-2 cursor-pointer'>
     <CheckboxPrimitive.Root
       ref={ref}
       className={cn(
@@ -22,11 +24,11 @@ const CheckboxStandard = React.forwardRef<
       )}
       {...props}
     >
-      <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
-        <Check className="h-5 w-5" />
+      <CheckboxPrimitive.Indicator className='flex items-center justify-center text-current'>
+        <Check className='h-5 w-5' />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
-    <span className="text-base text-primary">{label}</span>
+    <span className='text-base text-primary'>{label}</span>
   </label>
 ))
 
@@ -51,13 +53,14 @@ const CheckboxSquare = React.forwardRef<
     )}
     {...props}
   >
-    <span className="text-xs leading-tight">{labelTop}</span>
-    <span className="text-sm font-medium">{labelBottom}</span>
+    <span className='text-xs leading-tight'>{labelTop}</span>
+    <span className='text-sm font-medium'>{labelBottom}</span>
   </CheckboxPrimitive.Root>
 ))
 CheckboxSquare.displayName = CheckboxPrimitive.Root.displayName
 
-interface CheckboxRoundProps extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
+interface CheckboxRoundProps
+  extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
   label: string
   color: string
 }
@@ -67,7 +70,7 @@ const CheckboxRound = React.forwardRef<
   CheckboxRoundProps
 >(({ className, label, color, ...props }, ref) => {
   return (
-    <label className="flex items-center gap-2 cursor-pointer">
+    <label className='flex items-center gap-2 cursor-pointer'>
       <CheckboxPrimitive.Root
         ref={ref}
         className={cn(
@@ -81,7 +84,7 @@ const CheckboxRound = React.forwardRef<
         style={{ backgroundColor: color }}
         {...props}
       ></CheckboxPrimitive.Root>
-      <span className="text-base text-primary">{label}</span>
+      <span className='text-base text-primary'>{label}</span>
     </label>
   )
 })

@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import {
   CheckboxRound,
   CheckboxSquare,
   CheckboxStandard,
 } from '@/components/ui/checkbox-custom'
 import { HUE, TITLES, SIZE_RANGES, BEST_FOR, MATERIAL } from '@/lib/constants'
+import { useDebouncedFilters } from '@/lib/hooks/useDebouncedFilters'
+import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 
 type Gender = 'man' | 'woman'
 
@@ -25,20 +25,6 @@ const getTitle = (gender: Gender | null, type: string | null) => {
     : 'Shoes'
 }
 
-const updateSearchParams = (
-  searchParams: URLSearchParams,
-  key: string,
-  values: string[]
-) => {
-  const newParams = new URLSearchParams(searchParams)
-  if (values.length > 0) {
-    newParams.set(key, values.join(','))
-  } else {
-    newParams.delete(key)
-  }
-  return newParams
-}
-
 const TitleCategories = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -49,7 +35,7 @@ const TitleCategories = () => {
   const categories = TITLES[category] || []
 
   const handleCategoryClick = (category: string) => {
-    router.push(`/collections/${gender}?type=${category}`)
+    router.push(`/collections/${gender}?type=${category}`, { scroll: false })
   }
 
   return (
@@ -90,6 +76,7 @@ const SelectorWrapper = ({
 const SizeSelector = () => {
   const category = useCategory() as Gender
   const sizes = SIZE_RANGES[category]
+  const { selected, toggle } = useDebouncedFilters('sizes')
 
   return (
     <SelectorWrapper title='Sizes'>
@@ -103,6 +90,8 @@ const SizeSelector = () => {
             key={size}
             labelTop='EU'
             labelBottom={size.toString()}
+            checked={selected.includes(size.toString())}
+            onCheckedChange={() => toggle(size.toString())}
           />
         ))}
       </div>
@@ -112,33 +101,25 @@ const SizeSelector = () => {
 
 const ColorSelector = () => {
   const colors = HUE[useCategory()] || []
+  const { selected, toggle } = useDebouncedFilters('colorType')
 
   return (
     <SelectorWrapper title='HUE'>
       {colors.map(({ text, color }, i) => (
-        <CheckboxRound key={i} label={text} color={color} />
+        <CheckboxRound
+          key={i}
+          label={text}
+          color={color}
+          checked={selected.includes(text)}
+          onCheckedChange={() => toggle(text)}
+        />
       ))}
     </SelectorWrapper>
   )
 }
 
 const BestForSelector = () => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const category = useCategory()
-  const [selectedBestFor, setSelectedBestFor] = useState<string[]>(
-    searchParams.get('bestFor')?.split(',') || []
-  )
-
-  const handleBestForChange = (value: string) => {
-    const newSelected = selectedBestFor.includes(value)
-      ? selectedBestFor.filter(item => item !== value)
-      : [...selectedBestFor, value]
-
-    setSelectedBestFor(newSelected)
-    const newParams = updateSearchParams(searchParams, 'bestFor', newSelected)
-    router.push(`/collections/${category}?${newParams.toString()}`)
-  }
+  const { selected, toggle } = useDebouncedFilters('bestFor')
 
   return (
     <SelectorWrapper title='Best For'>
@@ -146,8 +127,8 @@ const BestForSelector = () => {
         <CheckboxStandard
           key={i}
           label={item}
-          checked={selectedBestFor.includes(item)}
-          onCheckedChange={() => handleBestForChange(item)}
+          checked={selected.includes(item)}
+          onCheckedChange={() => toggle(item)}
           name={`bestFor-${i}`}
           id={`bestFor-${i}`}
         />
@@ -157,22 +138,7 @@ const BestForSelector = () => {
 }
 
 const MaterialSelector = () => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const category = useCategory()
-  const [selectedMaterials, setSelectedMaterials] = useState<string[]>(
-    searchParams.get('materials')?.split(',') || []
-  )
-
-  const handleMaterialChange = (value: string) => {
-    const newSelected = selectedMaterials.includes(value)
-      ? selectedMaterials.filter(item => item !== value)
-      : [...selectedMaterials, value]
-
-    setSelectedMaterials(newSelected)
-    const newParams = updateSearchParams(searchParams, 'materials', newSelected)
-    router.push(`/collections/${category}?${newParams.toString()}`)
-  }
+  const { selected, toggle } = useDebouncedFilters('materials')
 
   return (
     <SelectorWrapper title='Material'>
@@ -180,8 +146,8 @@ const MaterialSelector = () => {
         <CheckboxStandard
           key={i}
           label={item}
-          checked={selectedMaterials.includes(item)}
-          onCheckedChange={() => handleMaterialChange(item)}
+          checked={selected.includes(item)}
+          onCheckedChange={() => toggle(item)}
           name={`material-${i}`}
           id={`material-${i}`}
         />

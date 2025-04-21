@@ -1,38 +1,63 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useProducts } from '@/lib/api/products'
-import { Product } from '@/types/product.types'
+import { ProductListItem } from '@/types/product.types'
 import { ProductCard } from './ProductCard'
 
 interface ProductsListProps {
-  initialProducts: Product[]
-  category: 'man' | 'woman'
+  initialProducts: ProductListItem[]
+  initialSearchParams?: { [key: string]: string }
+  category: string
+}
+
+const parseFilters = (params: URLSearchParams) => {
+  return {
+    type: params.get('type') || '',
+    bestFor: params.get('bestFor')?.split(',') || [],
+    materials: params.get('materials')?.split(',') || [],
+    colorType: params.get('colorType')?.split(',') || [],
+    sizes: params.get('sizes')?.split(',') || [],
+  }
+}
+
+const areFiltersEqual = (
+  current: ReturnType<typeof parseFilters>,
+  initial: ProductsListProps['initialSearchParams']
+) => {
+  const compareArrays = (a: string[], b: string[]) =>
+    a.length === b.length && a.every(v => b.includes(v))
+
+  return (
+    current.type === (initial?.type || '') &&
+    compareArrays(current.bestFor, (initial?.bestFor || '').split(',')) &&
+    compareArrays(current.materials, (initial?.materials || '').split(',')) &&
+    compareArrays(current.colorType, (initial?.colorType || '').split(',')) &&
+    compareArrays(current.sizes, (initial?.sizes || '').split(','))
+  )
 }
 
 export const ProductsList = ({
   initialProducts,
+  initialSearchParams,
   category,
 }: ProductsListProps) => {
   const searchParams = useSearchParams()
-  const [filters, setFilters] = useState({
-    type: '',
-    bestFor: [] as string[],
-    materials: [] as string[],
-  })
+  const [hasMounted, setHasMounted] = useState(false)
+
+  const filters = useMemo(() => {
+    return parseFilters(new URLSearchParams(searchParams.toString()))
+  }, [searchParams])
+
+  const shouldFetch = useMemo(() => {
+    if (!hasMounted) return false
+    return !areFiltersEqual(filters, initialSearchParams)
+  }, [filters, hasMounted, initialSearchParams])
 
   useEffect(() => {
-    const type = searchParams.get('type')
-    const bestFor = searchParams.get('bestFor')?.split(',') || []
-    const materials = searchParams.get('materials')?.split(',') || []
-
-    setFilters({
-      type: type || '',
-      bestFor,
-      materials,
-    })
-  }, [searchParams])
+    setHasMounted(true)
+  }, [])
 
   const {
     products = initialProducts,
@@ -40,21 +65,30 @@ export const ProductsList = ({
     isError,
   } = useProducts(
     category,
-    filters.type,
     initialProducts,
+    filters.type,
     filters.bestFor,
-    filters.materials
+    filters.materials,
+    filters.colorType,
+    filters.sizes,
+    shouldFetch
   )
 
-  if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>Error loading products</div>
-  if (!products || !Array.isArray(products)) return <div>No products found</div>
-
   return (
-    <div className='flex flex-wrap items-start gap-4 pl-4'>
-      {products.map(product => (
-        <ProductCard key={product.id} item={product} />
-      ))}
-    </div>
+    <>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : isError ? (
+        <div>Error loading products</div>
+      ) : !products?.length ? (
+        <div>No products found</div>
+      ) : (
+        <div className='flex flex-wrap items-start gap-4 pl-4'>
+          {products.map((product: ProductListItem) => (
+            <ProductCard key={product.id} item={product} />
+          ))}
+        </div>
+      )}
+    </>
   )
 }

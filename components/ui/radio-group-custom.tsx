@@ -30,8 +30,8 @@ const RadioGroupItemRound = React.forwardRef<
       )}
       {...props}
     >
-      <RadioGroupPrimitive.Indicator className="flex relative items-center justify-center border-red-500">
-        <div className="h-12 w-12 rounded-full border-2 border-black absolute" />
+      <RadioGroupPrimitive.Indicator className='flex relative items-center justify-center border-red-500'>
+        <div className='h-12 w-12 rounded-full border-2 border-black absolute' />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   )
@@ -56,8 +56,8 @@ const RadioGroupItemSquare = React.forwardRef<
       )}
       {...props}
     >
-      <span className="text-xs leading-tight">{labelTop}</span>
-      <span className="text-sm font-bold">{labelBottom}</span>
+      <span className='text-xs leading-tight'>{labelTop}</span>
+      <span className='text-sm font-bold'>{labelBottom}</span>
     </RadioGroupPrimitive.Item>
   )
 })

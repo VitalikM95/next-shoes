@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import { Product } from '@/types/product.types'
+import { ProductListItem } from '@/types/product.types'
 
 const fetcher = async (url: string) => {
   try {
@@ -36,26 +36,32 @@ const fetcher = async (url: string) => {
 }
 
 export const useProducts = (
-  male: 'man' | 'woman',
+  male: string,
+  initialData?: ProductListItem[],
   type?: string,
-  initialData?: Product[],
   bestFor?: string[],
-  materials?: string[]
+  materials?: string[],
+  colorType?: string[],
+  sizes?: string[],
+  shouldFetch: boolean = true
 ) => {
   const query = [`male=${male}`]
   if (type) query.push(`type=${type}`)
   if (bestFor && bestFor.length > 0) query.push(`bestFor=${bestFor.join(',')}`)
   if (materials && materials.length > 0)
     query.push(`materials=${materials.join(',')}`)
+  if (colorType && colorType.length > 0)
+    query.push(`colorType=${colorType.join(',')}`)
+  if (sizes && sizes.length > 0) query.push(`sizes=${sizes.join(',')}`)
 
   const url = `/api/products?${query.join('&')}`
 
-  const { data, error, isLoading } = useSWR(url, fetcher, {
+  const { data, error, isLoading } = useSWR(shouldFetch ? url : null, fetcher, {
     fallbackData: initialData,
+    revalidateOnMount: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     revalidateIfStale: true,
-    revalidateOnMount: true,
     dedupingInterval: 10000, // 10 секунд
     refreshInterval: 300000, // 5 хвилин
     errorRetryCount: 3,

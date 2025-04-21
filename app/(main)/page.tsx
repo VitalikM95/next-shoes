@@ -72,7 +72,7 @@ const images = [
   },
 ]
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <div>

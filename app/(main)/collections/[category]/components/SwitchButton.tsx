@@ -13,7 +13,7 @@ const SwitchButton = () => {
 
   const handleValueChange = (value: string) => {
     const newPath = pathname.replace(/\/man|\/woman/, `/${value}`)
-    router.push(newPath)
+    router.push(newPath, { scroll: false })
   }
 
   return (

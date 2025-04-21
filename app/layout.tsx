@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Ubuntu } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
+import ClientInit from './client-init'
 
 export const metadata: Metadata = {
   title: 'Next Shoes',
@@ -23,6 +24,7 @@ export default function RootLayout({
         <link data-rh='true' rel='icon' href='/logo.svg' />
       </head>
       <body>
+        <ClientInit />
         <Providers>{children}</Providers>
       </body>
     </html>

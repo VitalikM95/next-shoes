@@ -5,15 +5,15 @@ export interface Product {
   name: string
   male: string
   type: string[]
-  best_for: string[]
+  bestFor: string[]
   material: string
   price: number
   discountPercent: number
-  other_info: OtherInfo[]
+  otherInfo: OtherInfo[]
   highlights: string
   details: string
   sustainability: string
-  care_guide: string
+  careGuide: string
   variants: Variant[]
 }
 
@@ -24,13 +24,22 @@ export interface OtherInfo {
 }
 
 export interface Variant {
-  color: Color
+  id: string
+  colorType: string
+  colorName: string
+  colorHash: string
   images: string[]
   sizes: string[]
 }
 
-export interface Color {
-  type: string
+export interface ProductListItem {
+  id: string
   name: string
-  hash: string
+  male: string
+  type: string[]
+  bestFor: string[]
+  material: string
+  price: number
+  discountPercent: number
+  variants: Variant[]
 }

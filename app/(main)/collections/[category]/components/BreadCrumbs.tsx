@@ -26,7 +26,7 @@ const Breadcrumbs = () => {
   }
 
   const handleResetFilters = (category: string) => {
-    router.push(`/collections/${category}`)
+    router.push(`/collections/${category}`, { scroll: false })
   }
 
   return (

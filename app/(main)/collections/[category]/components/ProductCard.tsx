@@ -17,14 +17,14 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import { Button } from '@/components/ui/button'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { SIZE_RANGES } from '@/lib/constants'
 import { calculatePrice } from '@/lib/utils'
-import { Product } from '@/types/product.types'
+import { ProductListItem } from '@/types/product.types'
 import Link from 'next/link'
 
 interface ProductCardProps {
-  item: Product
+  item: ProductListItem
 }
 
 const ProductCard: FC<ProductCardProps> = ({ item }) => {
@@ -36,9 +36,16 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
   const sizes = SIZE_RANGES[male as keyof typeof SIZE_RANGES]
 
   const [selectedImage, setSelectedImage] = useState(
-    variants[0]?.images?.[0] || '/placeholder.jpg'
+    variants[0]?.images?.[0] || '/no_image.png'
   )
   const [activeVariantIndex, setActiveVariantIndex] = useState(0)
+
+  useEffect(() => {
+    if (variants.length > 0) {
+      setActiveVariantIndex(0)
+      setSelectedImage(variants[0]?.images?.[0] || '/no_image.png')
+    }
+  }, [variants])
 
   const handleVariantClick = (index: number, image: string) => {
     setSelectedImage(image)
@@ -50,7 +57,7 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
       name,
       price: discountedPrice,
       size,
-      color: variants[activeVariantIndex]?.color,
+      color: variants[activeVariantIndex]?.colorName,
       image: selectedImage,
     }
     console.log(productInfo)
@@ -60,7 +67,7 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
 
   return (
     <Card className='w-[350px] relative border-none rounded-none shadow-none hover:shadow-xl overflow-visible h-[500px] group'>
-      <Link href='/product/1' aria-label='Product'>
+      <Link href={`/product/${item.id}`} aria-label='Product'>
         <CardContent>
           <Image
             src={selectedImage}
@@ -102,7 +109,7 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
                     >
                       <Image
                         src={image}
-                        alt={variant.color?.name || 'Product variant'}
+                        alt={variant.colorName || 'Product variant'}
                         width={65}
                         height={70}
                       />
