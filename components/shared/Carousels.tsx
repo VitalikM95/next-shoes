@@ -16,6 +16,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '../ui/carousel'
+import { ProductListItem } from '@/types/product.types'
+import { calculatePrice } from '@/lib/utils'
 
 const BackgroundCarousel = () => {
   const [carouselRef] = useEmblaCarousel({ loop: true }, [
@@ -61,36 +63,36 @@ const BackgroundCarousel = () => {
   )
 }
 
-const images = [
-  {
-    img: '/images/slider-img1.avif',
-    title: "Women's Runner Family",
-    link: '#',
-  },
+const BigCarouselContent = [
   {
     img: '/images/slider-img2.avif',
-    title: "Men's Runner Family",
-    link: '#',
+    title: "Men's Trainer Family",
+    link: '/collections/man?type=Trainers',
+  },
+  {
+    img: '/images/slider-img1.avif',
+    title: "Women's Trainer Family",
+    link: '/collections/woman?type=Trainers',
   },
   {
     img: '/images/slider-img3.avif',
     title: "Men's Weather-Ready Collection",
-    link: '#',
+    link: '/collections/man?type=Water-Repellent+Shoes',
   },
   {
     img: '/images/slider-img4.avif',
     title: "Women's Weather-Ready Collection",
-    link: '#',
+    link: '/collections/woman?type=Water-Repellent+Shoes',
   },
   {
     img: '/images/slider-img5.avif',
     title: "Men's Active Shoes",
-    link: '#',
+    link: '/collections/man?type=Active+Shoes',
   },
   {
     img: '/images/slider-img6.avif',
     title: "Women's Active Shoes",
-    link: '#',
+    link: '/collections/woman?type=Active+Shoes',
   },
 ]
 
@@ -104,7 +106,7 @@ const BigCarousel = () => {
       className='w-full'
     >
       <CarouselContent className='gap-2'>
-        {images.map((item, i) => (
+        {BigCarouselContent.map((item, i) => (
           <CarouselItem
             key={i}
             className='relative group overflow-hidden h-[620px] basis-1/2'
@@ -227,15 +229,21 @@ const shoes = {
   ],
 }
 
-const SmallCarousel = () => {
+type SaleCarouselProps = {
+  shoes: {
+    woman: ProductListItem[]
+    man: ProductListItem[]
+  }
+}
+
+const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
   const [selectedCategory, setSelectedCategory] = useState<'man' | 'woman'>(
     'woman'
   )
-
   return (
     <>
       <div className='flex justify-between'>
-        <div className='uppercase font-bold text-lg'>More to shop</div>
+        <div className='uppercase font-bold text-lg'>Sale Shoes</div>
         <RadioGroupCustom
           defaultValue={selectedCategory}
           onValueChange={value => setSelectedCategory(value as 'man' | 'woman')}
@@ -252,29 +260,45 @@ const SmallCarousel = () => {
         className='w-full'
       >
         <CarouselContent className='p-5 gap-2'>
-          {shoes[selectedCategory]?.map((item, i) => (
-            <CarouselItem
-              key={i}
-              className='relative group overflow-hidden h-[450px] basis-1/4'
-            >
-              <Link
-                href='#'
-                className='absolute h-full w-full left-0 top-0 flex flex-col justify-end'
+          {shoes[selectedCategory]?.map((item, i) => {
+            const { discountedPrice, originalPrice, hasDiscount } =
+              calculatePrice(item.price, item.discountPercent)
+
+            return (
+              <CarouselItem
+                key={i}
+                className='relative group overflow-hidden h-[450px] basis-1/4'
               >
-                <Image
-                  src={item.link}
-                  alt='shoes'
-                  fill
-                  className='object-top object-contain transition-transform duration-200 group-hover:scale-105'
-                />
-                <div className=''>
-                  <div className='font-bold text-lg'>{item.title}</div>
-                  <div className=''>{item.subtitle}</div>
-                  <div className=''>€{item.price}</div>
-                </div>
-              </Link>
-            </CarouselItem>
-          ))}
+                <Link
+                  href={`/product/${item.id}`}
+                  className='absolute h-full w-full left-0 top-0 flex flex-col justify-end'
+                >
+                  <Image
+                    src={item.variants[0].images[0]}
+                    alt='shoes'
+                    fill
+                    className='object-top object-contain transition-transform duration-200 group-hover:scale-105 max-h-fit bg-[#F6F6F6]'
+                  />
+                  <div className='bg-white/80 px-2 py-1'>
+                    <div className='font-bold text-lg'>{item.name}</div>
+                    <div className=''>{item.type[0]}</div>
+                    {hasDiscount ? (
+                      <div className='flex items-center gap-2'>
+                        <span className='text-red-600 font-bold'>
+                          €{discountedPrice}
+                        </span>
+                        <span className='text-gray-500 line-through'>
+                          €{originalPrice}
+                        </span>
+                      </div>
+                    ) : (
+                      <span className='text-black'>€{discountedPrice}</span>
+                    )}
+                  </div>
+                </Link>
+              </CarouselItem>
+            )
+          })}
         </CarouselContent>
         <CarouselPrevious className='-left-9 top-[40%] h-14 hover:scale-y-150 transition-all duration-100' />
         <CarouselNext className='-right-9 top-[40%] h-14 hover:scale-y-150 transition-all duration-100' />
@@ -283,4 +307,4 @@ const SmallCarousel = () => {
   )
 }
 
-export { BackgroundCarousel, BigCarousel, SmallCarousel }
+export { BackgroundCarousel, BigCarousel, SaleCarousel }

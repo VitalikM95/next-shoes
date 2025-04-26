@@ -2,7 +2,7 @@ import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authConfig } from '@/lib/auth/config'
-import { handleApiError, apiErrors } from '@/lib/api/error-handler'
+import { handleApiError, apiErrors } from '@/lib/db/error-handler'
 
 // GET /api/cart - get user's cart
 const getCart = async (request: NextRequest) => {

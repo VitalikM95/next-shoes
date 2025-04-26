@@ -3,6 +3,7 @@ import { FC, useState, useCallback, useEffect } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
 import { ImageModal } from './ImageModal'
+import { useProductSelectionStore } from '@/lib/store/product-selection-store'
 
 interface ThumbProps {
   selected: boolean
@@ -13,7 +14,7 @@ interface ThumbProps {
 const Thumb: FC<ThumbProps> = ({ selected, onClick, src }) => (
   <Image
     src={src}
-    alt="Thumbnail"
+    alt='Thumbnail'
     width={400}
     height={400}
     onClick={onClick}
@@ -23,11 +24,16 @@ const Thumb: FC<ThumbProps> = ({ selected, onClick, src }) => (
   />
 )
 
-interface ProductGalleryProps {
-  images: string[]
+interface ImagesGalleryProps {
+  variants: {
+    images: string[]
+  }[]
 }
 
-const ProductGallery: FC<ProductGalleryProps> = ({ images }) => {
+const ImagesGallery: FC<ImagesGalleryProps> = ({ variants }) => {
+  const { colorIndex } = useProductSelectionStore()
+  const currentImages = variants[colorIndex].images
+
   const [modalActive, setModalActive] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
@@ -57,20 +63,21 @@ const ProductGallery: FC<ProductGalleryProps> = ({ images }) => {
   }
 
   const onNext = useCallback(() => {
-    setSelectedImage((prevImage) => {
-      const currentIndex = images.indexOf(prevImage || '')
-      const nextIndex = (currentIndex + 1) % images.length
-      return images[nextIndex]
+    setSelectedImage(prevImage => {
+      const currentIndex = currentImages.indexOf(prevImage || '')
+      const nextIndex = (currentIndex + 1) % currentImages.length
+      return currentImages[nextIndex]
     })
-  }, [images])
+  }, [currentImages])
 
   const onPrev = useCallback(() => {
-    setSelectedImage((prevImage) => {
-      const currentIndex = images.indexOf(prevImage || '')
-      const prevIndex = (currentIndex - 1 + images.length) % images.length
-      return images[prevIndex]
+    setSelectedImage(prevImage => {
+      const currentIndex = currentImages.indexOf(prevImage || '')
+      const prevIndex =
+        (currentIndex - 1 + currentImages.length) % currentImages.length
+      return currentImages[prevIndex]
     })
-  }, [images])
+  }, [currentImages])
 
   const updateSelectedIndex = (index: number) => {
     if (!modalActive) {
@@ -80,11 +87,11 @@ const ProductGallery: FC<ProductGalleryProps> = ({ images }) => {
   }
 
   return (
-    <div className="embla">
-      <div className="embla-thumbs">
-        <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
-          <div className="embla-thumbs__container px-0.5">
-            {images.map((src, index) => (
+    <div className='embla'>
+      <div className='embla-thumbs'>
+        <div className='embla-thumbs__viewport' ref={emblaThumbsRef}>
+          <div className='embla-thumbs__container px-0.5'>
+            {currentImages.map((src, index) => (
               <Thumb
                 key={index}
                 onClick={() => updateSelectedIndex(index)}
@@ -95,16 +102,16 @@ const ProductGallery: FC<ProductGalleryProps> = ({ images }) => {
           </div>
         </div>
       </div>
-      <div className="embla__viewport" ref={emblaMainRef}>
-        <div className="embla__container">
-          {images.map((src, index) => (
-            <div className="embla__slide" key={index}>
+      <div className='embla__viewport' ref={emblaMainRef}>
+        <div className='embla__container'>
+          {currentImages.map((src, index) => (
+            <div className='embla__slide' key={index}>
               <Image
                 src={src}
                 alt={`Product image ${index + 1}`}
                 width={600}
                 height={500}
-                className="cursor-pointer bg-[#F6F6F6]"
+                className='cursor-pointer bg-[#F6F6F6]'
                 onClick={() => openModal(src)}
               />
             </div>
@@ -122,4 +129,4 @@ const ProductGallery: FC<ProductGalleryProps> = ({ images }) => {
   )
 }
 
-export default ProductGallery
+export default ImagesGallery

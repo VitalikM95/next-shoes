@@ -1,7 +1,7 @@
-import { getProducts } from './get-products'
 import { ProductsList } from './components/ProductsList'
 import { SwitchButton } from './components/SwitchButton'
 import FiltersPanel from './components/FiltersPanel'
+import { getProducts } from '@/lib/db/products'
 
 export const dynamic = 'force-dynamic'
 

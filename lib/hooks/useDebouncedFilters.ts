@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { useDebounce } from 'use-debounce'
-import { FiltersState, useFiltersStore } from '@/lib/store/useFiltersStore'
+import { FiltersState, useFiltersStore } from '@/lib/store/filters-store'
 
 type FilterKey = keyof Omit<
   FiltersState,

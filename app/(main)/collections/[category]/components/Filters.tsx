@@ -42,17 +42,17 @@ const TitleCategories = () => {
     <div className='flex flex-col'>
       <h2 className='text-2xl font-bold py-4'>{currentTitle}</h2>
       <ul>
-        {categories.map(category => (
+        {categories.map(({ label, value }) => (
           <li
-            key={category}
+            key={label}
             className={`cursor-pointer hover:underline pb-1.5 ${
-              category === currentTitle
+              label === currentTitle
                 ? 'font-bold hover:no-underline cursor-text'
                 : ''
             }`}
-            onClick={() => handleCategoryClick(category)}
+            onClick={() => handleCategoryClick(value || label)}
           >
-            {category}
+            {label}
           </li>
         ))}
       </ul>

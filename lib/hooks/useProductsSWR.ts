@@ -35,7 +35,7 @@ const fetcher = async (url: string) => {
   }
 }
 
-export const useProducts = (
+export const useProductsSWR = (
   male: string,
   initialData?: ProductListItem[],
   type?: string,
@@ -66,9 +66,7 @@ export const useProducts = (
     refreshInterval: 300000, // 5 хвилин
     errorRetryCount: 3,
     onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-      // Не повторюємо запит при 404 помилці
       if (error.status === 404) return
-      // Збільшуємо інтервал між спробами
       const timeout = Math.min(1000 * 2 ** retryCount, 30000)
       setTimeout(() => revalidate({ retryCount }), timeout)
     },

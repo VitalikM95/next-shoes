@@ -1,6 +1,17 @@
-export const TITLES: Record<string, string[]> = {
-  man: ['Trainers', 'Active Shoes', 'Water-Repellent Shoes', "Men's Sale"],
-  woman: ['Trainers', 'Active Shoes', 'Water-Repellent Shoes', 'Flats', "Women's Sale"],
+export const TITLES: Record<string, { label: string; value?: string }[]> = {
+  man: [
+    { label: 'Trainers', value: 'Trainers' },
+    { label: 'Active Shoes', value: 'Active Shoes' },
+    { label: 'Water-Repellent Shoes', value: 'Water-Repellent Shoes' },
+    { label: "Men's Sale" }, // буде фільтр по discount
+  ],
+  woman: [
+    { label: 'Trainers', value: 'Trainers' },
+    { label: 'Active Shoes', value: 'Active Shoes' },
+    { label: 'Water-Repellent Shoes', value: 'Water-Repellent Shoes' },
+    { label: 'Flats', value: 'Flats' },
+    { label: "Women's Sale" },
+  ],
 }
 
 export const BEST_FOR: string[] = [

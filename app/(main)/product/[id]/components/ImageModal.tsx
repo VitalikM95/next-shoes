@@ -10,6 +10,7 @@ interface IProps {
   imageSrc: string | null
   onNext: () => void
   onPrev: () => void
+  isLoading?: boolean
 }
 
 const ImageModal: FC<IProps> = ({
@@ -18,6 +19,7 @@ const ImageModal: FC<IProps> = ({
   imageSrc,
   onNext,
   onPrev,
+  isLoading = false,
 }) => {
   useBodyLock(active)
 
@@ -61,32 +63,45 @@ const ImageModal: FC<IProps> = ({
         </Button>
         <div className='flex-grow flex flex-col justify-center items-center relative'>
           <div className='relative w-[800px] h-[800px]'>
-            {imageSrc && (
+            {isLoading ? (
+              <div className='absolute inset-0 w-full h-full bg-gray-200 animate-pulse flex items-center justify-center'>
+                <span className='text-gray-500'>Завантаження...</span>
+              </div>
+            ) : imageSrc ? (
               <Image
                 src={imageSrc}
-                alt='Selected product image'
+                alt='Обране зображення товару'
                 width={800}
                 height={800}
                 className='rounded-md bg-[#F6F6F6] absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-300 ease-in-out'
+                priority
               />
+            ) : (
+              <div className='absolute inset-0 w-full h-full bg-gray-100 flex items-center justify-center'>
+                <span className='text-gray-500'>Зображення не знайдено</span>
+              </div>
             )}
           </div>
-          <Button
-            variant='outline'
-            size='icon'
-            className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-transparent border border-transparent shadow-none hover:border-black'
-            onClick={onPrev}
-          >
-            <ChevronLeft className='!h-7 !w-7' />
-          </Button>
-          <Button
-            variant='outline'
-            size='icon'
-            className='absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent border border-transparent shadow-none hover:border-black'
-            onClick={onNext}
-          >
-            <ChevronRight className='!h-7 !w-7' />
-          </Button>
+          {!isLoading && (
+            <>
+              <Button
+                variant='outline'
+                size='icon'
+                className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-transparent border border-transparent shadow-none hover:border-black'
+                onClick={onPrev}
+              >
+                <ChevronLeft className='!h-7 !w-7' />
+              </Button>
+              <Button
+                variant='outline'
+                size='icon'
+                className='absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent border border-transparent shadow-none hover:border-black'
+                onClick={onNext}
+              >
+                <ChevronRight className='!h-7 !w-7' />
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>

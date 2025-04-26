@@ -10,6 +10,13 @@ const nextConfig = {
     ],
   },
   reactStrictMode: false,
+  swcMinify: true,
+  transpilePackages: ['@shadcn/ui', 'vaul', 'embla-carousel-react'],
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{ kebabCase member }}',
+    },
+  },
 }
 
 export default nextConfig

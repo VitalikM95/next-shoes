@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { useFiltersStore } from '@/lib/store/useFiltersStore'
+import { useFiltersStore } from '@/lib/store/filters-store'
 
 const parseParam = (param: string | null): string[] => {
   if (!param) return []

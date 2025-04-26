@@ -2,9 +2,9 @@
 
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
-import { useProducts } from '@/lib/api/products'
 import { ProductListItem } from '@/types/product.types'
 import { ProductCard } from './ProductCard'
+import { useProductsSWR } from '@/lib/hooks/useProductsSWR'
 
 interface ProductsListProps {
   initialProducts: ProductListItem[]
@@ -12,49 +12,27 @@ interface ProductsListProps {
   category: string
 }
 
-const parseFilters = (params: URLSearchParams) => {
-  return {
-    type: params.get('type') || '',
-    bestFor: params.get('bestFor')?.split(',') || [],
-    materials: params.get('materials')?.split(',') || [],
-    colorType: params.get('colorType')?.split(',') || [],
-    sizes: params.get('sizes')?.split(',') || [],
-  }
-}
-
-const areFiltersEqual = (
-  current: ReturnType<typeof parseFilters>,
-  initial: ProductsListProps['initialSearchParams']
-) => {
-  const compareArrays = (a: string[], b: string[]) =>
-    a.length === b.length && a.every(v => b.includes(v))
-
-  return (
-    current.type === (initial?.type || '') &&
-    compareArrays(current.bestFor, (initial?.bestFor || '').split(',')) &&
-    compareArrays(current.materials, (initial?.materials || '').split(',')) &&
-    compareArrays(current.colorType, (initial?.colorType || '').split(',')) &&
-    compareArrays(current.sizes, (initial?.sizes || '').split(','))
-  )
-}
-
 export const ProductsList = ({
   initialProducts,
-  initialSearchParams,
   category,
 }: ProductsListProps) => {
   const searchParams = useSearchParams()
   const [hasMounted, setHasMounted] = useState(false)
 
-  const filters = useMemo(() => {
-    return parseFilters(new URLSearchParams(searchParams.toString()))
-  }, [searchParams])
+  // Просто отримуємо всі параметри з URL
+  const params = useMemo(
+    () => new URLSearchParams(searchParams.toString()),
+    [searchParams]
+  )
 
-  const shouldFetch = useMemo(() => {
-    if (!hasMounted) return false
-    return !areFiltersEqual(filters, initialSearchParams)
-  }, [filters, hasMounted, initialSearchParams])
+  // Отримуємо всі потрібні значення для фільтрів
+  const type = params.get('type') || ''
+  const bestFor = params.getAll('bestFor')
+  const materials = params.getAll('materials')
+  const colorType = params.getAll('colorType')
+  const sizes = params.getAll('sizes')
 
+  // Запускаємо запит тільки після монтування на клієнті
   useEffect(() => {
     setHasMounted(true)
   }, [])
@@ -63,15 +41,15 @@ export const ProductsList = ({
     products = initialProducts,
     isLoading,
     isError,
-  } = useProducts(
+  } = useProductsSWR(
     category,
     initialProducts,
-    filters.type,
-    filters.bestFor,
-    filters.materials,
-    filters.colorType,
-    filters.sizes,
-    shouldFetch
+    type,
+    bestFor,
+    materials,
+    colorType,
+    sizes,
+    hasMounted // Виконуємо запит тільки після монтування компонента
   )
 
   return (

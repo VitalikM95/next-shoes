@@ -2,7 +2,7 @@ import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import bcrypt from 'bcrypt'
-import { handleApiError, apiErrors } from '@/lib/api/error-handler'
+import { handleApiError, apiErrors } from '@/lib/db/error-handler'
 import { getServerSession } from 'next-auth'
 import { authConfig } from '@/lib/auth/config'
 

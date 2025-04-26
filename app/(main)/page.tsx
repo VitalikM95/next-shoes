@@ -2,11 +2,12 @@ import { Libre_Baskerville } from 'next/font/google'
 import {
   BackgroundCarousel,
   BigCarousel,
-  SmallCarousel,
-} from '@/components/shared/HomeCarousels'
+  SaleCarousel,
+} from '@/components/shared/Carousels'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getProducts } from '@/lib/db/products'
 
 const libre = Libre_Baskerville({
   subsets: ['latin'],
@@ -46,43 +47,68 @@ const shoeItems = [
     image: '/images/sample-shoes1.avif',
     title: 'Tree Runner Go',
     description: 'Light, Breezy, Ready For Anything',
+    link_man: '/product/cm9n1mobw00024n74r5aybp03',
+    link_woman: '/product/cm9n1mr9400484n74rowduv1x',
   },
   {
     image: '/images/sample-shoes2.avif',
     title: 'Tree Dasher 2',
     description: 'Bouncy, Everyday Active Sneaker',
+    link_man: '/product/cm9n1mool000s4n740qh5lng9',
+    link_woman: '/product/cm9n1mrik00504n745shnddu0',
   },
   {
     image: '/images/sample-shoes3.avif',
-    title: 'Runner-Up Protect',
+    title: 'Tree Toppers',
     description: 'Water-Repellent, High Top Style',
+    link_man: '/product/cm9n1mq19002s4n74twtltj3c',
+    link_woman: '/product/cm9n1mtx100944n74fsmjqf0x',
   },
 ]
 
 const images = [
   {
-    link: '/images/big-img1.avif',
-    title: 'Bestsellers',
-    subtitle: 'Fan Favourite Styles',
+    img: '/images/big-img1.avif',
+    title: 'Trail Runner',
+    subtitle: 'Tough, Grippy, Ready To Explore',
+    link_man: '/product/cm9n1mpb8001z4n74tik5gzb3',
+    link_woman: '/product/cm9n1msm900734n74uw76teg0',
   },
   {
-    link: '/images/big-img2.avif',
+    img: '/images/big-img2.avif',
     title: 'Wool Piper Go',
     subtitle: 'Reimagined Classic, Elevated Comfort',
+    link_man: '/product/cm9n1mq19002s4n74twtltj3c',
+    link_woman: '/product/cm9n1mqwr003q4n7470taajon',
   },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [woman, man] = await Promise.all([
+    getProducts('woman', 'Active Shoes', 2),
+    getProducts('man', 'Active Shoes', 2),
+  ])
+  const shoesGrid = [...woman, ...man]
+
+  const [womanSale, manSale] = await Promise.all([
+    getProducts('woman', "Men's Sale"),
+    getProducts('man', "Women's Sale"),
+  ])
+  const shoesCarousel = {
+    woman: womanSale,
+    man: manSale,
+  }
+
   return (
     <>
       <div>
         <nav>
           <ul className='flex justify-center items-center gap-4 h-14 pl-20'>
             <li className='navlink-animation min-w-24 text-center'>
-              <Link href='/collections/woman'>Shop Women</Link>
+              <Link href='/collections/man'>Shop Men</Link>
             </li>
             <li className='navlink-animation min-w-24 text-center'>
-              <Link href='/collections/man'>Shop Men</Link>
+              <Link href='/collections/woman'>Shop Women</Link>
             </li>
           </ul>
         </nav>
@@ -130,10 +156,10 @@ export default function HomePage() {
               </div>
               <div className='space-x-2 opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible'>
                 <Button className='min-w-40' size='lg'>
-                  <Link href='/collections/man'>Shop Men</Link>
+                  <Link href={item.link_man}>Shop Men</Link>
                 </Button>
                 <Button className='min-w-40' size='lg'>
-                  <Link href='/collections/woman'>Shop Women</Link>
+                  <Link href={item.link_woman}>Shop Women</Link>
                 </Button>
               </div>
             </div>
@@ -172,7 +198,7 @@ export default function HomePage() {
           />
           <div className='absolute h-full w-full left-0 top-0 flex flex-col justify-end text-white p-10'>
             <div>
-              <div className='font-bold text-3xl'>Best Of Our Bestsellers</div>
+              <div className='font-bold text-3xl'>Our Sale Shoes</div>
               <p className='mt-2'>
                 Light. Versatile. Comfortable. Every reason to be top-selling
                 shoes.
@@ -180,38 +206,37 @@ export default function HomePage() {
             </div>
             <div className='space-x-4 mt-7'>
               <Button className='min-w-40' size='lg'>
-                <Link href='/collections/man'>Shop Men</Link>
+                <Link href='/collections/man?type=Men%27s+Sale'>Shop Men</Link>
               </Button>
               <Button className='min-w-40' size='lg'>
-                <Link href='/collections/woman'>Shop Women</Link>
+                <Link href='/collections/woman?type=Women%27s+Sale'>
+                  Shop Women
+                </Link>
               </Button>
             </div>
           </div>
         </div>
         <div className='w-1/2 flex gap-2 flex-wrap'>
-          {shoes.map((item, i) => (
+          {shoesGrid.map((item, i) => (
             <div key={i} className='w-[49%] relative group overflow-hidden'>
               <Image
-                src={item.image}
+                src={item.variants[0].images[0]}
                 width='400'
                 height='400'
                 alt='shoes-sample'
-                className='transition-transform duration-200 group-hover:scale-105'
+                className='transition-transform duration-200 group-hover:scale-105 bg-[#F6F6F6] '
               />
               <div className='flex flex-col absolute bottom-3 px-3 w-full text-sm tracking-normal'>
                 <div className='flex justify-between '>
-                  <div className='font-bold'>{item.title}</div>
+                  <div className='font-bold'>{item.name}</div>
                   <div className='mt-1'>€{item.price}</div>
                 </div>
-                <div>{item.subtitle}</div>
+                <div>{item.type}</div>
               </div>
               <div className='absolute h-full w-full left-0 top-0 flex justify-center items-center bg-black bg-opacity-0 group-hover:bg-opacity-15 transition-all duration-200'>
                 <div className='space-y-2 flex flex-col opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible'>
                   <Button className='min-w-40' size='lg'>
-                    Shop Men
-                  </Button>
-                  <Button className='min-w-40' size='lg'>
-                    Shop Women
+                    <Link href={`/product/${item.id}`}>Check it!</Link>
                   </Button>
                 </div>
               </div>
@@ -226,7 +251,7 @@ export default function HomePage() {
             className='relative w-1/2 h-[700px] group overflow-hidden'
           >
             <Image
-              src={item.link}
+              src={item.img}
               fill
               alt='image'
               className='object-cover transition-transform duration-200 group-hover:scale-105'
@@ -238,10 +263,10 @@ export default function HomePage() {
               </div>
               <div className='space-x-2 flex opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible'>
                 <Button className='min-w-40' size='lg'>
-                  Shop Men
+                  <Link href={item.link_man}>Shop Men</Link>
                 </Button>
                 <Button className='min-w-40' size='lg'>
-                  Shop Women
+                  <Link href={item.link_woman}>Shop Women</Link>
                 </Button>
               </div>
             </div>
@@ -249,7 +274,7 @@ export default function HomePage() {
         ))}
       </div>
       <div className='m-10'>
-        <SmallCarousel />
+        <SaleCarousel shoes={shoesCarousel} />
       </div>
       <section className='py-20 px-10'>
         <h3 className='font-bold text-3xl mb-10'>The NextShoes Approach</h3>

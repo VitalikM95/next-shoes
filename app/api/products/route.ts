@@ -1,6 +1,6 @@
 import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
-import { handleApiError, apiErrors } from '@/lib/api/error-handler'
+import { handleApiError, apiErrors } from '@/lib/db/error-handler'
 import { Prisma } from '@prisma/client'
 
 // GET /api/products - отримати список продуктів
@@ -24,10 +24,16 @@ const getProducts = async (request: NextRequest) => {
     throw apiErrors.validation('The male parameter is required')
   }
 
+  const isSale = type === "Men's Sale" || type === "Women's Sale"
+
   // Формуємо умови фільтрації
   const where: Prisma.ProductWhereInput = {
     male,
-    ...(type && { type: { has: type } }),
+    ...(isSale
+      ? { discountPercent: { not: 0 } }
+      : type
+      ? { type: { has: type } }
+      : {}),
     ...(bestFor.length > 0 && { bestFor: { hasSome: bestFor } }),
     ...(materials.length > 0 && { material: { in: materials } }),
     ...(sizes.length > 0 && {
@@ -68,20 +74,7 @@ const getProducts = async (request: NextRequest) => {
     },
   })
 
-  // Трансформуємо дані для відповіді
-  const transformedProducts = products.map(product => ({
-    ...product,
-    variants: product.variants.map(variant => ({
-      ...variant,
-      color: {
-        type: variant.colorType,
-        name: variant.colorName,
-        hash: variant.colorHash,
-      },
-    })),
-  }))
-
-  return NextResponse.json(transformedProducts)
+  return NextResponse.json(products)
 }
 
 // Export functions for Next.js API routes

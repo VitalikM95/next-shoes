@@ -16,6 +16,10 @@ const Breadcrumbs = () => {
     .split('/')
     .filter(segment => segment !== '' && segment !== 'collections')
 
+  const handleResetFilters = (category: string) => {
+    router.push(`/collections/${category}`, { scroll: false })
+  }
+
   const DISPLAY_NAMES: Record<string, string> = {
     man: "Men's Shoes",
     woman: "Women's Shoes",
@@ -23,10 +27,6 @@ const Breadcrumbs = () => {
 
   const getDisplayName = (segment: string) => {
     return DISPLAY_NAMES[segment] || segment
-  }
-
-  const handleResetFilters = (category: string) => {
-    router.push(`/collections/${category}`, { scroll: false })
   }
 
   return (
