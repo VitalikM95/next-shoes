@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Providers } from './providers'
-import ClientInit from './client-init'
+import { Toaster } from 'sonner'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Next Shoes',
@@ -12,13 +15,13 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <head>
-        <link data-rh='true' rel='icon' href='/logo.svg' />
+        <link data-rh="true" rel="icon" href="/logo.svg" />
       </head>
-      <body>
-        <ClientInit />
+      <body className={inter.className}>
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   )

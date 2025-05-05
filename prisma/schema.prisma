@@ -66,13 +66,21 @@ model Cart {
 }
 
 model CartItem {
-  id        String  @id @default(cuid())
+  id        String @id @default(cuid())
   cartId    String
   variantId String
   size      String // Обраний розмір
-  quantity  Int     @default(1)
-  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  variant   Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  quantity  Int    @default(1)
+  price     Int // Ціна товару
+
+  // Додаткові дані для кращого відображення
+  productName String?
+  productId   String?
+  colorName   String?
+  image       String?
+
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  variant Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
 
   @@unique([cartId, variantId, size]) // Один розмір одного варіанта не може дублюватися
 }

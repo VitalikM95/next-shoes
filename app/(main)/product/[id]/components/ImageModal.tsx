@@ -50,55 +50,55 @@ const ImageModal: FC<IProps> = ({
       <div
         className={`${
           active ? 'scale-100' : 'scale-50'
-        } relative bg-[#F6F6F6] w-full max-w-[800px] h-full max-h-screen flex flex-col justify-between transition-transform duration-300 ease-out`}
+        } relative image-bg w-full max-w-[800px] h-full max-h-screen flex flex-col justify-between transition-transform duration-300 ease-out`}
         onClick={e => e.stopPropagation()}
       >
         <Button
-          variant='outline'
-          size='icon'
-          className='absolute top-2 right-2 z-50 bg-transparent border-2 border-transparent shadow-none hover:bg-black hover:text-white'
+          variant="outline"
+          size="icon"
+          className="absolute top-2 right-2 z-50 bg-transparent border-2 border-transparent shadow-none hover:bg-black hover:text-white"
           onClick={() => setActive(false)}
         >
-          <X strokeWidth={1} className='!h-7 !w-7' />
+          <X strokeWidth={1} className="!h-7 !w-7" />
         </Button>
-        <div className='flex-grow flex flex-col justify-center items-center relative'>
-          <div className='relative w-[800px] h-[800px]'>
+        <div className="flex-grow flex flex-col justify-center items-center relative">
+          <div className="relative w-[800px] h-[800px]">
             {isLoading ? (
-              <div className='absolute inset-0 w-full h-full bg-gray-200 animate-pulse flex items-center justify-center'>
-                <span className='text-gray-500'>Завантаження...</span>
+              <div className="absolute inset-0 w-full h-full bg-gray-200 animate-pulse flex items-center justify-center">
+                <span className="text-gray-500">Завантаження...</span>
               </div>
             ) : imageSrc ? (
               <Image
                 src={imageSrc}
-                alt='Обране зображення товару'
+                alt="Обране зображення товару"
                 width={800}
                 height={800}
-                className='rounded-md bg-[#F6F6F6] absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-300 ease-in-out'
+                className="rounded-md image-bg absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-300 ease-in-out"
                 priority
               />
             ) : (
-              <div className='absolute inset-0 w-full h-full bg-gray-100 flex items-center justify-center'>
-                <span className='text-gray-500'>Зображення не знайдено</span>
+              <div className="absolute inset-0 w-full h-full bg-gray-100 flex items-center justify-center">
+                <span className="text-gray-500">Зображення не знайдено</span>
               </div>
             )}
           </div>
           {!isLoading && (
             <>
               <Button
-                variant='outline'
-                size='icon'
-                className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-transparent border border-transparent shadow-none hover:border-black'
+                variant="outline"
+                size="icon"
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-transparent border border-transparent shadow-none hover:border-black"
                 onClick={onPrev}
               >
-                <ChevronLeft className='!h-7 !w-7' />
+                <ChevronLeft className="!h-7 !w-7" />
               </Button>
               <Button
-                variant='outline'
-                size='icon'
-                className='absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent border border-transparent shadow-none hover:border-black'
+                variant="outline"
+                size="icon"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent border border-transparent shadow-none hover:border-black"
                 onClick={onNext}
               >
-                <ChevronRight className='!h-7 !w-7' />
+                <ChevronRight className="!h-7 !w-7" />
               </Button>
             </>
           )}

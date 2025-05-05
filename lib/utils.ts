@@ -13,3 +13,12 @@ export function calculatePrice(price: number, discount: number) {
     hasDiscount: discount > 0,
   }
 }
+
+export function formatPrice(price: number) {
+  return new Intl.NumberFormat('uk-UA', {
+    style: 'currency',
+    currency: 'UAH',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(price)
+}

@@ -1,6 +1,7 @@
 'use client'
 import { signOut } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
+import { LogOut } from 'lucide-react'
 
 export default function SignOutButton() {
   const handleSignOut = async () => {
@@ -10,17 +11,14 @@ export default function SignOutButton() {
         redirect: true,
       })
     } catch (error) {
-      console.error('Помилка при виході:', error)
+      console.error('Error on exit:', error)
     }
   }
 
   return (
-    <Button
-      variant='default'
-      className='font-bold min-w-36 border border-black'
-      onClick={handleSignOut}
-    >
+    <Button variant='destructive' className='min-w-40' onClick={handleSignOut}>
       Sign Out
+      <LogOut />
     </Button>
   )
 }

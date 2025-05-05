@@ -87,6 +87,10 @@ body {
     left: 0;
     transform: none;
   }
+
+  .image-bg {
+    @apply bg-[#F6F6F6];
+  }
 }
 
 /* Embla Carousel Styles */

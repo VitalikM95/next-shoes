@@ -11,6 +11,7 @@ import { Breadcrumbs } from './BreadCrumbs'
 import { useSyncFiltersFromURL } from '@/lib/hooks/useSyncFiltersFromURL'
 import { Button } from '@/components/ui/button'
 import { usePathname, useRouter } from 'next/navigation'
+import { Trash2 } from 'lucide-react'
 
 const FiltersPanel = () => {
   useSyncFiltersFromURL()
@@ -29,11 +30,11 @@ const FiltersPanel = () => {
       <div className='flex justify-between items-center'>
         <span className='mt-5 mb-4 font-bold'>Filter By:</span>
         <Button
-          variant='default'
-          className='font-bold min-w-20 border border-red-800 hover:bg-red-800 text-red-800'
+          variant='destructive'
           onClick={() => handleResetFilters(lastSegment)}
         >
           Clear All
+          <Trash2 className='h-4 w-4' />
         </Button>
       </div>
       <hr />

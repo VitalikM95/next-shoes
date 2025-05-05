@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 
 const ClientInit = () => {
   useEffect(() => {
+    // Очищення кешу продуктів
     const cleanLocalStorage = () => {
       Object.keys(localStorage).forEach(key => {
         if (key.startsWith('products_')) {

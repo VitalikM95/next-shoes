@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import SignOutButton from './components/SignOutButton'
 
 import Image from 'next/image'
+import { Settings } from 'lucide-react'
 
 const data = [
   {
@@ -63,10 +64,11 @@ const ProfilePage = () => {
           <div className='text-lg mt-5'>e-mail: test@test.com</div>
           <div className='text-lg mt-5'>password: **********</div>
           <Button
-            variant='default'
-            className='absolute top-0 sm:right-5 right-0 font-bold min-w-36 border border-black'
+            variant='outline'
+            className='absolute top-0 sm:right-5 right-0 font-bold min-w-40'
           >
             Edit Profile
+            <Settings />
           </Button>
         </div>
       </div>
