@@ -5,7 +5,6 @@ import { Trash2, Minus, Plus } from 'lucide-react'
 import { FC, memo } from 'react'
 import { CartItemType } from '@/types/cart.types'
 import { useCart } from '@/lib/hooks/useCart'
-import { formatPrice } from '@/lib/utils'
 
 interface CartItemProps {
   item: CartItemType
@@ -27,7 +26,6 @@ const CartItem: FC<CartItemProps> = memo(({ item }) => {
   const isMinQuantity = item.quantity <= 1
   const isMaxQuantity = item.quantity >= 9
   const itemTotal = item.price * item.quantity
-  console.log(item)
 
   return (
     <div className="flex gap-4 border-b pb-4">
@@ -44,9 +42,20 @@ const CartItem: FC<CartItemProps> = memo(({ item }) => {
         <div className="flex justify-between items-start gap-2">
           <Link href={`/product/${item.productId}`} className="flex-1">
             <h3 className="font-semibold truncate">{item.productName}</h3>
-            <p className="text-sm text-gray-500">Колір: {item.colorName}</p>
-            <p className="text-sm text-gray-500">Розмір: {item.size}</p>
-            <p className="text-sm font-semibold">{formatPrice(item.price)}</p>
+            <p className="text-sm font-semibold">
+              Color:{' '}
+              <span className="text-gray-500 font-normal">
+                {item.colorName}
+              </span>
+            </p>
+            <p className="text-sm font-semibold">
+              Size:{' '}
+              <span className="text-gray-500 font-normal">{item.size}</span>
+            </p>
+            <p className="text-sm font-semibold">
+              Price:{' '}
+              <span className="text-gray-500 font-normal">€{item.price}</span>
+            </p>
           </Link>
           <Button
             variant="destructive"
@@ -59,8 +68,8 @@ const CartItem: FC<CartItemProps> = memo(({ item }) => {
         </div>
         <div className="flex justify-between items-center">
           <div className="text-sm flex items-center gap-2">
-            <span className="font-semibold">Кількість:</span>
-            <div className="flex items-center gap-2">
+            <span className="font-semibold">Quantity:</span>
+            <div className="flex items-center gap-1">
               <Button
                 variant="secondary"
                 className="w-8 h-8"
@@ -68,7 +77,7 @@ const CartItem: FC<CartItemProps> = memo(({ item }) => {
                 onClick={() => handleQuantityChange(item.quantity - 1)}
                 disabled={isMinQuantity}
               >
-                <Minus strokeWidth={2} />
+                <Minus strokeWidth={2} className="!h-5 !w-5" />
               </Button>
               {item.quantity}
               <Button
@@ -78,11 +87,11 @@ const CartItem: FC<CartItemProps> = memo(({ item }) => {
                 onClick={() => handleQuantityChange(item.quantity + 1)}
                 disabled={isMaxQuantity}
               >
-                <Plus strokeWidth={2} />
+                <Plus strokeWidth={2} className="!h-5 !w-5" />
               </Button>
             </div>
           </div>
-          <div className="font-semibold">{formatPrice(itemTotal)}</div>
+          <div className="font-semibold"> = €{itemTotal}</div>
         </div>
       </div>
     </div>

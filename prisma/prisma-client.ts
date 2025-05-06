@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client'
 
 declare global {
   var prisma: PrismaClient | undefined
+  var isBeforeExitHandlerRegistered: boolean | undefined
 }
 
 const prisma =
@@ -19,9 +20,12 @@ if (process.env.NODE_ENV !== 'production') {
   global.prisma = prisma
 }
 
-// Додаємо обробку помилок при закритті з'єднання
-process.on('beforeExit', async () => {
-  await prisma.$disconnect()
-})
+// Реєструємо обробник події тільки один раз
+if (!global.isBeforeExitHandlerRegistered) {
+  process.on('beforeExit', async () => {
+    await prisma.$disconnect()
+  })
+  global.isBeforeExitHandlerRegistered = true
+}
 
 export { prisma }

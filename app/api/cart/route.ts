@@ -29,6 +29,10 @@ export const GET = async (req: NextRequest) => {
       },
       include: {
         items: {
+          orderBy: {
+            // Сортуємо елементи корзини для консистентного відображення
+            id: 'asc',
+          },
           include: {
             variant: {
               select: {
@@ -254,6 +258,10 @@ const syncCart = async (request: NextRequest) => {
       where: { id: cart.id },
       include: {
         items: {
+          orderBy: {
+            // Сортуємо елементи корзини для консистентного відображення
+            id: 'asc',
+          },
           include: {
             variant: {
               select: {

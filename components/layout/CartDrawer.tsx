@@ -8,7 +8,6 @@ import { useCart } from '@/lib/hooks/useCart'
 import { useCartDrawerStore } from '@/lib/store/cart-drawer-store'
 import { CartItem } from '../shared/CartItem'
 import { useState, useEffect } from 'react'
-import { formatPrice } from '@/lib/utils'
 
 const CartDrawer = () => {
   const { cartItems, isLoading, totalItems, totalPrice, makeOrder } = useCart()
@@ -50,7 +49,7 @@ const CartDrawer = () => {
               className="bg-white border-2 border-transparent shadow-none rounded-none hover:bg-black hover:text-white"
               onClick={closeDrawer}
             >
-              <X strokeWidth={1} className="h-7 w-7" />
+              <X strokeWidth={1} className="!h-7 !w-7" />
             </Button>
             <Image
               src="/logo.svg"
@@ -74,7 +73,7 @@ const CartDrawer = () => {
               </div>
             ) : cartItems.length === 0 ? (
               <div className="text-center py-10">
-                <p className="text-lg">Корзина порожня</p>
+                <p className="text-lg">Cart is empty :(</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -88,11 +87,15 @@ const CartDrawer = () => {
           {cartItems.length > 0 && (
             <div className="mt-auto p-4 border-t">
               <div className="flex justify-between font-semibold text-lg mb-4">
-                <span>Загальна сума:</span>
-                <span>{formatPrice(totalPrice)}</span>
+                <span>Total amount:</span>
+                <span>€{totalPrice}</span>
               </div>
-              <Button variant="default" className="w-full" onClick={makeOrder}>
-                Оформити замовлення
+              <Button
+                variant="default"
+                className="w-full font-semibold"
+                onClick={makeOrder}
+              >
+                Make an order
               </Button>
             </div>
           )}

@@ -24,38 +24,38 @@ const BackgroundCarousel = () => {
     Autoplay({ delay: 5000, stopOnInteraction: false }),
   ])
   return (
-    <div ref={carouselRef} className='overflow-hidden'>
-      <div className='flex'>
-        <div className='relative flex-shrink-0 w-screen h-[650px]'>
+    <div ref={carouselRef} className="overflow-hidden">
+      <div className="flex">
+        <div className="relative flex-shrink-0 w-screen h-[650px]">
           <Image
-            src='/images/wide-bg1.avif'
-            alt='bg-image'
+            src="/images/wide-bg1.avif"
+            alt="bg-image"
             fill
-            className='object-cover'
+            className="object-cover"
           />
         </div>
-        <div className='relative flex-shrink-0 w-screen h-[650px]'>
+        <div className="relative flex-shrink-0 w-screen h-[650px]">
           <Image
-            src='/images/wide-bg2.avif'
-            alt='bg-image'
+            src="/images/wide-bg2.avif"
+            alt="bg-image"
             fill
-            className='object-cover'
+            className="object-cover"
           />
         </div>
-        <div className='relative flex-shrink-0 w-screen h-[650px]'>
+        <div className="relative flex-shrink-0 w-screen h-[650px]">
           <Image
-            src='/images/wide-bg3.avif'
-            alt='bg-image'
+            src="/images/wide-bg3.avif"
+            alt="bg-image"
             fill
-            className='object-cover'
+            className="object-cover"
           />
         </div>
-        <div className='relative flex-shrink-0 w-screen h-[650px]'>
+        <div className="relative flex-shrink-0 w-screen h-[650px]">
           <Image
-            src='/images/wide-bg4.avif'
-            alt='bg-image'
+            src="/images/wide-bg4.avif"
+            alt="bg-image"
             fill
-            className='object-cover'
+            className="object-cover"
           />
         </div>
       </div>
@@ -103,31 +103,31 @@ const BigCarousel = () => {
         align: 'start',
         slidesToScroll: 2,
       }}
-      className='w-full'
+      className="w-full"
     >
-      <CarouselContent className='gap-2'>
+      <CarouselContent className="gap-2">
         {BigCarouselContent.map((item, i) => (
           <CarouselItem
             key={i}
-            className='relative group overflow-hidden h-[620px] basis-1/2'
+            className="relative group overflow-hidden h-[620px] basis-1/2"
           >
             <Image
               src={item.img}
-              alt='bg-image'
+              alt="bg-image"
               fill
-              className='object-cover transition-transform duration-200 group-hover:scale-105'
+              className="object-cover transition-transform duration-200 group-hover:scale-105"
             />
             <Link
               href={item.link}
-              className='absolute h-full w-full left-0 top-0 bg-black bg-opacity-15 text-white flex items-center justify-center text-2xl font-bold'
+              className="absolute h-full w-full left-0 top-0 bg-black bg-opacity-15 text-white flex items-center justify-center text-2xl font-bold"
             >
               {item.title}
             </Link>
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className='-left-8 h-20 hover:scale-y-150 transition-all duration-100' />
-      <CarouselNext className='-right-8 h-20 hover:scale-y-150 transition-all duration-100' />
+      <CarouselPrevious className="-left-8 h-20 hover:scale-y-150 transition-all duration-100" />
+      <CarouselNext className="-right-8 h-20 hover:scale-y-150 transition-all duration-100" />
     </Carousel>
   )
 }
@@ -242,14 +242,14 @@ const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
   )
   return (
     <>
-      <div className='flex justify-between'>
-        <div className='uppercase font-bold text-lg'>Sale Shoes</div>
+      <div className="flex justify-between">
+        <div className="uppercase font-bold text-lg">Sale Shoes</div>
         <RadioGroupCustom
           defaultValue={selectedCategory}
           onValueChange={value => setSelectedCategory(value as 'man' | 'woman')}
         >
-          <RadioGroupItemUnderline value='woman' label='WOMAN' />
-          <RadioGroupItemUnderline value='man' label='MAN' />
+          <RadioGroupItemUnderline value="woman" label="WOMAN" />
+          <RadioGroupItemUnderline value="man" label="MAN" />
         </RadioGroupCustom>
       </div>
       <Carousel
@@ -257,9 +257,9 @@ const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
           align: 'start',
           slidesToScroll: 4,
         }}
-        className='w-full'
+        className="w-full"
       >
-        <CarouselContent className='p-5 gap-2'>
+        <CarouselContent className="p-5 gap-2">
           {shoes[selectedCategory]?.map((item, i) => {
             const { discountedPrice, originalPrice, hasDiscount } =
               calculatePrice(item.price, item.discountPercent)
@@ -267,32 +267,32 @@ const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
             return (
               <CarouselItem
                 key={i}
-                className='relative group overflow-hidden h-[450px] basis-1/4'
+                className="relative group overflow-hidden h-[450px] basis-1/4"
               >
                 <Link
                   href={`/product/${item.id}`}
-                  className='absolute h-full w-full left-0 top-0 flex flex-col justify-end'
+                  className="absolute h-full w-full left-0 top-0 flex flex-col justify-end"
                 >
                   <Image
                     src={item.variants[0].images[0]}
-                    alt='shoes'
+                    alt="shoes"
                     fill
-                    className='object-top object-contain transition-transform duration-200 group-hover:scale-105 max-h-fit bg-[#F6F6F6]'
+                    className="object-top object-contain transition-transform duration-200 group-hover:scale-105 max-h-fit bg-[#F6F6F6]"
                   />
-                  <div className='bg-white/80 px-2 py-1'>
-                    <div className='font-bold text-lg'>{item.name}</div>
-                    <div className=''>{item.type[0]}</div>
+                  <div className="bg-white/80 px-2 py-1">
+                    <div className="font-bold text-lg">{item.name}</div>
+                    <div className="">{item.type[0]}</div>
                     {hasDiscount ? (
-                      <div className='flex items-center gap-2'>
-                        <span className='text-red-600 font-bold'>
+                      <div className="flex items-center gap-2">
+                        <span className="text-red-600 font-bold">
                           €{discountedPrice}
                         </span>
-                        <span className='text-gray-500 line-through'>
+                        <span className="text-gray-500 line-through">
                           €{originalPrice}
                         </span>
                       </div>
                     ) : (
-                      <span className='text-black'>€{discountedPrice}</span>
+                      <span className="text-black">€{discountedPrice}</span>
                     )}
                   </div>
                 </Link>
@@ -300,8 +300,8 @@ const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
             )
           })}
         </CarouselContent>
-        <CarouselPrevious className='-left-9 top-[40%] h-14 hover:scale-y-150 transition-all duration-100' />
-        <CarouselNext className='-right-9 top-[40%] h-14 hover:scale-y-150 transition-all duration-100' />
+        <CarouselPrevious className="-left-9 top-[40%] h-14 hover:scale-y-150 transition-all duration-100" />
+        <CarouselNext className="-right-9 top-[40%] !h-14 hover:scale-y-150 transition-all duration-100" />
       </Carousel>
     </>
   )
