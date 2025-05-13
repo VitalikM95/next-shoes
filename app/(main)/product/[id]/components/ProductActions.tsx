@@ -10,17 +10,18 @@ import {
 import { useProductSelectionStore } from '@/lib/store/product-selection-store'
 import { SIZE_RANGES } from '@/lib/constants'
 import { Product } from '@/types/product.types'
-import { useCart } from '@/lib/hooks/useCart'
+import { useCartSWR } from '@/lib/hooks/useCartSWR'
 import { toast } from 'sonner'
 
 interface ProductActionsProps {
   product: Product
+  discountedPrice: number
 }
 
-const ProductActions = ({ product }: ProductActionsProps) => {
+const ProductActions = ({ product, discountedPrice }: ProductActionsProps) => {
   const { colorIndex, setColorIndex, size, setSize } =
     useProductSelectionStore()
-  const { addToCart } = useCart()
+  const { addToCart } = useCartSWR()
 
   useEffect(() => {
     const newSizes = product.variants[colorIndex].sizes
@@ -31,15 +32,14 @@ const ProductActions = ({ product }: ProductActionsProps) => {
 
   const handleAddToCart = async () => {
     try {
-      const price =
-        product.price - (product.price * product.discountPercent) / 100
       await addToCart(
         product.variants[colorIndex].id,
         size,
         product,
         product.variants[colorIndex],
-        price
+        discountedPrice
       )
+
       toast.success('Product added to cart')
     } catch (error) {
       toast.error('Error adding to cart')
@@ -50,15 +50,15 @@ const ProductActions = ({ product }: ProductActionsProps) => {
     <>
       <div className="flex flex-col py-5">
         <div className="w-full">
-          <div className="font-semibold uppercase my-4">
+          <div className="my-4 font-semibold uppercase">
             <span>Color</span>
-            <span className="pl-2 text-base normal-case text-gray-800 font-normal">
+            <span className="pl-2 text-base font-normal normal-case text-gray-800">
               ({product.variants[colorIndex].colorName})
             </span>
           </div>
           <RadioGroupCustom
             defaultValue={'0'}
-            onValueChange={value => setColorIndex(parseInt(value))}
+            onValueChange={(value) => setColorIndex(parseInt(value))}
           >
             {product.variants.map((variant, i) => {
               const colorHash = variant.colorHash
@@ -82,7 +82,7 @@ const ProductActions = ({ product }: ProductActionsProps) => {
           </RadioGroupCustom>
         </div>
         <div className="w-full">
-          <div className="font-semibold uppercase my-4">Size</div>
+          <div className="my-4 font-semibold uppercase">Size</div>
           <RadioGroupCustom value={size} onValueChange={setSize}>
             {SIZE_RANGES[product.male as keyof typeof SIZE_RANGES].map(
               (availableSize: number) => {
@@ -104,13 +104,13 @@ const ProductActions = ({ product }: ProductActionsProps) => {
           </RadioGroupCustom>
         </div>
       </div>
-      <div className="flex justify-between my-6">
+      <div className="my-6 flex justify-between">
         <Button
           onClick={handleAddToCart}
-          className={`w-full mr-6 h-12 border-2 font-bold ${
+          className={`mr-6 h-12 w-full border-2 font-bold ${
             product.variants[colorIndex].sizes.length > 0
               ? ''
-              : 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
+              : 'cursor-not-allowed border-gray-300 bg-gray-300 text-gray-500'
           }`}
           disabled={product.variants[colorIndex].sizes.length === 0}
         >

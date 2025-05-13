@@ -5,12 +5,12 @@ import { UserActions } from '../shared/UserActions'
 
 const TheHeader = () => {
   return (
-    <header className="h-16 pr-8 sticky top-[-14px] w-full left-0 bg-white z-20 shadow-lg ">
-      <div className="flex justify-between items-center sticky h-14 top-0 left-0 w-full bg-white">
+    <header className="sticky left-0 top-[-14px] z-20 h-16 w-full bg-white pr-8 shadow-lg">
+      <div className="sticky left-0 top-0 flex h-14 w-full items-center justify-between bg-white">
         <div className="self-end">
           <Navigation />
         </div>
-        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-center">
+        <h1 className="absolute left-1/2 -translate-x-1/2 transform text-center">
           <Link href="/" aria-label="Home">
             <Image
               src="/logo.svg"

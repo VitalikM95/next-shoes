@@ -42,29 +42,29 @@ const ImageModal: FC<IProps> = ({
     <div
       className={`${
         active
-          ? 'opacity-100 pointer-events-auto'
-          : 'opacity-0 pointer-events-none'
-      } h-screen w-screen bg-black/70 fixed top-0 left-0 z-50 flex justify-center items-center transition-opacity duration-300 ease-out`}
+          ? 'pointer-events-auto opacity-100'
+          : 'pointer-events-none opacity-0'
+      } fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/70 transition-opacity duration-300 ease-out`}
       onClick={() => setActive(false)}
     >
       <div
         className={`${
           active ? 'scale-100' : 'scale-50'
-        } relative image-bg w-full max-w-[800px] h-full max-h-screen flex flex-col justify-between transition-transform duration-300 ease-out`}
-        onClick={e => e.stopPropagation()}
+        } image-bg relative flex h-full max-h-screen w-full max-w-[800px] flex-col justify-between transition-transform duration-300 ease-out`}
+        onClick={(e) => e.stopPropagation()}
       >
         <Button
           variant="outline"
           size="icon"
-          className="absolute top-2 right-2 z-50 bg-transparent border-2 border-transparent shadow-none hover:bg-black hover:text-white"
+          className="absolute right-2 top-2 z-50 border-2 border-transparent bg-transparent shadow-none hover:bg-black hover:text-white"
           onClick={() => setActive(false)}
         >
           <X strokeWidth={1} className="!h-7 !w-7" />
         </Button>
-        <div className="flex-grow flex flex-col justify-center items-center relative">
-          <div className="relative w-[800px] h-[800px]">
+        <div className="relative flex flex-grow flex-col items-center justify-center">
+          <div className="relative h-[800px] w-[800px]">
             {isLoading ? (
-              <div className="absolute inset-0 w-full h-full bg-gray-200 animate-pulse flex items-center justify-center">
+              <div className="absolute inset-0 flex h-full w-full animate-pulse items-center justify-center bg-gray-200">
                 <span className="text-gray-500">Завантаження...</span>
               </div>
             ) : imageSrc ? (
@@ -73,11 +73,11 @@ const ImageModal: FC<IProps> = ({
                 alt="Обране зображення товару"
                 width={800}
                 height={800}
-                className="rounded-md image-bg absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-300 ease-in-out"
+                className="image-bg absolute inset-0 h-full w-full rounded-md object-cover opacity-100 transition-opacity duration-300 ease-in-out"
                 priority
               />
             ) : (
-              <div className="absolute inset-0 w-full h-full bg-gray-100 flex items-center justify-center">
+              <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-gray-100">
                 <span className="text-gray-500">Зображення не знайдено</span>
               </div>
             )}
@@ -87,7 +87,7 @@ const ImageModal: FC<IProps> = ({
               <Button
                 variant="outline"
                 size="icon"
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-transparent border border-transparent shadow-none hover:border-black"
+                className="absolute left-2 top-1/2 -translate-y-1/2 transform border border-transparent bg-transparent shadow-none hover:border-black"
                 onClick={onPrev}
               >
                 <ChevronLeft className="!h-7 !w-7" />
@@ -95,7 +95,7 @@ const ImageModal: FC<IProps> = ({
               <Button
                 variant="outline"
                 size="icon"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent border border-transparent shadow-none hover:border-black"
+                className="absolute right-2 top-1/2 -translate-y-1/2 transform border border-transparent bg-transparent shadow-none hover:border-black"
                 onClick={onNext}
               >
                 <ChevronRight className="!h-7 !w-7" />

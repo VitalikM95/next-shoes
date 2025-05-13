@@ -18,8 +18,8 @@ const Thumb: FC<ThumbProps> = ({ selected, onClick, src }) => (
     width={400}
     height={400}
     onClick={onClick}
-    className={`rounded-none image-bg mb-2 border-2 transition-all duration-100 ${
-      selected ? 'border-black' : 'hover:border-gray-400 cursor-pointer'
+    className={`image-bg mb-2 rounded-none border-2 transition-all duration-100 ${
+      selected ? 'border-black' : 'cursor-pointer hover:border-gray-400'
     }`}
   />
 )
@@ -75,7 +75,7 @@ const ImagesGallery: FC<ImagesGalleryProps> = ({ variants }) => {
 
   const navigateImage = useCallback(
     (direction: 'next' | 'prev') => {
-      setCurrentImageIndex(prevIndex => {
+      setCurrentImageIndex((prevIndex) => {
         const newIndex =
           direction === 'next'
             ? (prevIndex + 1) % currentImages.length
@@ -118,7 +118,7 @@ const ImagesGallery: FC<ImagesGalleryProps> = ({ variants }) => {
                 alt={`Product image ${index + 1}`}
                 width={600}
                 height={600}
-                className="cursor-pointer image-bg"
+                className="image-bg cursor-pointer"
                 onClick={() => openModal(index)}
               />
             </div>

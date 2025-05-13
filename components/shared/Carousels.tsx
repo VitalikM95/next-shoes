@@ -26,7 +26,7 @@ const BackgroundCarousel = () => {
   return (
     <div ref={carouselRef} className="overflow-hidden">
       <div className="flex">
-        <div className="relative flex-shrink-0 w-screen h-[650px]">
+        <div className="relative h-[650px] w-screen flex-shrink-0">
           <Image
             src="/images/wide-bg1.avif"
             alt="bg-image"
@@ -34,7 +34,7 @@ const BackgroundCarousel = () => {
             className="object-cover"
           />
         </div>
-        <div className="relative flex-shrink-0 w-screen h-[650px]">
+        <div className="relative h-[650px] w-screen flex-shrink-0">
           <Image
             src="/images/wide-bg2.avif"
             alt="bg-image"
@@ -42,7 +42,7 @@ const BackgroundCarousel = () => {
             className="object-cover"
           />
         </div>
-        <div className="relative flex-shrink-0 w-screen h-[650px]">
+        <div className="relative h-[650px] w-screen flex-shrink-0">
           <Image
             src="/images/wide-bg3.avif"
             alt="bg-image"
@@ -50,7 +50,7 @@ const BackgroundCarousel = () => {
             className="object-cover"
           />
         </div>
-        <div className="relative flex-shrink-0 w-screen h-[650px]">
+        <div className="relative h-[650px] w-screen flex-shrink-0">
           <Image
             src="/images/wide-bg4.avif"
             alt="bg-image"
@@ -109,7 +109,7 @@ const BigCarousel = () => {
         {BigCarouselContent.map((item, i) => (
           <CarouselItem
             key={i}
-            className="relative group overflow-hidden h-[620px] basis-1/2"
+            className="group relative h-[620px] basis-1/2 overflow-hidden"
           >
             <Image
               src={item.img}
@@ -119,15 +119,15 @@ const BigCarousel = () => {
             />
             <Link
               href={item.link}
-              className="absolute h-full w-full left-0 top-0 bg-black bg-opacity-15 text-white flex items-center justify-center text-2xl font-bold"
+              className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-15 text-2xl font-bold text-white"
             >
               {item.title}
             </Link>
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="-left-8 h-20 hover:scale-y-150 transition-all duration-100" />
-      <CarouselNext className="-right-8 h-20 hover:scale-y-150 transition-all duration-100" />
+      <CarouselPrevious className="-left-8 h-20 transition-all duration-100 hover:scale-y-150 hover:text-black" />
+      <CarouselNext className="-right-8 h-20 transition-all duration-100 hover:scale-y-150 hover:text-black" />
     </Carousel>
   )
 }
@@ -243,10 +243,12 @@ const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
   return (
     <>
       <div className="flex justify-between">
-        <div className="uppercase font-bold text-lg">Sale Shoes</div>
+        <div className="text-lg font-bold uppercase">Sale Shoes</div>
         <RadioGroupCustom
           defaultValue={selectedCategory}
-          onValueChange={value => setSelectedCategory(value as 'man' | 'woman')}
+          onValueChange={(value) =>
+            setSelectedCategory(value as 'man' | 'woman')
+          }
         >
           <RadioGroupItemUnderline value="woman" label="WOMAN" />
           <RadioGroupItemUnderline value="man" label="MAN" />
@@ -259,7 +261,7 @@ const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
         }}
         className="w-full"
       >
-        <CarouselContent className="p-5 gap-2">
+        <CarouselContent className="gap-2 p-5">
           {shoes[selectedCategory]?.map((item, i) => {
             const { discountedPrice, originalPrice, hasDiscount } =
               calculatePrice(item.price, item.discountPercent)
@@ -267,24 +269,24 @@ const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
             return (
               <CarouselItem
                 key={i}
-                className="relative group overflow-hidden h-[450px] basis-1/4"
+                className="group relative h-[450px] basis-1/4 overflow-hidden"
               >
                 <Link
                   href={`/product/${item.id}`}
-                  className="absolute h-full w-full left-0 top-0 flex flex-col justify-end"
+                  className="absolute left-0 top-0 flex h-full w-full flex-col justify-end"
                 >
                   <Image
                     src={item.variants[0].images[0]}
                     alt="shoes"
                     fill
-                    className="object-top object-contain transition-transform duration-200 group-hover:scale-105 max-h-fit bg-[#F6F6F6]"
+                    className="max-h-fit bg-[#F6F6F6] object-contain object-top transition-transform duration-200 group-hover:scale-105"
                   />
                   <div className="bg-white/80 px-2 py-1">
-                    <div className="font-bold text-lg">{item.name}</div>
+                    <div className="text-lg font-bold">{item.name}</div>
                     <div className="">{item.type[0]}</div>
                     {hasDiscount ? (
                       <div className="flex items-center gap-2">
-                        <span className="text-red-600 font-bold">
+                        <span className="font-bold text-red-600">
                           €{discountedPrice}
                         </span>
                         <span className="text-gray-500 line-through">
@@ -300,8 +302,8 @@ const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
             )
           })}
         </CarouselContent>
-        <CarouselPrevious className="-left-9 top-[40%] h-14 hover:scale-y-150 transition-all duration-100" />
-        <CarouselNext className="-right-9 top-[40%] !h-14 hover:scale-y-150 transition-all duration-100" />
+        <CarouselPrevious className="-left-9 top-[40%] h-14 transition-all duration-100 hover:scale-y-150 hover:text-black" />
+        <CarouselNext className="-right-9 top-[40%] !h-14 transition-all duration-100 hover:scale-y-150 hover:text-black" />
       </Carousel>
     </>
   )

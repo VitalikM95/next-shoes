@@ -20,8 +20,10 @@ import { Button } from '@/components/ui/button'
 import { FC, useEffect, useState } from 'react'
 import { SIZE_RANGES } from '@/lib/constants'
 import { calculatePrice } from '@/lib/utils'
-import { ProductListItem } from '@/types/product.types'
+import { Product, ProductListItem } from '@/types/product.types'
 import Link from 'next/link'
+import { useCartSWR } from '@/lib/hooks/useCartSWR'
+import { toast } from 'sonner'
 
 interface ProductCardProps {
   item: ProductListItem
@@ -34,6 +36,7 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
     discountPercent
   )
   const sizes = SIZE_RANGES[male as keyof typeof SIZE_RANGES]
+  const { addToCart } = useCartSWR()
 
   const [selectedImage, setSelectedImage] = useState(
     variants[0]?.images?.[0] || '/no_image.png'
@@ -53,20 +56,27 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
   }
 
   const handleSizeClick = (size: number) => {
-    const productInfo = {
-      name,
-      price: discountedPrice,
-      size,
-      color: variants[activeVariantIndex]?.colorName,
-      image: selectedImage,
-    }
-    console.log(productInfo)
+    const activeVariant = variants[activeVariantIndex]
+
+    // Використовуємо правильне приведення типів через unknown
+    // Фактично з об'єкта product використовуються лише поля id та name
+    addToCart(
+      activeVariant.id,
+      size.toString(),
+      item as unknown as Product,
+      activeVariant,
+      discountedPrice
+    )
+
+    toast.success(`Product "${name}" added to cart`, {
+      description: `Color: ${activeVariant.colorName}, Size: ${size}`,
+    })
   }
 
   if (!variants.length) return null
 
   return (
-    <Card className="w-[350px] relative border-none rounded-none shadow-none hover:shadow-xl overflow-visible h-[500px] group">
+    <Card className="group relative h-[500px] w-[350px] overflow-visible rounded-none border-none shadow-none hover:shadow-xl">
       <Link href={`/product/${item.id}`} aria-label="Product">
         <CardContent>
           <Image
@@ -83,7 +93,7 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
         <CardDescription>
           {hasDiscount ? (
             <div className="flex items-center gap-2">
-              <span className="text-red-600 font-bold">€{discountedPrice}</span>
+              <span className="font-bold text-red-600">€{discountedPrice}</span>
               <span className="text-gray-500 line-through">
                 €{originalPrice}
               </span>
@@ -93,14 +103,14 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
           )}
         </CardDescription>
         {variants.length > 0 && (
-          <Carousel opts={{ align: 'start' }} className="w-full max-w-sm mt-2">
+          <Carousel opts={{ align: 'start' }} className="mt-2 w-full max-w-sm">
             <CarouselContent className="px-0.5">
               {variants.map((variant, index) => {
                 const image = variant.images?.[0] || '/placeholder.jpg'
                 return (
                   <CarouselItem key={index} className="basis-1/4">
                     <div
-                      className={`border rounded-none image-bg cursor-pointer !p-0 hover:border-black ${
+                      className={`image-bg cursor-pointer rounded-none border !p-0 hover:border-black ${
                         index === activeVariantIndex
                           ? 'border-black'
                           : 'border-gray-300'
@@ -119,19 +129,19 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
               })}
             </CarouselContent>
             <CarouselPrevious
-              className="-left-6 w-6 hover:scale-y-150 transition-all duration-100"
+              className="-left-6 w-6 transition-all duration-100 hover:scale-y-150 hover:text-black"
               custom="!w-6 !h-6"
             />
             <CarouselNext
-              className="-right-6 w-6 hover:scale-y-150 transition-all duration-100"
+              className="-right-6 w-6 transition-all duration-100 hover:scale-y-150 hover:text-black"
               custom="!w-6 !h-6"
             />
           </Carousel>
         )}
       </CardHeader>
-      <CardFooter className="flex flex-col items-start absolute top-[95%] left-0 w-full bg-white transition-transform origin-top scale-y-0 z-10 group-hover:scale-y-100 duration-100 shadow-xl rounded-none">
-        <div className="font-bold my-4 text-sm">Quick Add</div>
-        <div className="flex gap-2 flex-wrap">
+      <CardFooter className="absolute left-0 top-[95%] z-10 flex w-full origin-top scale-y-0 flex-col items-start rounded-none bg-white shadow-xl transition-transform duration-100 group-hover:scale-y-100">
+        <div className="my-4 text-sm font-bold">Quick Add</div>
+        <div className="flex flex-wrap gap-2">
           {sizes?.map((size: number) => {
             const isAvailable = variants[activeVariantIndex]?.sizes?.includes(
               size.toString()
@@ -143,7 +153,7 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
                 className={`h-10 w-10 rounded-none border bg-white ${
                   isAvailable
                     ? 'border-black text-black hover:brightness-95'
-                    : 'border-gray-300 text-gray-400 cursor-not-allowed'
+                    : 'cursor-not-allowed border-gray-300 text-gray-400'
                 }`}
                 disabled={!isAvailable}
                 onClick={() => isAvailable && handleSizeClick(size)}

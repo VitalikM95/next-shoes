@@ -12,7 +12,7 @@ const CheckboxStandard = React.forwardRef<
     label: string
   }
 >(({ className, label, ...props }, ref) => (
-  <label className='flex items-center gap-2 cursor-pointer'>
+  <label className="flex cursor-pointer items-center gap-2">
     <CheckboxPrimitive.Root
       ref={ref}
       className={cn(
@@ -24,11 +24,11 @@ const CheckboxStandard = React.forwardRef<
       )}
       {...props}
     >
-      <CheckboxPrimitive.Indicator className='flex items-center justify-center text-current'>
-        <Check className='h-5 w-5' />
+      <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
+        <Check className="h-5 w-5" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
-    <span className='text-base text-primary'>{label}</span>
+    <span className="text-base text-primary">{label}</span>
   </label>
 ))
 
@@ -44,17 +44,17 @@ const CheckboxSquare = React.forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(
-      'flex flex-col items-center justify-center h-12 w-12 border font-bold border-black text-black rounded-none bg-transparent transition-colors',
+      'flex h-12 w-12 flex-col items-center justify-center rounded-none border border-black bg-transparent font-bold text-black transition-colors',
       'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30',
-      'data-[state=checked]:bg-black data-[state=checked]:text-white data-[state=checked]:border-black',
+      'data-[state=checked]:border-black data-[state=checked]:bg-black data-[state=checked]:text-white',
       'data-[disabled]:border-muted-foreground data-[disabled]:text-muted-foreground',
       'hover:bg-black/10',
       className
     )}
     {...props}
   >
-    <span className='text-xs leading-tight'>{labelTop}</span>
-    <span className='text-sm font-medium'>{labelBottom}</span>
+    <span className="text-xs leading-tight">{labelTop}</span>
+    <span className="text-sm font-medium">{labelBottom}</span>
   </CheckboxPrimitive.Root>
 ))
 CheckboxSquare.displayName = CheckboxPrimitive.Root.displayName
@@ -70,11 +70,11 @@ const CheckboxRound = React.forwardRef<
   CheckboxRoundProps
 >(({ className, label, color, ...props }, ref) => {
   return (
-    <label className='flex items-center gap-2 cursor-pointer'>
+    <label className="flex cursor-pointer items-center gap-2">
       <CheckboxPrimitive.Root
         ref={ref}
         className={cn(
-          'h-6 w-6 rounded-full flex items-center justify-center border-2 transition-all duration-200',
+          'flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all duration-200',
           'disabled:cursor-not-allowed disabled:opacity-50',
           'hover:ring-2 hover:ring-gray-200 hover:ring-offset-2',
           'data-[state=checked]:ring-2 data-[state=checked]:ring-gray-500 data-[state=checked]:ring-offset-2',
@@ -84,7 +84,7 @@ const CheckboxRound = React.forwardRef<
         style={{ backgroundColor: color }}
         {...props}
       ></CheckboxPrimitive.Root>
-      <span className='text-base text-primary'>{label}</span>
+      <span className="text-base text-primary">{label}</span>
     </label>
   )
 })

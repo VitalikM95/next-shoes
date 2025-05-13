@@ -15,8 +15,8 @@ export const getProducts = async (
       ...(isSale
         ? { discountPercent: { not: 0 } }
         : type
-        ? { type: { has: type } }
-        : {}),
+          ? { type: { has: type } }
+          : {}),
     }
 
     const products = await prisma.product.findMany({
@@ -44,9 +44,9 @@ export const getProducts = async (
       },
     })
 
-    return products.map(product => ({
+    return products.map((product) => ({
       ...product,
-      variants: product.variants.map(variant => ({
+      variants: product.variants.map((variant) => ({
         id: variant.id,
         colorType: variant.colorType,
         colorName: variant.colorName,
@@ -74,7 +74,7 @@ export const getProductById = async (id: string) => {
   return {
     ...product,
     otherInfo: (product.otherInfo as unknown as OtherInfo[]) || [],
-    variants: product.variants.map(variant => ({
+    variants: product.variants.map((variant) => ({
       id: variant.id,
       colorType: variant.colorType,
       colorName: variant.colorName,

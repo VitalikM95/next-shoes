@@ -3,47 +3,61 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
+import { useForm } from 'react-hook-form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+
+type FormData = {
+  fullName: string
+  email: string
+  password: string
+}
 
 export default function RegisterForm() {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      fullName: '',
+      email: '',
+      password: '',
+    },
+  })
+
+  const onSubmit = async (data: FormData) => {
     setError(null)
     setIsLoading(true)
-
-    const formData = new FormData(e.currentTarget)
 
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
-        body: JSON.stringify({
-          email: formData.get('email'),
-          password: formData.get('password'),
-          fullName: formData.get('fullName'),
-        }),
+        body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
         },
       })
 
       if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error || 'Помилка реєстрації')
+        const responseData = await res.json()
+        throw new Error(responseData.error || 'Registration error')
       }
 
       // Після успішної реєстрації авторизуємо користувача та перенаправляємо на профіль
       await signIn('credentials', {
-        email: formData.get('email'),
-        password: formData.get('password'),
+        email: data.email,
+        password: data.password,
         redirect: false,
       })
       router.push('/profile')
       router.refresh()
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Щось пішло не так')
+      setError(error instanceof Error ? error.message : 'Something went wrong')
     } finally {
       setIsLoading(false)
     }
@@ -51,70 +65,94 @@ export default function RegisterForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className='space-y-4'>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
         <div>
           <label
-            htmlFor='fullName'
-            className='block text-sm font-medium text-gray-700'
+            htmlFor="fullName"
+            className="mb-1 block text-sm font-medium text-gray-700"
           >
-            Повне ім'я
+            Full name
           </label>
-          <input
-            type='text'
-            name='fullName'
-            id='fullName'
-            required
-            className='mt-1 block w-full rounded-md border border-gray-300 px-3 py-2'
+          <Input
+            {...register('fullName', {
+              required: 'Name is required',
+              minLength: {
+                value: 2,
+                message: 'Name must be at least 2 characters',
+              },
+            })}
+            type="text"
+            className="rounded-none"
+            id="fullName"
           />
+          {errors.fullName && (
+            <p className="mt-1 text-sm text-red-500">
+              {errors.fullName.message}
+            </p>
+          )}
         </div>
 
         <div>
           <label
-            htmlFor='email'
-            className='block text-sm font-medium text-gray-700'
+            htmlFor="email"
+            className="mb-1 block text-sm font-medium text-gray-700"
           >
             Email
           </label>
-          <input
-            type='email'
-            name='email'
-            id='email'
-            required
-            className='mt-1 block w-full rounded-md border border-gray-300 px-3 py-2'
+          <Input
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Invalid email format',
+              },
+            })}
+            type="email"
+            className="rounded-none"
+            id="email"
           />
+          {errors.email && (
+            <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+          )}
         </div>
 
         <div>
           <label
-            htmlFor='password'
-            className='block text-sm font-medium text-gray-700'
+            htmlFor="password"
+            className="mb-1 block text-sm font-medium text-gray-700"
           >
-            Пароль
+            Password
           </label>
-          <input
-            type='password'
-            name='password'
-            id='password'
-            required
-            className='mt-1 block w-full rounded-md border border-gray-300 px-3 py-2'
+          <Input
+            {...register('password', {
+              required: 'Password is required',
+              minLength: {
+                value: 6,
+                message: 'Password must be at least 6 characters',
+              },
+            })}
+            type="password"
+            className="rounded-none"
+            id="password"
           />
+          {errors.password && (
+            <p className="mt-1 text-sm text-red-500">
+              {errors.password.message}
+            </p>
+          )}
         </div>
 
-        {error && <p className='text-red-500 text-sm'>{error}</p>}
+        {error && <p className="text-sm text-red-500">{error}</p>}
 
-        <button
-          type='submit'
-          disabled={isLoading}
-          className='w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50'
-        >
-          {isLoading ? 'Завантаження...' : 'Зареєструватися'}
-        </button>
+        <Button type="submit" disabled={isLoading} className="w-full">
+          {isLoading ? 'Loading...' : 'Register'}
+        </Button>
       </form>
 
-      <p className='mt-4 text-center text-sm text-gray-600'>
-        Вже маєте акаунт?{' '}
-        <Link href='/login' className='text-blue-600 hover:underline'>
-          Увійти
+      <p className="mt-4 text-center text-sm text-gray-600">
+        Already have an account?{' '}
+        <Link href="/login" className="text-blue-600 hover:underline">
+          Login
         </Link>
       </p>
     </>

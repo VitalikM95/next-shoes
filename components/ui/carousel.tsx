@@ -138,8 +138,8 @@ const Carousel = React.forwardRef<
           ref={ref}
           onKeyDownCapture={handleKeyDown}
           className={cn('relative', className)}
-          role='region'
-          aria-roledescription='carousel'
+          role="region"
+          aria-roledescription="carousel"
           {...props}
         >
           {children}
@@ -157,7 +157,7 @@ const CarouselContent = React.forwardRef<
   const { carouselRef, orientation } = useCarousel()
 
   return (
-    <div ref={carouselRef} className='overflow-hidden'>
+    <div ref={carouselRef} className="overflow-hidden">
       <div
         ref={ref}
         className={cn(
@@ -181,8 +181,8 @@ const CarouselItem = React.forwardRef<
   return (
     <div
       ref={ref}
-      role='group'
-      aria-roledescription='slide'
+      role="group"
+      aria-roledescription="slide"
       className={cn(
         'min-w-0 shrink-0 grow-0 basis-full',
         orientation === 'horizontal' ? 'pl-4' : 'pt-4',
@@ -210,10 +210,10 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        'absolute h-8 w-8 border-none bg-transparent hover:bg-transparent shadow-none',
+        'absolute h-8 w-8 border-none bg-transparent shadow-none hover:bg-transparent',
         orientation === 'horizontal'
           ? '-left-12 top-1/2 -translate-y-1/2'
-          : '-top-12 left-1/2 -translate-x-1/2 ',
+          : '-top-12 left-1/2 -translate-x-1/2',
         className
       )}
       disabled={!canScrollPrev}
@@ -227,7 +227,7 @@ const CarouselPrevious = React.forwardRef<
           props.custom
         )}
       />
-      <span className='sr-only'>Previous slide</span>
+      <span className="sr-only">Previous slide</span>
     </Button>
   )
 })
@@ -243,10 +243,10 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, CarouselButtonProps>(
         variant={variant}
         size={size}
         className={cn(
-          'absolute h-8 w-8 border-none bg-transparent hover:bg-transparent shadow-none',
+          'absolute h-8 w-8 border-none bg-transparent shadow-none hover:bg-transparent',
           orientation === 'horizontal'
             ? '-right-12 top-1/2 -translate-y-1/2'
-            : '-bottom-12 left-1/2 -translate-x-1/2 ',
+            : '-bottom-12 left-1/2 -translate-x-1/2',
           className
         )}
         disabled={!canScrollNext}
@@ -260,7 +260,7 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, CarouselButtonProps>(
             props.custom
           )}
         />
-        <span className='sr-only'>Next slide</span>
+        <span className="sr-only">Next slide</span>
       </Button>
     )
   }

@@ -20,11 +20,11 @@ const Navigation = () => {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Men</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="flex w-screen px-36 gap-10 py-8">
-              <li className="flex flex-col justify-between w-1/3">
+            <ul className="flex w-screen gap-10 px-36 py-8">
+              <li className="flex w-1/3 flex-col justify-between">
                 <div className="flex flex-col gap-3">
                   <Link
-                    className="uppercase font-bold hover:underline mb-5"
+                    className="mb-5 font-bold uppercase hover:underline"
                     href={men.basePath}
                   >
                     Shoes
@@ -34,7 +34,7 @@ const Navigation = () => {
                       key={label}
                       className="hover:underline"
                       href={`${men.basePath}?type=${encodeURIComponent(
-                        value || label
+                        value || label,
                       )}`}
                     >
                       {label}
@@ -42,45 +42,45 @@ const Navigation = () => {
                   ))}
                 </div>
                 <Link
-                  className="hover:underline font-bold text-red-700 uppercase"
+                  className="font-bold uppercase text-red-700 hover:underline"
                   href={men.sale.href}
                 >
                   {men.sale.label}
                 </Link>
               </li>
-              <li className="flex flex-col gap-3 w-1/3">
-                <div className="uppercase font-bold mb-5">Best Sellers</div>
+              <li className="flex w-1/3 flex-col gap-3">
+                <div className="mb-5 font-bold uppercase">Best Sellers</div>
                 <Link
                   className="hover:underline"
-                  href="/product/cm9n1moja000d4n74olg5ctcy"
+                  href="/product/cmamj7ld8000d4ni010dk9l6n"
                 >
                   Tree Runner
                 </Link>
                 <Link
                   className="hover:underline"
-                  href="/product/cm9n1mool000s4n740qh5lng9"
+                  href="/product/cmamj7li5000s4ni082eehcqx"
                 >
                   Tree Dasher 2
                 </Link>
                 <Link
                   className="hover:underline"
-                  href="/product/cm9n1mpk200264n74rhb2al4e"
+                  href="/product/cmamj7miz00264ni07duvwf60"
                 >
                   Wool Runner Mizzle
                 </Link>
                 <Link
                   className="hover:underline"
-                  href="/product/cm9n1mp1m001o4n74vy08oaod"
+                  href="/product/cmamj7m00001o4ni0fxw5zduc"
                 >
                   Tree Dasher Relay
                 </Link>
               </li>
-              <li className="flex flex-col gap-3 w-1/3">
-                <div className="uppercase font-bold hover:underline mb-5">
+              <li className="flex w-1/3 flex-col gap-3">
+                <div className="mb-5 font-bold uppercase hover:underline">
                   Featured
                 </div>
                 <Link
-                  className="group flex justify-center items-center"
+                  className="group flex items-center justify-center"
                   href="/collections/man?type=Active+Shoes"
                 >
                   <Image
@@ -88,14 +88,14 @@ const Navigation = () => {
                     alt="#"
                     width={400}
                     height={100}
-                    className="relative group-hover:opacity-80 transition-opacity ease-out duration-300"
+                    className="relative transition-opacity duration-300 ease-out group-hover:opacity-80"
                   ></Image>
-                  <div className="absolute text-lg font-bold uppercase group-hover:underline text-white">
+                  <div className="absolute text-lg font-bold uppercase text-white group-hover:underline">
                     Active shoes
                   </div>
                 </Link>
                 <Link
-                  className="group flex justify-center items-center"
+                  className="group flex items-center justify-center"
                   href="/collections/man?type=Water-Repellent+Shoes"
                 >
                   <Image
@@ -103,9 +103,9 @@ const Navigation = () => {
                     alt="#"
                     width={400}
                     height={100}
-                    className="relative group-hover:opacity-80 transition-opacity ease-out duration-300"
+                    className="relative transition-opacity duration-300 ease-out group-hover:opacity-80"
                   ></Image>
-                  <div className="absolute text-lg font-bold uppercase group-hover:underline text-white">
+                  <div className="absolute text-lg font-bold uppercase text-white group-hover:underline">
                     Rain ready shoes
                   </div>
                 </Link>
@@ -116,11 +116,11 @@ const Navigation = () => {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Women</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="flex w-screen px-36 gap-10 py-8 ">
-              <li className="flex flex-col justify-between w-1/3">
+            <ul className="flex w-screen gap-10 px-36 py-8">
+              <li className="flex w-1/3 flex-col justify-between">
                 <div className="flex flex-col gap-3">
                   <Link
-                    className="uppercase font-bold hover:underline mb-5"
+                    className="mb-5 font-bold uppercase hover:underline"
                     href={women.basePath}
                   >
                     Shoes
@@ -130,7 +130,7 @@ const Navigation = () => {
                       key={label}
                       className="hover:underline"
                       href={`${women.basePath}?type=${encodeURIComponent(
-                        value || label
+                        value || label,
                       )}`}
                     >
                       {label}
@@ -138,47 +138,47 @@ const Navigation = () => {
                   ))}
                 </div>
                 <Link
-                  className="hover:underline font-bold text-red-700 uppercase"
+                  className="font-bold uppercase text-red-700 hover:underline"
                   href={women.sale.href}
                 >
                   {women.sale.label}
                 </Link>
               </li>
-              <li className="flex flex-col gap-3 w-1/3">
-                <div className="uppercase font-bold hover:underline mb-5">
+              <li className="flex w-1/3 flex-col gap-3">
+                <div className="mb-5 font-bold uppercase hover:underline">
                   Best Sellers
                 </div>
                 <Link
                   className="hover:underline"
-                  href="/product/cm9n1mrdi004h4n74o47vfs1y"
+                  href="/product/cmamj7ojp004h4ni0jo54w9wf"
                 >
                   Tree Runner
                 </Link>
                 <Link
                   className="hover:underline"
-                  href="/product/cm9n1mrik00504n745shnddu0"
+                  href="/product/cmamj7opf00504ni0urvibt6u"
                 >
                   Tree Dasher 2
                 </Link>
                 <Link
                   className="hover:underline"
-                  href="/product/cm9n1mt7z007v4n74870yt5ac"
+                  href="/product/cmamj7qss007v4ni0c5xlqtkq"
                 >
                   Wool Runner Mizzle
                 </Link>
                 <Link
                   className="hover:underline"
-                  href="/product/cm9n1mrsx005u4n74vj29lowe"
+                  href="/product/cmamj7p4a005u4ni0iq2ivzbd"
                 >
                   Tree Breezer
                 </Link>
               </li>
-              <li className="flex flex-col gap-3 w-1/3">
-                <div className="uppercase font-bold hover:underline mb-5">
+              <li className="flex w-1/3 flex-col gap-3">
+                <div className="mb-5 font-bold uppercase hover:underline">
                   Featured
                 </div>
                 <Link
-                  className="group flex justify-center items-center"
+                  className="group flex items-center justify-center"
                   href="/collections/woman?type=Active+Shoes"
                 >
                   <Image
@@ -186,14 +186,14 @@ const Navigation = () => {
                     alt="#"
                     width={400}
                     height={100}
-                    className="relative group-hover:opacity-80 transition-opacity ease-out duration-300"
+                    className="relative transition-opacity duration-300 ease-out group-hover:opacity-80"
                   ></Image>
-                  <div className="absolute text-lg font-bold uppercase group-hover:underline text-white">
+                  <div className="absolute text-lg font-bold uppercase text-white group-hover:underline">
                     Active shoes
                   </div>
                 </Link>
                 <Link
-                  className="group flex justify-center items-center"
+                  className="group flex items-center justify-center"
                   href="/collections/woman?type=Water-Repellent+Shoes"
                 >
                   <Image
@@ -201,9 +201,9 @@ const Navigation = () => {
                     alt="#"
                     width={400}
                     height={100}
-                    className="relative group-hover:opacity-80 transition-opacity ease-out duration-300"
+                    className="relative transition-opacity duration-300 ease-out group-hover:opacity-80"
                   ></Image>
-                  <div className="absolute text-lg font-bold uppercase group-hover:underline text-white">
+                  <div className="absolute text-lg font-bold uppercase text-white group-hover:underline">
                     Rain ready shoes
                   </div>
                 </Link>

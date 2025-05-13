@@ -21,8 +21,8 @@ const getTitle = (gender: Gender | null, type: string | null) => {
   return gender === 'man'
     ? "Men's Shoes"
     : gender === 'woman'
-    ? "Women's Shoes"
-    : 'Shoes'
+      ? "Women's Shoes"
+      : 'Shoes'
 }
 
 const TitleCategories = () => {
@@ -39,15 +39,15 @@ const TitleCategories = () => {
   }
 
   return (
-    <div className='flex flex-col'>
-      <h2 className='text-2xl font-bold py-4'>{currentTitle}</h2>
+    <div className="flex flex-col">
+      <h2 className="py-4 text-2xl font-bold">{currentTitle}</h2>
       <ul>
         {categories.map(({ label, value }) => (
           <li
             key={label}
-            className={`cursor-pointer hover:underline pb-1.5 ${
+            className={`cursor-pointer pb-1.5 hover:underline ${
               label === currentTitle
-                ? 'font-bold hover:no-underline cursor-text'
+                ? 'cursor-text font-bold hover:no-underline'
                 : ''
             }`}
             onClick={() => handleCategoryClick(value || label)}
@@ -67,8 +67,8 @@ const SelectorWrapper = ({
   children: React.ReactNode
   title?: string
 }) => (
-  <div className='flex flex-col gap-2 mb-4'>
-    {title && <h3 className='uppercase font-bold my-5'>{title}</h3>}
+  <div className="mb-4 flex flex-col gap-2">
+    {title && <h3 className="my-5 font-bold uppercase">{title}</h3>}
     {children}
   </div>
 )
@@ -79,16 +79,16 @@ const SizeSelector = () => {
   const { selected, toggle } = useDebouncedFilters('sizes')
 
   return (
-    <SelectorWrapper title='Sizes'>
-      <p className='text-xs mb-4'>
+    <SelectorWrapper title="Sizes">
+      <p className="mb-4 text-xs">
         Most of our shoes only come in full sizes. If you're a half size, select
         your nearest whole size too.
       </p>
-      <div className='flex flex-wrap gap-2 pr-8'>
-        {sizes.map(size => (
+      <div className="flex flex-wrap gap-2 pr-8">
+        {sizes.map((size) => (
           <CheckboxSquare
             key={size}
-            labelTop='EU'
+            labelTop="EU"
             labelBottom={size.toString()}
             checked={selected.includes(size.toString())}
             onCheckedChange={() => toggle(size.toString())}
@@ -104,7 +104,7 @@ const ColorSelector = () => {
   const { selected, toggle } = useDebouncedFilters('colorType')
 
   return (
-    <SelectorWrapper title='HUE'>
+    <SelectorWrapper title="HUE">
       {colors.map(({ text, color }, i) => (
         <CheckboxRound
           key={i}
@@ -122,7 +122,7 @@ const BestForSelector = () => {
   const { selected, toggle } = useDebouncedFilters('bestFor')
 
   return (
-    <SelectorWrapper title='Best For'>
+    <SelectorWrapper title="Best For">
       {BEST_FOR.map((item, i) => (
         <CheckboxStandard
           key={i}
@@ -141,7 +141,7 @@ const MaterialSelector = () => {
   const { selected, toggle } = useDebouncedFilters('materials')
 
   return (
-    <SelectorWrapper title='Material'>
+    <SelectorWrapper title="Material">
       {MATERIAL.map((item, i) => (
         <CheckboxStandard
           key={i}

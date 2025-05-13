@@ -10,6 +10,7 @@ const createOrderSchema = z.object({
   address: z.string().min(1, 'Address is required'),
   phone: z.string().min(1, 'Phone number is required'),
   totalPrice: z.number().min(0, 'Total price must be positive'),
+  country: z.string().default('Ukraine'),
   items: z.array(
     z.object({
       variantId: z.string(),
@@ -17,7 +18,7 @@ const createOrderSchema = z.object({
       quantity: z.number().min(1),
       priceAtPurchase: z.number(),
       discountAtPurchase: z.number(),
-    })
+    }),
   ),
 })
 
@@ -80,6 +81,11 @@ const createOrder = async (req: NextRequest) => {
     data: {
       userId: session.user.id,
       totalPrice: validatedData.totalPrice,
+      // Використовуємо приведення типу до any для обходу обмежень типізації
+      // поки не відбудеться оновлення типів Prisma Client
+      ...(validatedData.country
+        ? ({ country: validatedData.country } as any)
+        : {}),
       items: {
         create: validatedData.items.map(item => ({
           variantId: item.variantId,
@@ -103,11 +109,11 @@ const createOrder = async (req: NextRequest) => {
     },
   })
 
-  // Оновлюємо дані користувача
+  // Оновлюємо дані користувача зі структурованою адресою
   await prisma.user.update({
     where: { id: session.user.id },
     data: {
-      address: validatedData.address,
+      address: validatedData.address, // Форматована адреса з розділювачами вже передана з клієнта
       phone: validatedData.phone,
     },
   })

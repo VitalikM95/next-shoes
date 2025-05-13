@@ -103,7 +103,7 @@ export default async function HomePage() {
     <>
       <div>
         <nav>
-          <ul className="flex justify-center items-center gap-4 h-14 pl-20">
+          <ul className="flex h-14 items-center justify-center gap-4 pl-20">
             <li className="navlink-animation min-w-24 text-center">
               <Link href="/collections/man">Shop Men</Link>
             </li>
@@ -114,23 +114,23 @@ export default async function HomePage() {
         </nav>
         <div className="relative">
           <BackgroundCarousel />
-          <div className="absolute left-0 top-0 w-1/2 p-10 h-full flex flex-col justify-between text-white">
+          <div className="absolute left-0 top-0 flex h-full w-1/2 flex-col justify-between p-10 text-white">
             <div className="flex flex-col">
               <h1
-                className={`text-[80px] leading-none mb-5 ${libre.className}`}
+                className={`mb-5 text-[80px] leading-none ${libre.className}`}
               >
                 Let Comfort Take You Places
               </h1>
-              <p className="uppercase w-2/3 ">
+              <p className="w-2/3 uppercase">
                 Two light bouncy trainers. countless Reasons to get outside and
                 reset.
               </p>
             </div>
             <div>
-              <Button variant="secondary" className="min-w-40 mr-4" size="lg">
+              <Button variant="secondary" className="mr-4 min-w-40" size="lg">
                 <Link href="/collections/man">Shop Men</Link>
               </Button>
-              <Button variant="secondary" className="min-w-40 mr-4" size="lg">
+              <Button variant="secondary" className="mr-4 min-w-40" size="lg">
                 <Link href="/collections/woman">Shop Women</Link>
               </Button>
             </div>
@@ -139,7 +139,7 @@ export default async function HomePage() {
       </div>
       <div className="m-10 flex gap-2">
         {shoeItems.map((item, index) => (
-          <div key={index} className="relative group overflow-hidden">
+          <div key={index} className="group relative overflow-hidden">
             <Image
               src={item.image}
               alt={item.title}
@@ -147,14 +147,14 @@ export default async function HomePage() {
               height={1000}
               className="transition-transform duration-200 group-hover:scale-105"
             />
-            <div className="absolute h-full w-full pb-12 pt-16 text-white left-0 top-0 flex flex-col justify-between items-center bg-black bg-opacity-15">
+            <div className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-between bg-black bg-opacity-15 pb-12 pt-16 text-white">
               <div>
-                <div className="font-bold text-center text-xl">
+                <div className="text-center text-xl font-bold">
                   {item.title}
                 </div>
-                <p className="text-center mt-2">{item.description}</p>
+                <p className="mt-2 text-center">{item.description}</p>
               </div>
-              <div className="space-x-2 opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible">
+              <div className="invisible space-x-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
                 <Button variant="secondary" className="min-w-40" size="lg">
                   <Link href={item.link_man}>Shop Men</Link>
                 </Button>
@@ -173,8 +173,8 @@ export default async function HomePage() {
           width={2800}
           height={700}
         />
-        <div className="absolute left-0 top-0 w-full h-full py-32 flex flex-col justify-between items-center text-white">
-          <h3 className="uppercase text-2xl">
+        <div className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-between py-32 text-white">
+          <h3 className="text-2xl uppercase">
             We Make Better Things In A Better Way
           </h3>
           <p className="w-1/2 text-center">
@@ -188,7 +188,7 @@ export default async function HomePage() {
         <BigCarousel />
       </div>
       <div className="m-10 flex gap-2">
-        <div className="w-1/2 relative group overflow-hidden">
+        <div className="group relative w-1/2 overflow-hidden">
           <Image
             src="/images/bestsellers.avif"
             width="1000"
@@ -196,15 +196,15 @@ export default async function HomePage() {
             alt="bestsellers"
             className="transition-transform duration-200 group-hover:scale-105"
           />
-          <div className="absolute h-full w-full left-0 top-0 flex flex-col justify-end text-white p-10">
+          <div className="absolute left-0 top-0 flex h-full w-full flex-col justify-end p-10 text-white">
             <div>
-              <div className="font-bold text-3xl">Our Sale Shoes</div>
+              <div className="text-3xl font-bold">Our Sale Shoes</div>
               <p className="mt-2">
                 Light. Versatile. Comfortable. Every reason to be top-selling
                 shoes.
               </p>
             </div>
-            <div className="space-x-4 mt-7">
+            <div className="mt-7 space-x-4">
               <Button variant="secondary" className="min-w-40" size="lg">
                 <Link href="/collections/man?type=Men%27s+Sale">Shop Men</Link>
               </Button>
@@ -216,25 +216,25 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-        <div className="w-1/2 flex gap-2 flex-wrap">
+        <div className="flex w-1/2 flex-wrap gap-2">
           {shoesGrid.map((item, i) => (
-            <div key={i} className="w-[49%] relative group overflow-hidden">
+            <div key={i} className="group relative w-[49%] overflow-hidden">
               <Image
                 src={item.variants[0].images[0]}
                 width="400"
                 height="400"
                 alt="shoes-sample"
-                className="transition-transform duration-200 group-hover:scale-105 image-bg"
+                className="image-bg transition-transform duration-200 group-hover:scale-105"
               />
-              <div className="flex flex-col absolute bottom-3 px-3 w-full text-sm tracking-normal">
-                <div className="flex justify-between ">
+              <div className="absolute bottom-3 flex w-full flex-col px-3 text-sm tracking-normal">
+                <div className="flex justify-between">
                   <div className="font-bold">{item.name}</div>
                   <div className="mt-1">€{item.price}</div>
                 </div>
                 <div>{item.type}</div>
               </div>
-              <div className="absolute h-full w-full left-0 top-0 flex justify-center items-center bg-black bg-opacity-0 group-hover:bg-opacity-15 transition-all duration-200">
-                <div className="space-y-2 flex flex-col opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible">
+              <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-0 transition-all duration-200 group-hover:bg-opacity-15">
+                <div className="invisible flex flex-col space-y-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
                   <Button variant="secondary" className="min-w-40" size="lg">
                     <Link href={`/product/${item.id}`}>Check it!</Link>
                   </Button>
@@ -248,7 +248,7 @@ export default async function HomePage() {
         {images.map((item, i) => (
           <div
             key={i}
-            className="relative w-1/2 h-[700px] group overflow-hidden"
+            className="group relative h-[700px] w-1/2 overflow-hidden"
           >
             <Image
               src={item.img}
@@ -256,12 +256,12 @@ export default async function HomePage() {
               alt="image"
               className="object-cover transition-transform duration-200 group-hover:scale-105"
             />
-            <div className="absolute h-full w-full left-0 top-0 flex flex-col justify-between items-center text-white pt-16 pb-10 bg-black bg-opacity-15">
+            <div className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-between bg-black bg-opacity-15 pb-10 pt-16 text-white">
               <div className="text-center">
-                <h5 className="font-bold text-xl mb-2">{item.title}</h5>
+                <h5 className="mb-2 text-xl font-bold">{item.title}</h5>
                 <p>{item.subtitle}</p>
               </div>
-              <div className="space-x-2 flex opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible">
+              <div className="invisible flex space-x-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
                 <Button variant="secondary" className="min-w-40" size="lg">
                   <Link href={item.link_man}>Shop Men</Link>
                 </Button>
@@ -276,11 +276,11 @@ export default async function HomePage() {
       <div className="m-10">
         <SaleCarousel shoes={shoesCarousel} />
       </div>
-      <section className="py-20 px-10">
-        <h3 className="font-bold text-3xl mb-10">The NextShoes Approach</h3>
+      <section className="px-10 py-20">
+        <h3 className="mb-10 text-3xl font-bold">The NextShoes Approach</h3>
         <div className="flex justify-between gap-10">
           <div>
-            <div className="font-bold text-xl mb-3">Wear-All-Day Comfort</div>
+            <div className="mb-3 text-xl font-bold">Wear-All-Day Comfort</div>
             <p className="text-sm">
               Lightweight, bouncy, and wildly comfortable, NextShoes shoes make
               any outing feel effortless. Slip in, lace up, or slide them on and
@@ -288,7 +288,7 @@ export default async function HomePage() {
             </p>
           </div>
           <div>
-            <div className="font-bold text-xl mb-3">
+            <div className="mb-3 text-xl font-bold">
               Sustainability In Every Step
             </div>
             <p className="text-sm">
@@ -298,7 +298,7 @@ export default async function HomePage() {
             </p>
           </div>
           <div>
-            <div className="font-bold text-xl mb-3">
+            <div className="mb-3 text-xl font-bold">
               Materials From The Earth
             </div>
             <p className="text-sm">

@@ -24,17 +24,17 @@ const FiltersPanel = () => {
   }
 
   return (
-    <aside className='flex flex-col w-1/5'>
+    <aside className="flex w-1/5 flex-col">
       <Breadcrumbs />
       <TitleCategories />
-      <div className='flex justify-between items-center'>
-        <span className='mt-5 mb-4 font-bold'>Filter By:</span>
+      <div className="flex items-center justify-between">
+        <span className="mb-4 mt-5 font-bold">Filter By:</span>
         <Button
-          variant='destructive'
+          variant="destructive"
           onClick={() => handleResetFilters(lastSegment)}
         >
           Clear All
-          <Trash2 className='h-4 w-4' />
+          <Trash2 className="h-4 w-4" />
         </Button>
       </div>
       <hr />

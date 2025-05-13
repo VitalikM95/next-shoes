@@ -34,19 +34,19 @@ export const useCartStore = create<CartStore>()(
       isLoading: false,
 
       // Локальна корзина
-      addLocalItem: item =>
-        set(state => ({
+      addLocalItem: (item) =>
+        set((state) => ({
           localItems: [...state.localItems, item],
         })),
 
-      removeLocalItem: itemId =>
-        set(state => ({
-          localItems: state.localItems.filter(item => item.id !== itemId),
+      removeLocalItem: (itemId) =>
+        set((state) => ({
+          localItems: state.localItems.filter((item) => item.id !== itemId),
         })),
 
       updateLocalItemQuantity: (itemId, quantity) =>
-        set(state => ({
-          localItems: state.localItems.map(item =>
+        set((state) => ({
+          localItems: state.localItems.map((item) =>
             item.id === itemId ? { ...item, quantity } : item
           ),
         })),
@@ -54,11 +54,11 @@ export const useCartStore = create<CartStore>()(
       clearLocalCart: () => set({ localItems: [] }),
 
       // Серверна корзина
-      setServerItems: items => set({ serverItems: items }),
-      setLoading: loading => set({ isLoading: loading }),
+      setServerItems: (items) => set({ serverItems: items }),
+      setLoading: (loading) => set({ isLoading: loading }),
 
       // Статистика корзини
-      getCartTotal: isLoggedIn => {
+      getCartTotal: (isLoggedIn) => {
         const items = isLoggedIn ? get().serverItems : get().localItems
 
         const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
@@ -72,7 +72,7 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'cart-storage',
-      partialize: state => ({ localItems: state.localItems }),
+      partialize: (state) => ({ localItems: state.localItems }),
     }
   )
 )

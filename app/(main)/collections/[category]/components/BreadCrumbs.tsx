@@ -14,7 +14,7 @@ const Breadcrumbs = () => {
   const router = useRouter()
   const segments = pathname
     .split('/')
-    .filter(segment => segment !== '' && segment !== 'collections')
+    .filter((segment) => segment !== '' && segment !== 'collections')
 
   const handleResetFilters = (category: string) => {
     router.push(`/collections/${category}`, { scroll: false })
@@ -34,10 +34,10 @@ const Breadcrumbs = () => {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href='/'>Home</Link>
+            <Link href="/">Home</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <span className='px-2 hover:no-underline'>/</span>
+        <span className="px-2 hover:no-underline">/</span>
 
         {segments.map((segment, i) => {
           const href = `/${segments.slice(0, i + 1).join('/')}`
@@ -50,7 +50,7 @@ const Breadcrumbs = () => {
                 <BreadcrumbLink asChild>
                   <button
                     onClick={() => handleResetFilters(segment)}
-                    className='hover:underline cursor-pointer'
+                    className="cursor-pointer hover:underline"
                   >
                     {displayName}
                   </button>

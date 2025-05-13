@@ -4,6 +4,7 @@ import { PropsWithChildren } from 'react'
 import { SessionProvider } from 'next-auth/react'
 import NextTopLoader from 'nextjs-toploader'
 import ClientInit from './client-init'
+import { Toaster } from 'sonner'
 
 export function Providers({ children }: PropsWithChildren) {
   return (
@@ -17,9 +18,10 @@ export function Providers({ children }: PropsWithChildren) {
         crawl={true}
         crawlSpeed={200}
         speed={200}
-        easing="ease"
+        easing="ease" 
         showSpinner={false}
       />
+      <Toaster position="top-center" />
     </SessionProvider>
   )
 }

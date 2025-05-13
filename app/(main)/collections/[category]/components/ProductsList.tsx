@@ -61,7 +61,7 @@ export const ProductsList = ({
       ) : !products?.length ? (
         <div>No products found</div>
       ) : (
-        <div className='flex flex-wrap items-start gap-4 pl-4'>
+        <div className="flex flex-wrap items-start gap-4 pl-4">
           {products.map((product: ProductListItem) => (
             <ProductCard key={product.id} item={product} />
           ))}

@@ -38,7 +38,7 @@ async function generateProducts() {
         careGuide: product.care_guide,
         otherInfo: product.other_info,
         variants: {
-          create: product.variants.map(variant => ({
+          create: product.variants.map((variant) => ({
             colorType: variant.color.type,
             colorName: variant.color.name,
             colorHash: variant.color.hash,
@@ -82,7 +82,7 @@ main()
   .then(async () => {
     await prisma.$disconnect()
   })
-  .catch(async e => {
+  .catch(async (e) => {
     console.error(e)
     await prisma.$disconnect()
     process.exit(1)

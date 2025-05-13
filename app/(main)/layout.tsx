@@ -15,7 +15,7 @@ export default function MainLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className={ubuntu.className}>
+        <div className={ubuntu.className}>
       <TheHeader />
       <main>{children}</main>
       <TheFooter />

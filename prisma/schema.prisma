@@ -92,6 +92,7 @@ model Order {
   totalPrice Int
   createdAt  DateTime    @default(now())
   status     OrderStatus @default(PROCESSING)
+  country    String      @default("Ukraine") // Країна доставки
   items      OrderItem[]
 }
 

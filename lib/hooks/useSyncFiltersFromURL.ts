@@ -11,7 +11,7 @@ const parseParam = (param: string | null): string[] => {
 
 export const useSyncFiltersFromURL = () => {
   const searchParams = useSearchParams()
-  const setFilters = useFiltersStore(state => state.setFilters)
+  const setFilters = useFiltersStore((state) => state.setFilters)
 
   useEffect(() => {
     const sizes = parseParam(searchParams.get('sizes'))

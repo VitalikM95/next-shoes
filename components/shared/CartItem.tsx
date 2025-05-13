@@ -4,14 +4,14 @@ import { Button } from '@/components/ui/button'
 import { Trash2, Minus, Plus } from 'lucide-react'
 import { FC, memo } from 'react'
 import { CartItemType } from '@/types/cart.types'
-import { useCart } from '@/lib/hooks/useCart'
+import { useCartSWR } from '@/lib/hooks/useCartSWR'
 
 interface CartItemProps {
   item: CartItemType
 }
 
 const CartItem: FC<CartItemProps> = memo(({ item }) => {
-  const { removeFromCart, updateQuantity } = useCart()
+  const { removeFromCart, updateQuantity } = useCartSWR()
 
   const handleRemove = () => {
     removeFromCart(item.id)
@@ -29,69 +29,66 @@ const CartItem: FC<CartItemProps> = memo(({ item }) => {
 
   return (
     <div className="flex gap-4 border-b pb-4">
-      <Link href={`/product/${item.productId}`} className="relative">
+      <Link href={`/product/${item.productId}`} className="relative shrink-0">
         <Image
           src={item.image}
           alt={item.colorName}
-          width={140}
-          height={140}
-          className="object-cover image-bg"
+          width={100}
+          height={100}
+          className="image-bg object-cover"
         />
       </Link>
-      <div className="flex flex-col gap-2 w-full">
-        <div className="flex justify-between items-start gap-2">
-          <Link href={`/product/${item.productId}`} className="flex-1">
-            <h3 className="font-semibold truncate">{item.productName}</h3>
-            <p className="text-sm font-semibold">
+      <div className="flex w-full flex-col gap-1 min-w-0">
+        <div className="flex items-start justify-between gap-2">
+          <Link href={`/product/${item.productId}`} className="flex-1 min-w-0">
+            <h3 className="truncate font-bold">{item.productName}</h3>
+            <p className="text-sm font-medium">
               Color:{' '}
-              <span className="text-gray-500 font-normal">
+              <span className="font-normal text-gray-500">
                 {item.colorName}
               </span>
             </p>
-            <p className="text-sm font-semibold">
+            <p className="text-sm font-medium">
               Size:{' '}
-              <span className="text-gray-500 font-normal">{item.size}</span>
+              <span className="font-normal text-gray-500">{item.size}</span>
             </p>
-            <p className="text-sm font-semibold">
+            <p className="flex justify-between text-sm font-medium">
               Price:{' '}
-              <span className="text-gray-500 font-normal">€{item.price}</span>
+              <span className="text-base font-semibold">€{itemTotal}</span>
             </p>
           </Link>
           <Button
             variant="destructive"
             size="icon"
-            className="border-none h-8 w-8 shrink-0"
+            className="h-8 w-8 shrink-0 border-none"
             onClick={handleRemove}
           >
             <Trash2 className="h-4 w-4" />
           </Button>
         </div>
-        <div className="flex justify-between items-center">
-          <div className="text-sm flex items-center gap-2">
-            <span className="font-semibold">Quantity:</span>
-            <div className="flex items-center gap-1">
-              <Button
-                variant="secondary"
-                className="w-8 h-8"
-                size="icon"
-                onClick={() => handleQuantityChange(item.quantity - 1)}
-                disabled={isMinQuantity}
-              >
-                <Minus strokeWidth={2} className="!h-5 !w-5" />
-              </Button>
-              {item.quantity}
-              <Button
-                variant="secondary"
-                className="w-8 h-8"
-                size="icon"
-                onClick={() => handleQuantityChange(item.quantity + 1)}
-                disabled={isMaxQuantity}
-              >
-                <Plus strokeWidth={2} className="!h-5 !w-5" />
-              </Button>
-            </div>
+        <div className="flex items-center justify-between gap-2 text-sm">
+          <span className="font-medium">Quantity:</span>
+          <div className="flex items-center gap-1 font-semibold">
+            <Button
+              variant="secondary"
+              className="h-8 w-8"
+              size="icon"
+              onClick={() => handleQuantityChange(item.quantity - 1)}
+              disabled={isMinQuantity}
+            >
+              <Minus strokeWidth={2} className="!h-5 !w-5" />
+            </Button>
+            {item.quantity}
+            <Button
+              variant="secondary"
+              className="h-8 w-8"
+              size="icon"
+              onClick={() => handleQuantityChange(item.quantity + 1)}
+              disabled={isMaxQuantity}
+            >
+              <Plus strokeWidth={2} className="!h-5 !w-5" />
+            </Button>
           </div>
-          <div className="font-semibold"> = €{itemTotal}</div>
         </div>
       </div>
     </div>

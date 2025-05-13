@@ -15,8 +15,8 @@ export const useDebouncedFilters = (filterKey: FilterKey) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const selected = useFiltersStore(state => state[filterKey])
-  const toggle = useFiltersStore(state => state.toggleFilter)
+  const selected = useFiltersStore((state) => state[filterKey])
+  const toggle = useFiltersStore((state) => state.toggleFilter)
 
   const [debounced] = useDebounce<string[]>(selected, 400)
 

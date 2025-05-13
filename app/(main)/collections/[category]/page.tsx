@@ -20,10 +20,10 @@ export default async function CollectionPage({
   const products = await getProducts(category, type)
 
   return (
-    <main className='px-16 py-10 flex'>
+    <main className="flex px-16 py-10">
       <FiltersPanel />
-      <div className='w-4/5 flex flex-col'>
-        <div className='flex justify-end'>
+      <div className="flex w-4/5 flex-col">
+        <div className="flex justify-end">
           <SwitchButton />
         </div>
         <ProductsList

@@ -13,7 +13,7 @@ const fetcher = async (url: string) => {
   return res.json()
 }
 
-export const useCart = () => {
+export const useCartSWR = () => {
   const { data: session } = useSession()
   const isLoggedIn = !!session?.user
 
@@ -25,6 +25,7 @@ export const useCart = () => {
     addLocalItem,
     removeLocalItem,
     updateLocalItemQuantity,
+    clearLocalCart,
     setServerItems,
     setLoading,
     getCartTotal,
@@ -32,7 +33,7 @@ export const useCart = () => {
 
   // Отримуємо дані корзини з сервера для авторизованого користувача
   const { data, mutate } = useSWR(isLoggedIn ? '/api/cart' : null, fetcher, {
-    onSuccess: data => {
+    onSuccess: (data) => {
       if (data?.items) {
         setServerItems(data.items)
       }
@@ -161,15 +162,20 @@ export const useCart = () => {
     [isLoggedIn, updateLocalItemQuantity, setLoading, mutate]
   )
 
+  // Очищення корзини
+  const clearCart = useCallback(async () => {
+    if (isLoggedIn) {
+      // Просто оновлюємо дані корзини з бекенду
+      await mutate()
+    }
+
+    // Очищаємо локальну корзину
+    clearLocalCart()
+  }, [isLoggedIn, clearLocalCart, mutate])
+
   // Отримуємо поточні товари корзини та статистику
   const cartItems = isLoggedIn ? serverItems : localItems
   const { totalItems, totalPrice } = getCartTotal(isLoggedIn)
-
-  // Метод для оформлення замовлення
-  const makeOrder = useCallback(() => {
-    console.log('Order items:', cartItems)
-    console.log('Total price:', totalPrice)
-  }, [cartItems, totalPrice])
 
   return {
     cartItems,
@@ -179,7 +185,7 @@ export const useCart = () => {
     addToCart,
     removeFromCart,
     updateQuantity,
-    makeOrder,
+    clearCart,
     isLoggedIn,
   }
 }

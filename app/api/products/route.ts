@@ -11,13 +11,13 @@ const getProducts = async (request: NextRequest) => {
   const male = searchParams.get('male')
   const type = searchParams.get('type')
   const bestForRaw = searchParams.getAll('bestFor')
-  const bestFor: string[] = bestForRaw.flatMap(val => val.split(','))
+  const bestFor: string[] = bestForRaw.flatMap((val) => val.split(','))
   const materialsRaw = searchParams.getAll('materials')
-  const materials: string[] = materialsRaw.flatMap(val => val.split(','))
+  const materials: string[] = materialsRaw.flatMap((val) => val.split(','))
   const sizesRaw = searchParams.getAll('sizes')
-  const sizes: string[] = sizesRaw.flatMap(val => val.split(','))
+  const sizes: string[] = sizesRaw.flatMap((val) => val.split(','))
   const colorTypeRaw = searchParams.getAll('colorType')
-  const colorType: string[] = colorTypeRaw.flatMap(val => val.split(','))
+  const colorType: string[] = colorTypeRaw.flatMap((val) => val.split(','))
 
   // Перевіряємо наявність обов'язкового параметру male
   if (!male || !['man', 'woman'].includes(male)) {
@@ -32,8 +32,8 @@ const getProducts = async (request: NextRequest) => {
     ...(isSale
       ? { discountPercent: { not: 0 } }
       : type
-      ? { type: { has: type } }
-      : {}),
+        ? { type: { has: type } }
+        : {}),
     ...(bestFor.length > 0 && { bestFor: { hasSome: bestFor } }),
     ...(materials.length > 0 && { material: { in: materials } }),
     ...(sizes.length > 0 && {

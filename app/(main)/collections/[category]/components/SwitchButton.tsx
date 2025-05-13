@@ -18,12 +18,12 @@ const SwitchButton = () => {
 
   return (
     <RadioGroupCustom
-      className='border border-gray-500 rounded-none pt-[2px] pb-[3px] pr-[2px] pl-[3px]'
+      className="rounded-none border border-gray-500 pb-[3px] pl-[3px] pr-[2px] pt-[2px]"
       value={currentCategory}
       onValueChange={handleValueChange}
     >
-      <RadioGroupItemSwitch value='woman' label='WOMEN' />
-      <RadioGroupItemSwitch value='man' label='MEN' />
+      <RadioGroupItemSwitch value="woman" label="WOMEN" />
+      <RadioGroupItemSwitch value="man" label="MEN" />
     </RadioGroupCustom>
   )
 }

@@ -26,12 +26,12 @@ export default async function ProductPage({ params }: PageProps) {
     product.discountPercent
   )
   return (
-    <div className='max-w-screen-xl mx-auto'>
-      <div className='flex my-10'>
-        <div className='flex flex-col w-1/2'>
+    <div className="mx-auto max-w-screen-xl">
+      <div className="my-10 flex">
+        <div className="flex w-1/2 flex-col">
           <ProductGallery variants={product.variants} />
-          <Accordion type='single' collapsible className='w-full mt-10'>
-            <AccordionItem value='item-1'>
+          <Accordion type="single" collapsible className="mt-10 w-full">
+            <AccordionItem value="item-1">
               <AccordionTrigger>Details</AccordionTrigger>
               <AccordionContent>
                 <ReactMarkdown>
@@ -39,7 +39,7 @@ export default async function ProductPage({ params }: PageProps) {
                 </ReactMarkdown>
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value='item-2'>
+            <AccordionItem value="item-2">
               <AccordionTrigger>sustainability</AccordionTrigger>
               <AccordionContent>
                 <ReactMarkdown>
@@ -49,7 +49,7 @@ export default async function ProductPage({ params }: PageProps) {
                 </ReactMarkdown>
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value='item-3'>
+            <AccordionItem value="item-3">
               <AccordionTrigger>Care Guide</AccordionTrigger>
               <AccordionContent>
                 <ReactMarkdown>
@@ -59,44 +59,44 @@ export default async function ProductPage({ params }: PageProps) {
             </AccordionItem>
           </Accordion>
         </div>
-        <div className='flex flex-col w-1/2 px-14'>
-          <h2 className='text-3xl font-bold uppercase'>{product.name}</h2>
-          <div className='flex py-5'>
+        <div className="flex w-1/2 flex-col px-14">
+          <h2 className="text-3xl font-bold uppercase">{product.name}</h2>
+          <div className="flex py-5">
             {hasDiscount ? (
               <>
-                <div className='pr-6 text-2xl font-semibold text-red-600'>
+                <div className="pr-6 text-2xl font-semibold text-red-600">
                   ${discountedPrice}
                 </div>
-                <div className='pr-6 line-through text-base text-muted-foreground'>
+                <div className="pr-6 text-base text-muted-foreground line-through">
                   ${originalPrice}
                 </div>
               </>
             ) : (
-              <div className='pr-8 text-2xl font-semibold text-black'>
+              <div className="pr-8 text-2xl font-semibold text-black">
                 ${discountedPrice}
               </div>
             )}
           </div>
-          <div className='text-sm p-2 text-center text-gray-800 bg-[#F6F6F6]'>
-            <b className='text-base text-black'>{product.name} highlights: </b>
-            <hr className='my-2' />
-            <div className='line-clamp-5'>
-              <ReactMarkdown components={{ hr: () => <hr className='my-2' /> }}>
+          <div className="bg-[#F6F6F6] p-2 text-center text-sm text-gray-800">
+            <b className="text-base text-black">{product.name} highlights: </b>
+            <hr className="my-2" />
+            <div className="line-clamp-5">
+              <ReactMarkdown components={{ hr: () => <hr className="my-2" /> }}>
                 {product.highlights
                   .replace(/(\.)\s+/g, '$1\n\n---\n\n')
                   .replace(/\n\n---\n\n$/, '')}
               </ReactMarkdown>
             </div>
           </div>
-          <ProductActions product={product} />
+          <ProductActions product={product} discountedPrice={discountedPrice} />
         </div>
       </div>
-      <div className='flex mb-10 gap-4'>
+      <div className="mb-10 flex gap-4">
         {product.otherInfo.map((info, i) => (
-          <div key={i} className='flex flex-col w-1/3'>
-            <Image src={info.img} alt='shoes photo' width={500} height={700} />
-            <h5 className='font-bold text-2xl py-4'>{info.title}</h5>
-            <p className='pb-16'>{info.text}</p>
+          <div key={i} className="flex w-1/3 flex-col">
+            <Image src={info.img} alt="shoes photo" width={500} height={700} />
+            <h5 className="py-4 text-2xl font-bold">{info.title}</h5>
+            <p className="pb-16">{info.text}</p>
           </div>
         ))}
       </div>

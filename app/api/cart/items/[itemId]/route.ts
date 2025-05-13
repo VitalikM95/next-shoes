@@ -22,26 +22,26 @@ export const DELETE = async (
 
     if (!userExists) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
-  }
+    }
 
     // Отримуємо корзину користувача
-  const cart = await prisma.cart.findUnique({
-    where: { userId: session.user.id },
-  })
+    const cart = await prisma.cart.findUnique({
+      where: { userId: session.user.id },
+    })
 
-  if (!cart) {
+    if (!cart) {
       return NextResponse.json({ error: 'Cart not found' }, { status: 404 })
-  }
+    }
 
     // Видаляємо товар
-  await prisma.cartItem.delete({
-    where: {
-      id: params.itemId,
-      cartId: cart.id,
-    },
-  })
+    await prisma.cartItem.delete({
+      where: {
+        id: params.itemId,
+        cartId: cart.id,
+      },
+    })
 
-  return NextResponse.json({ success: true })
+    return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error deleting item from cart:', error)
     return NextResponse.json(
@@ -82,24 +82,24 @@ export const PATCH = async (
     }
 
     // Отримуємо корзину користувача
-  const cart = await prisma.cart.findUnique({
-    where: { userId: session.user.id },
-  })
+    const cart = await prisma.cart.findUnique({
+      where: { userId: session.user.id },
+    })
 
-  if (!cart) {
+    if (!cart) {
       return NextResponse.json({ error: 'Cart not found' }, { status: 404 })
-  }
+    }
 
     // Оновлюємо кількість товару
-  const updatedItem = await prisma.cartItem.update({
-    where: {
-      id: params.itemId,
-      cartId: cart.id,
-    },
-    data: { quantity },
-  })
+    const updatedItem = await prisma.cartItem.update({
+      where: {
+        id: params.itemId,
+        cartId: cart.id,
+      },
+      data: { quantity },
+    })
 
-  return NextResponse.json(updatedItem)
+    return NextResponse.json(updatedItem)
   } catch (error) {
     console.error('Error updating cart item quantity:', error)
     return NextResponse.json(

@@ -121,6 +121,24 @@ const updateUser = async (req: NextRequest) => {
     }
   }
 
+  // Отримуємо поточного користувача для перевірки
+  const currentUser = await prisma.user.findUnique({
+    where: { id },
+    select: {
+      password: true,
+    },
+  })
+
+  if (!currentUser) {
+    throw apiErrors.notFound('User')
+  }
+
+  // Перевіряємо чи є пароль у користувача (для тих, хто зареєстрований через Google)
+  const hasPassword =
+    currentUser.password !== null &&
+    currentUser.password !== undefined &&
+    currentUser.password.length > 0
+
   // Якщо оновлюється пароль, хешуємо його
   if (validatedData.password) {
     validatedData.password = await bcrypt.hash(validatedData.password, 10)
@@ -138,7 +156,13 @@ const updateUser = async (req: NextRequest) => {
     },
   })
 
-  return NextResponse.json(user)
+  // Додаємо інформацію про наявність пароля
+  const responseUser = {
+    ...user,
+    hasPassword: validatedData.password ? true : hasPassword,
+  }
+
+  return NextResponse.json(responseUser)
 }
 
 // Експорт функцій для Next.js API роутів

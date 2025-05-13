@@ -16,7 +16,11 @@ export default function SignOutButton() {
   }
 
   return (
-    <Button variant='destructive' className='min-w-40' onClick={handleSignOut}>
+    <Button
+      variant="destructive"
+      className="min-w-44 font-semibold"
+      onClick={handleSignOut}
+    >
       Sign Out
       <LogOut />
     </Button>

@@ -6,7 +6,7 @@ const ClientInit = () => {
   useEffect(() => {
     // Очищення кешу продуктів
     const cleanLocalStorage = () => {
-      Object.keys(localStorage).forEach(key => {
+      Object.keys(localStorage).forEach((key) => {
         if (key.startsWith('products_')) {
           const cached = localStorage.getItem(key)
           if (cached) {
