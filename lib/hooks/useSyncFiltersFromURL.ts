@@ -11,13 +11,15 @@ const parseParam = (param: string | null): string[] => {
 
 export const useSyncFiltersFromURL = () => {
   const searchParams = useSearchParams()
-  const setFilters = useFiltersStore((state) => state.setFilters)
+  const setFilters = useFiltersStore(state => state.setFilters)
 
   useEffect(() => {
-    const sizes = parseParam(searchParams.get('sizes'))
-    const bestFor = parseParam(searchParams.get('bestFor'))
-    const materials = parseParam(searchParams.get('materials'))
-    const colorType = parseParam(searchParams.get('colorType'))
+    const params = new URLSearchParams(window.location.search)
+
+    const sizes = parseParam(params.get('sizes'))
+    const bestFor = parseParam(params.get('bestFor'))
+    const materials = parseParam(params.get('materials'))
+    const colorType = parseParam(params.get('colorType'))
 
     setFilters({
       sizes,
@@ -25,5 +27,5 @@ export const useSyncFiltersFromURL = () => {
       materials,
       colorType,
     })
-  }, [searchParams]) // тепер оновлюється при кожній зміні URL
+  }, [searchParams])
 }

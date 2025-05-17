@@ -18,7 +18,7 @@ const SwitchButton = () => {
 
   return (
     <RadioGroupCustom
-      className="rounded-none border border-gray-500 pb-[3px] pl-[3px] pr-[2px] pt-[2px]"
+      className="rounded-none border border-gray-500 pb-[3px] pl-[3px] pr-[2px] pt-[2px] text-xs sm:text-sm"
       value={currentCategory}
       onValueChange={handleValueChange}
     >

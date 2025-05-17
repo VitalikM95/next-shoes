@@ -22,7 +22,7 @@ export const ProductsList = ({
   // Просто отримуємо всі параметри з URL
   const params = useMemo(
     () => new URLSearchParams(searchParams.toString()),
-    [searchParams]
+    [searchParams],
   )
 
   // Отримуємо всі потрібні значення для фільтрів
@@ -49,21 +49,25 @@ export const ProductsList = ({
     materials,
     colorType,
     sizes,
-    hasMounted // Виконуємо запит тільки після монтування компонента
+    hasMounted, // Виконуємо запит тільки після монтування компонента
   )
 
   return (
     <>
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="w-full py-8 text-center">Завантаження...</div>
       ) : isError ? (
-        <div>Error loading products</div>
+        <div className="w-full py-8 text-center">
+          Помилка завантаження товарів
+        </div>
       ) : !products?.length ? (
-        <div>No products found</div>
+        <div className="w-full py-8 text-center">Товари не знайдені</div>
       ) : (
-        <div className="flex flex-wrap items-start gap-4 pl-4">
+        <div className="grid auto-cols-[360px] grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,360px)] justify-center">
           {products.map((product: ProductListItem) => (
-            <ProductCard key={product.id} item={product} />
+            <div key={product.id} className="flex justify-center">
+              <ProductCard item={product} />
+            </div>
           ))}
         </div>
       )}

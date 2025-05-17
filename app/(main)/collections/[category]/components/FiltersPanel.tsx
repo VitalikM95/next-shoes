@@ -1,5 +1,5 @@
-'use client'
-
+import ClearFiltersButton from '@/components/shared/ClearFiltersButton'
+import { Breadcrumbs } from './BreadCrumbs'
 import {
   BestForSelector,
   ColorSelector,
@@ -7,45 +7,36 @@ import {
   SizeSelector,
   TitleCategories,
 } from './Filters'
-import { Breadcrumbs } from './BreadCrumbs'
-import { useSyncFiltersFromURL } from '@/lib/hooks/useSyncFiltersFromURL'
-import { Button } from '@/components/ui/button'
-import { usePathname, useRouter } from 'next/navigation'
-import { Trash2 } from 'lucide-react'
+import MobileFiltersDrawer from './MobileFiltersDrawer'
+import { SyncFiltersClient } from '@/components/shared/SyncFiltersClient'
 
 const FiltersPanel = () => {
-  useSyncFiltersFromURL()
-  const pathname = usePathname() // дасть /collections/man
-  const router = useRouter()
-  const segments = pathname.split('/').filter(Boolean)
-  const lastSegment = segments[segments.length - 1] // "man"
-  const handleResetFilters = (category: string) => {
-    router.push(`/collections/${category}`, { scroll: false })
-  }
-
   return (
-    <aside className="flex w-1/5 flex-col">
-      <Breadcrumbs />
-      <TitleCategories />
-      <div className="flex items-center justify-between">
-        <span className="mb-4 mt-5 font-bold">Filter By:</span>
-        <Button
-          variant="destructive"
-          onClick={() => handleResetFilters(lastSegment)}
-        >
-          Clear All
-          <Trash2 className="h-4 w-4" />
-        </Button>
+    <>
+      {/* Мобільна версія */}
+      <div className="mb-4 w-full md:hidden">
+        <MobileFiltersDrawer />
       </div>
-      <hr />
-      <SizeSelector />
-      <hr />
-      <BestForSelector />
-      <hr />
-      <MaterialSelector />
-      <hr />
-      <ColorSelector />
-    </aside>
+
+      {/* Десктопна версія */}
+      <aside className="hidden w-full md:block md:w-1/5 md:pr-6 lg:pr-8">
+        <SyncFiltersClient />
+        <Breadcrumbs />
+        <TitleCategories />
+        <div className="flex flex-wrap items-center justify-between">
+          <span className="mb-4 mt-5 font-bold">Filter By:</span>
+          <ClearFiltersButton />
+        </div>
+        <hr />
+        <SizeSelector />
+        <hr />
+        <BestForSelector />
+        <hr />
+        <MaterialSelector />
+        <hr />
+        <ColorSelector />
+      </aside>
+    </>
   )
 }
 

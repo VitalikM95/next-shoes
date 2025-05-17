@@ -98,135 +98,40 @@ const BigCarouselContent = [
 
 const BigCarousel = () => {
   return (
-    <Carousel
-      opts={{
-        align: 'start',
-        slidesToScroll: 2,
-      }}
-      className="w-full"
-    >
-      <CarouselContent className="gap-2">
-        {BigCarouselContent.map((item, i) => (
-          <CarouselItem
-            key={i}
-            className="group relative h-[620px] basis-1/2 overflow-hidden"
-          >
-            <Image
-              src={item.img}
-              alt="bg-image"
-              fill
-              className="object-cover transition-transform duration-200 group-hover:scale-105"
-            />
-            <Link
-              href={item.link}
-              className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-15 text-2xl font-bold text-white"
+    <div className="relative ">
+      <Carousel
+        opts={{
+          align: 'start',
+          slidesToScroll: window?.innerWidth && window.innerWidth < 768 ? 1 : 2,
+        }}
+        className="w-full overflow-hidden"
+      >
+        <CarouselContent className="gap-2">
+          {BigCarouselContent.map((item, i) => (
+            <CarouselItem
+              key={i}
+              className="group relative h-[620px] basis-full md:basis-1/2 overflow-hidden"
             >
-              {item.title}
-            </Link>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious className="-left-8 h-20 transition-all duration-100 hover:scale-y-150 hover:text-black" />
-      <CarouselNext className="-right-8 h-20 transition-all duration-100 hover:scale-y-150 hover:text-black" />
-    </Carousel>
+              <Image
+                src={item.img}
+                alt="bg-image"
+                fill
+                className="object-cover transition-transform duration-200 group-hover:scale-105"
+              />
+              <Link
+                href={item.link}
+                className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-15 text-2xl font-bold text-white"
+              >
+                {item.title}
+              </Link>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="left-0 md:-left-2 h-16 md:h-24 w-10 md:w-14 bg-white/30 hover:bg-white/70 backdrop-blur-sm border-0 rounded-r-xl shadow-lg text-black transition-all duration-100 hover:scale-110 z-10" />
+        <CarouselNext className="right-0 md:-right-2 h-16 md:h-24 w-10 md:w-14 bg-white/30 hover:bg-white/70 backdrop-blur-sm border-0 rounded-l-xl shadow-lg text-black transition-all duration-100 hover:scale-110 z-10" />
+      </Carousel>
+    </div>
   )
-}
-
-const shoes = {
-  man: [
-    {
-      link: '/images/shoes/man-shoe1.webp',
-      title: 'Mens Wool Runner Go',
-      subtitle: 'Deep Navy',
-      price: '125',
-    },
-    {
-      link: '/images/shoes/man-shoe2.webp',
-      title: 'Mens Wool Dasher Mizzles',
-      subtitle: 'Deep Navy',
-      price: '155',
-    },
-    {
-      link: '/images/shoes/man-shoe3.webp',
-      title: 'Mens Tree Gliders',
-      subtitle: 'Medium Grey',
-      price: '150',
-    },
-    {
-      link: '/images/shoes/man-shoe4.webp',
-      title: 'Mens Wool Piper Go',
-      subtitle: 'Natural Black',
-      price: '130',
-    },
-    {
-      link: '/images/shoes/man-shoe5.webp',
-      title: 'Mens Tree Dasher 2',
-      subtitle: 'Blizzard ',
-      price: '140',
-    },
-    {
-      link: '/images/shoes/man-shoe6.webp',
-      title: 'Mens Tree Dasher Relay',
-      subtitle: 'Deep Navy',
-      price: '140',
-    },
-    {
-      link: '/images/shoes/man-shoe7.webp',
-      title: 'Mens Tree Pipers',
-      subtitle: 'Kaikoura White ',
-      price: '120',
-    },
-  ],
-  woman: [
-    {
-      link: '/images/shoes/woman-shoe1.webp',
-      title: 'Womans Tree Dasher Relay',
-      subtitle: 'Deep Navy',
-      price: '140',
-    },
-    {
-      link: '/images/shoes/woman-shoe2.webp',
-      title: 'Womans Tree Dasher Relay',
-      subtitle: 'Deep Navy',
-      price: '140',
-    },
-    {
-      link: '/images/shoes/woman-shoe3.webp',
-      title: 'Womans Tree Dasher Relay',
-      subtitle: 'Deep Navy',
-      price: '140',
-    },
-    {
-      link: '/images/shoes/woman-shoe4.webp',
-      title: 'Womans Tree Dasher Relay',
-      subtitle: 'Deep Navy',
-      price: '140',
-    },
-    {
-      link: '/images/shoes/woman-shoe5.webp',
-      title: 'Womans Tree Dasher Relay',
-      subtitle: 'Deep Navy',
-      price: '140',
-    },
-    {
-      link: '/images/shoes/woman-shoe6.webp',
-      title: 'Womans Tree Dasher Relay',
-      subtitle: 'Deep Navy',
-      price: '140',
-    },
-    {
-      link: '/images/shoes/woman-shoe7.webp',
-      title: 'Womans Tree Dasher Relay',
-      subtitle: 'Deep Navy',
-      price: '140',
-    },
-    {
-      link: '/images/shoes/woman-shoe8.webp',
-      title: 'Womans Tree Dasher Relay',
-      subtitle: 'Deep Navy',
-      price: '140',
-    },
-  ],
 }
 
 type SaleCarouselProps = {
@@ -238,73 +143,76 @@ type SaleCarouselProps = {
 
 const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
   const [selectedCategory, setSelectedCategory] = useState<'man' | 'woman'>(
-    'woman'
+    'woman',
   )
+
   return (
     <>
       <div className="flex justify-between">
         <div className="text-lg font-bold uppercase">Sale Shoes</div>
         <RadioGroupCustom
           defaultValue={selectedCategory}
-          onValueChange={(value) =>
-            setSelectedCategory(value as 'man' | 'woman')
-          }
+          onValueChange={value => setSelectedCategory(value as 'man' | 'woman')}
         >
           <RadioGroupItemUnderline value="woman" label="WOMAN" />
           <RadioGroupItemUnderline value="man" label="MAN" />
         </RadioGroupCustom>
       </div>
-      <Carousel
-        opts={{
-          align: 'start',
-          slidesToScroll: 4,
-        }}
-        className="w-full"
-      >
-        <CarouselContent className="gap-2 p-5">
-          {shoes[selectedCategory]?.map((item, i) => {
-            const { discountedPrice, originalPrice, hasDiscount } =
-              calculatePrice(item.price, item.discountPercent)
+      <div className="relative px-4">
+        <Carousel
+          opts={{
+            align: 'start',
+            slidesToScroll: 1,
+          }}
+          className="w-full overflow-hidden"
+        >
+          <CarouselContent className="gap-2 p-5">
+            {shoes[selectedCategory]?.map((item, i) => {
+              const { discountedPrice, originalPrice, hasDiscount } =
+                calculatePrice(item.price, item.discountPercent)
 
-            return (
-              <CarouselItem
-                key={i}
-                className="group relative h-[450px] basis-1/4 overflow-hidden"
-              >
-                <Link
-                  href={`/product/${item.id}`}
-                  className="absolute left-0 top-0 flex h-full w-full flex-col justify-end"
+              return (
+                <CarouselItem
+                  key={i}
+                  className="group relative h-[350px] sm:h-[400px] md:h-[450px] basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 overflow-hidden"
                 >
-                  <Image
-                    src={item.variants[0].images[0]}
-                    alt="shoes"
-                    fill
-                    className="max-h-fit bg-[#F6F6F6] object-contain object-top transition-transform duration-200 group-hover:scale-105"
-                  />
-                  <div className="bg-white/80 px-2 py-1">
-                    <div className="text-lg font-bold">{item.name}</div>
-                    <div className="">{item.type[0]}</div>
-                    {hasDiscount ? (
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-red-600">
-                          €{discountedPrice}
-                        </span>
-                        <span className="text-gray-500 line-through">
-                          €{originalPrice}
-                        </span>
+                  <Link
+                    href={`/product/${item.id}`}
+                    className="absolute left-0 top-0 flex h-full w-full flex-col justify-end"
+                  >
+                    <Image
+                      src={item.variants[0].images[0]}
+                      alt="shoes"
+                      fill
+                      className="max-h-fit bg-[#F6F6F6] object-contain object-top transition-transform duration-200 group-hover:scale-105"
+                    />
+                    <div className="bg-white/80 px-2 py-1">
+                      <div className="text-base md:text-lg font-bold">
+                        {item.name}
                       </div>
-                    ) : (
-                      <span className="text-black">€{discountedPrice}</span>
-                    )}
-                  </div>
-                </Link>
-              </CarouselItem>
-            )
-          })}
-        </CarouselContent>
-        <CarouselPrevious className="-left-9 top-[40%] h-14 transition-all duration-100 hover:scale-y-150 hover:text-black" />
-        <CarouselNext className="-right-9 top-[40%] !h-14 transition-all duration-100 hover:scale-y-150 hover:text-black" />
-      </Carousel>
+                      <div className="text-sm md:text-base">{item.type[0]}</div>
+                      {hasDiscount ? (
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-red-600">
+                            €{discountedPrice}
+                          </span>
+                          <span className="text-gray-500 line-through">
+                            €{originalPrice}
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="text-black">€{discountedPrice}</span>
+                      )}
+                    </div>
+                  </Link>
+                </CarouselItem>
+              )
+            })}
+          </CarouselContent>
+          <CarouselPrevious className="left-0 md:-left-2 top-[40%] h-14 md:h-20 w-10 md:w-12 bg-white/30 hover:bg-white/70 backdrop-blur-sm border-0 rounded-r-xl shadow-lg text-black transition-all duration-100 hover:scale-110 z-10" />
+          <CarouselNext className="right-0 md:-right-2 top-[40%] h-14 md:h-20 w-10 md:w-12 bg-white/30 hover:bg-white/70 backdrop-blur-sm border-0 rounded-l-xl shadow-lg text-black transition-all duration-100 hover:scale-110 z-10" />
+        </Carousel>
+      </div>
     </>
   )
 }

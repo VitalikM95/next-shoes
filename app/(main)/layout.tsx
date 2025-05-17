@@ -3,7 +3,7 @@ import { Ubuntu } from 'next/font/google'
 
 import { TheHeader } from '@/components/layout/TheHeader'
 import { TheFooter } from '@/components/layout/TheFooter'
-import { CartDrawer } from '@/components/layout/CartDrawer'
+import { CartDrawer } from '@/components/cart/CartDrawer'
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
@@ -15,7 +15,7 @@ export default function MainLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-        <div className={ubuntu.className}>
+    <div className={`${ubuntu.className} w-full`}>
       <TheHeader />
       <main>{children}</main>
       <TheFooter />

@@ -6,7 +6,7 @@ import { useBodyLock } from '@/lib/hooks/useBodyLock'
 import Image from 'next/image'
 import { useCartSWR } from '@/lib/hooks/useCartSWR'
 import { useCartDrawerStore } from '@/lib/store/cart-drawer-store'
-import { CartItem } from '../shared/CartItem'
+import { CartItem } from './CartItem'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
@@ -40,7 +40,7 @@ const CartDrawer = () => {
         className={`${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         } fixed right-0 top-0 h-screen w-[375px] transform bg-white shadow-lg transition-transform duration-300 ease-out`}
-        onClick={(e) => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
       >
         <div className="flex h-full flex-col">
           <div className="sticky top-0 z-10 flex w-full items-center justify-between border-b bg-white py-2 pl-3 pr-10">
@@ -72,7 +72,7 @@ const CartDrawer = () => {
               </div>
             ) : (
               <div className="space-y-4">
-                {cartItems.map((item) => (
+                {cartItems.map(item => (
                   <CartItem key={item.id} item={item} />
                 ))}
               </div>

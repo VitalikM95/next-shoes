@@ -33,13 +33,13 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
   const { name, price, discountPercent, variants = [], male } = item
   const { discountedPrice, originalPrice, hasDiscount } = calculatePrice(
     price,
-    discountPercent
+    discountPercent,
   )
   const sizes = SIZE_RANGES[male as keyof typeof SIZE_RANGES]
   const { addToCart } = useCartSWR()
 
   const [selectedImage, setSelectedImage] = useState(
-    variants[0]?.images?.[0] || '/no_image.png'
+    variants[0]?.images?.[0] || '/no_image.png',
   )
   const [activeVariantIndex, setActiveVariantIndex] = useState(0)
 
@@ -65,7 +65,7 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
       size.toString(),
       item as unknown as Product,
       activeVariant,
-      discountedPrice
+      discountedPrice,
     )
 
     toast.success(`Product "${name}" added to cart`, {
@@ -76,20 +76,22 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
   if (!variants.length) return null
 
   return (
-    <Card className="group relative h-[500px] w-[350px] overflow-visible rounded-none border-none shadow-none hover:shadow-xl">
+    <Card className="group relative w-[360px] overflow-visible rounded-none border-none shadow-none transition-shadow duration-300 hover:shadow-xl h-[550px]">
       <Link href={`/product/${item.id}`} aria-label="Product">
-        <CardContent>
+        <CardContent className="p-5 ">
           <Image
             src={selectedImage}
             width="400"
             height="400"
-            className="image-bg"
+            className="image-bg h-auto w-full"
             alt={name}
           />
         </CardContent>
       </Link>
-      <CardHeader>
-        <CardTitle>{name}</CardTitle>
+      <CardHeader className="p-5 ">
+        <CardTitle className="line-clamp-1 text-sm sm:text-base md:text-lg">
+          {name}
+        </CardTitle>
         <CardDescription>
           {hasDiscount ? (
             <div className="flex items-center gap-2">
@@ -108,7 +110,10 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
               {variants.map((variant, index) => {
                 const image = variant.images?.[0] || '/placeholder.jpg'
                 return (
-                  <CarouselItem key={index} className="basis-1/4">
+                  <CarouselItem
+                    key={index}
+                    className="basis-1/4 min-w-12 md:min-w-14"
+                  >
                     <div
                       className={`image-bg cursor-pointer rounded-none border !p-0 hover:border-black ${
                         index === activeVariantIndex
@@ -129,28 +134,30 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
               })}
             </CarouselContent>
             <CarouselPrevious
-              className="-left-6 w-6 transition-all duration-100 hover:scale-y-150 hover:text-black"
-              custom="!w-6 !h-6"
+              className="-left-3 w-5 sm:-left-6 sm:w-6 transition-all duration-100 hover:scale-y-150 hover:text-black"
+              custom="!w-5 !h-5 sm:!w-6 sm:!h-6"
             />
             <CarouselNext
-              className="-right-6 w-6 transition-all duration-100 hover:scale-y-150 hover:text-black"
-              custom="!w-6 !h-6"
+              className="-right-3 w-5 sm:-right-6 sm:w-6 transition-all duration-100 hover:scale-y-150 hover:text-black"
+              custom="!w-5 !h-5 sm:!w-6 sm:!h-6"
             />
           </Carousel>
         )}
       </CardHeader>
-      <CardFooter className="absolute left-0 top-[95%] z-10 flex w-full origin-top scale-y-0 flex-col items-start rounded-none bg-white shadow-xl transition-transform duration-100 group-hover:scale-y-100">
-        <div className="my-4 text-sm font-bold">Quick Add</div>
-        <div className="flex flex-wrap gap-2">
+      <CardFooter className="absolute left-0 top-[95%] z-10 flex w-full origin-top scale-y-0 flex-col items-start rounded-none bg-white p-2 shadow-xl transition-transform duration-100 group-hover:scale-y-10p-5 ">
+        <div className="my-2 text-xs font-bold sm:my-4 sm:text-sm">
+          Quick Add
+        </div>
+        <div className="flex flex-wrap gap-1 sm:gap-2">
           {sizes?.map((size: number) => {
             const isAvailable = variants[activeVariantIndex]?.sizes?.includes(
-              size.toString()
+              size.toString(),
             )
             return (
               <Button
                 size="icon"
                 key={size}
-                className={`h-10 w-10 rounded-none border bg-white ${
+                className={`h-8 w-8 rounded-none border bg-white text-xs sm:h-10 sm:w-10 sm:text-sm ${
                   isAvailable
                     ? 'border-black text-black hover:brightness-95'
                     : 'cursor-not-allowed border-gray-300 text-gray-400'

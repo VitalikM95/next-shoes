@@ -2,18 +2,25 @@
 import { useEffect } from 'react'
 
 export function useBodyLock(active: boolean) {
-  useEffect(() => {
-    if (active) {
-      document.body.style.overflow = 'hidden'
-      document.body.style.paddingRight = '15px'
-    } else {
-      document.body.style.overflow = 'visible'
-      document.body.style.paddingRight = '0px'
-    }
+  return null
+  // useEffect(() => {
+  //   const getScrollbarWidth = () => {
+  //     return window.innerWidth - document.documentElement.clientWidth
+  //   }
 
-    return () => {
-      document.body.style.overflow = 'visible'
-      document.body.style.paddingRight = '0px'
-    }
-  }, [active])
+  //   if (active) {
+  //     const scrollbarWidth = getScrollbarWidth()
+
+  //     document.body.style.overflow = 'hidden'
+  //     document.body.style.paddingRight = `${scrollbarWidth}px`
+  //   } else {
+  //     document.body.style.overflow = ''
+  //     document.body.style.paddingRight = ''
+  //   }
+
+  //   return () => {
+  //     document.body.style.overflow = ''
+  //     document.body.style.paddingRight = ''
+  //   }
+  // }, [active])
 }

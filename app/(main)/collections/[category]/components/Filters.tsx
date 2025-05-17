@@ -85,7 +85,7 @@ const SizeSelector = () => {
         your nearest whole size too.
       </p>
       <div className="flex flex-wrap gap-2 pr-8">
-        {sizes.map((size) => (
+        {sizes.map(size => (
           <CheckboxSquare
             key={size}
             labelTop="EU"
