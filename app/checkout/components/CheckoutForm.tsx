@@ -129,7 +129,7 @@ const CheckoutForm = () => {
   }
 
   return (
-    <div className="border-r-2 border-black px-10 pt-5">
+    <div className="lg:border-r-2 border-r-0 border-black bg-gray-50 sm:px-10 px-5 pt-5">
       <h1 className="mb-5 text-2xl font-bold">Checkout</h1>
 
       {/* Express checkout кнопки */}

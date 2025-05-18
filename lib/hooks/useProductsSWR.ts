@@ -1,39 +1,39 @@
 import useSWR from 'swr'
 import { ProductListItem } from '@/types/product.types'
 
-const fetcher = async (url: string) => {
-  try {
-    const response = await fetch(url)
-    if (!response.ok) throw new Error('Network response was not ok')
-    const data = await response.json()
-
-    // Зберігаємо дані в localStorage
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(
-        `products_${url}`,
-        JSON.stringify({
-          data,
-          timestamp: Date.now(),
-        })
-      )
-    }
-
-    return data
-  } catch (error) {
-    // Спробуємо отримати дані з localStorage при помилці
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem(`products_${url}`)
-      if (cached) {
-        const { data, timestamp } = JSON.parse(cached)
-        // Використовуємо кешовані дані, якщо вони не старіші за 1 годину
-        if (Date.now() - timestamp < 3600000) {
-          return data
+const fetcher = (url: string) =>
+  fetch(url)
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok')
+      return response.json()
+    })
+    .then(data => {
+      // Зберігаємо дані в localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(
+          `products_${url}`,
+          JSON.stringify({
+            data,
+            timestamp: Date.now(),
+          }),
+        )
+      }
+      return data
+    })
+    .catch(error => {
+      // Спробуємо отримати дані з localStorage при помилці
+      if (typeof window !== 'undefined') {
+        const cached = localStorage.getItem(`products_${url}`)
+        if (cached) {
+          const { data, timestamp } = JSON.parse(cached)
+          // Використовуємо кешовані дані, якщо вони не старіші за 1 годину
+          if (Date.now() - timestamp < 3600000) {
+            return data
+          }
         }
       }
-    }
-    throw error
-  }
-}
+      throw error
+    })
 
 export const useProductsSWR = (
   male: string,
@@ -43,7 +43,7 @@ export const useProductsSWR = (
   materials?: string[],
   colorType?: string[],
   sizes?: string[],
-  shouldFetch: boolean = true
+  shouldFetch: boolean = true,
 ) => {
   const query = [`male=${male}`]
   if (type) query.push(`type=${type}`)

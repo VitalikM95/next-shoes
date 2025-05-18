@@ -10,29 +10,37 @@ export type FiltersState = {
       FiltersState,
       'resetFilters' | 'toggleFilter' | 'setFilters'
     >,
-    value: string
+    value: string,
   ) => void
   setFilters: (
     filters: Partial<
       Omit<FiltersState, 'resetFilters' | 'toggleFilter' | 'setFilters'>
-    >
+    >,
   ) => void
+  resetFilters: () => void
 }
 
-export const useFiltersStore = create<FiltersState>((set) => ({
+export const useFiltersStore = create<FiltersState>(set => ({
   sizes: [],
   bestFor: [],
   materials: [],
   colorType: [],
   toggleFilter: (key, value) =>
-    set((state) => {
+    set(state => {
       const list = state[key]
       const isSelected = list.includes(value)
       return {
         [key]: isSelected
-          ? list.filter((item) => item !== value)
+          ? list.filter(item => item !== value)
           : [...list, value],
       } as Partial<FiltersState>
     }),
-  setFilters: (filters) => set((state) => ({ ...state, ...filters })),
+  setFilters: filters => set(state => ({ ...state, ...filters })),
+  resetFilters: () =>
+    set({
+      sizes: [],
+      bestFor: [],
+      materials: [],
+      colorType: [],
+    }),
 }))

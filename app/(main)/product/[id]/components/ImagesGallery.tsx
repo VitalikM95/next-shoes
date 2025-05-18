@@ -36,6 +36,7 @@ const ImagesGallery: FC<ImagesGalleryProps> = ({ variants }) => {
 
   const [modalActive, setModalActive] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isImageLoading, setIsImageLoading] = useState(false)
 
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel()
   const [emblaThumbsRef] = useEmblaCarousel({
@@ -75,7 +76,8 @@ const ImagesGallery: FC<ImagesGalleryProps> = ({ variants }) => {
 
   const navigateImage = useCallback(
     (direction: 'next' | 'prev') => {
-      setCurrentImageIndex((prevIndex) => {
+      setIsImageLoading(true)
+      setCurrentImageIndex(prevIndex => {
         const newIndex =
           direction === 'next'
             ? (prevIndex + 1) % currentImages.length
@@ -83,7 +85,7 @@ const ImagesGallery: FC<ImagesGalleryProps> = ({ variants }) => {
         return newIndex
       })
     },
-    [currentImages.length]
+    [currentImages.length],
   )
 
   const updateSelectedIndex = (index: number) => {
@@ -94,8 +96,8 @@ const ImagesGallery: FC<ImagesGalleryProps> = ({ variants }) => {
   }
 
   return (
-    <div className="embla" key={`gallery-${colorIndex}`}>
-      <div className="embla-thumbs">
+    <div className="embla w-full" key={`gallery-${colorIndex}`}>
+      <div className="embla-thumbs text-center">
         <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
           <div className="embla-thumbs__container px-0.5">
             {currentImages.map((src, index) => (
@@ -131,6 +133,7 @@ const ImagesGallery: FC<ImagesGalleryProps> = ({ variants }) => {
         imageSrc={currentImages[currentImageIndex]}
         onNext={() => navigateImage('next')}
         onPrev={() => navigateImage('prev')}
+        isLoading={isImageLoading}
       />
     </div>
   )

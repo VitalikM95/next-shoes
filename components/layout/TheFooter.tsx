@@ -3,10 +3,10 @@ import Image from 'next/image'
 
 const TheFooter = () => {
   return (
-    <footer className="bg-zinc-800 p-12">
-      <div className="mx-auto text-sm font-light text-white">
-        <div className="flex flex-col items-center px-4 md:flex-row md:justify-between">
-          <div className="xs:w-1/2 my-6 md:w-1/3">
+    <footer className="bg-zinc-800 lg:p-12 sm:p-5 p-0">
+      <div className="mx-auto text-sm py-5 font-light text-white">
+        <div className="flex flex-col sm:gap-5 gap-2 items-center px-4 md:flex-row md:justify-between">
+          <div className="xs:w-1/2 md:w-1/3">
             <div className="py-2 text-base font-bold uppercase">Help</div>
             <div className="my-2 w-fit cursor-pointer hover:underline">
               1-888-999-4444
@@ -19,7 +19,7 @@ const TheFooter = () => {
             </div>
           </div>
 
-          <div className="xs:w-1/2 my-6 md:w-1/3">
+          <div className="xs:w-1/2 md:w-1/3">
             <div className="py-2 text-base font-bold uppercase">
               FOLLOW THE FLOCK
             </div>
@@ -34,7 +34,7 @@ const TheFooter = () => {
             </div>
           </div>
 
-          <div className="xs:w-1/2 my-6 md:w-1/3">
+          <div className="xs:w-1/2 md:w-1/3">
             <Image
               className="mx-auto mt-8 max-h-20"
               width={50}

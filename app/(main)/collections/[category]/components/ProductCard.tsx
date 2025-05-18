@@ -144,7 +144,7 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
           </Carousel>
         )}
       </CardHeader>
-      <CardFooter className="absolute left-0 top-[95%] z-10 flex w-full origin-top scale-y-0 flex-col items-start rounded-none bg-white p-2 shadow-xl transition-transform duration-100 group-hover:scale-y-10p-5 ">
+      <CardFooter className="flex flex-col items-start absolute top-[95%] left-0 w-full bg-white transition-transform origin-top scale-y-0 z-10 group-hover:scale-y-100 duration-100 shadow-xl rounded-none">
         <div className="my-2 text-xs font-bold sm:my-4 sm:text-sm">
           Quick Add
         </div>

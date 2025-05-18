@@ -6,8 +6,10 @@ import {
   CheckboxStandard,
 } from '@/components/ui/checkbox-custom'
 import { HUE, TITLES, SIZE_RANGES, BEST_FOR, MATERIAL } from '@/lib/constants'
-import { useDebouncedFilters } from '@/lib/hooks/useDebouncedFilters'
+// import { useDebouncedFilters } from '@/lib/hooks/useDebouncedFilters'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
+import { useFiltersStore } from '@/lib/store/filters-store'
+import { useFilters } from '@/lib/hooks/useFilters'
 
 type Gender = 'man' | 'woman'
 
@@ -76,7 +78,7 @@ const SelectorWrapper = ({
 const SizeSelector = () => {
   const category = useCategory() as Gender
   const sizes = SIZE_RANGES[category]
-  const { selected, toggle } = useDebouncedFilters('sizes')
+  const { selected, toggle } = useFilters('sizes')
 
   return (
     <SelectorWrapper title="Sizes">
@@ -101,7 +103,7 @@ const SizeSelector = () => {
 
 const ColorSelector = () => {
   const colors = HUE[useCategory()] || []
-  const { selected, toggle } = useDebouncedFilters('colorType')
+  const { selected, toggle } = useFilters('colorType')
 
   return (
     <SelectorWrapper title="HUE">
@@ -119,7 +121,7 @@ const ColorSelector = () => {
 }
 
 const BestForSelector = () => {
-  const { selected, toggle } = useDebouncedFilters('bestFor')
+  const { selected, toggle } = useFilters('bestFor')
 
   return (
     <SelectorWrapper title="Best For">
@@ -138,7 +140,7 @@ const BestForSelector = () => {
 }
 
 const MaterialSelector = () => {
-  const { selected, toggle } = useDebouncedFilters('materials')
+  const { selected, toggle } = useFilters('materials')
 
   return (
     <SelectorWrapper title="Material">

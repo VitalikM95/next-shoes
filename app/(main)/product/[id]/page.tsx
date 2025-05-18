@@ -23,43 +23,18 @@ export default async function ProductPage({ params }: PageProps) {
 
   const { discountedPrice, originalPrice, hasDiscount } = calculatePrice(
     product.price,
-    product.discountPercent
+    product.discountPercent,
   )
   return (
-    <div className="mx-auto max-w-screen-xl">
-      <div className="my-10 flex">
-        <div className="flex w-1/2 flex-col">
+    <div className="mx-auto max-w-screen-xl px-5">
+      <div className="my-10 flex lg:flex-row flex-col flex-wrap">
+        {/* Галерея продукту */}
+        <div className="flex lg:w-1/2 w-full flex-col order-1">
           <ProductGallery variants={product.variants} />
-          <Accordion type="single" collapsible className="mt-10 w-full">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Details</AccordionTrigger>
-              <AccordionContent>
-                <ReactMarkdown>
-                  {product.details.replace(/\.\s*([^.:]*):/g, '.\n\n**$1:**')}
-                </ReactMarkdown>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>sustainability</AccordionTrigger>
-              <AccordionContent>
-                <ReactMarkdown>
-                  {product.sustainability
-                    .replace(/\.\s*/g, '.\n\n• ')
-                    .replace(/([^:\n]+):/g, '**$1:**\n')}
-                </ReactMarkdown>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>Care Guide</AccordionTrigger>
-              <AccordionContent>
-                <ReactMarkdown>
-                  {product.careGuide.replace(/(\d+\.)\s*/g, '\n\n$1')}
-                </ReactMarkdown>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
         </div>
-        <div className="flex w-1/2 flex-col px-14">
+
+        {/* Інформація про продукт */}
+        <div className="flex lg:w-1/2 w-full flex-col sm:pl-10 px-0 lg:pr-5 lg:pt-0 pt-10 sm:pr-10 order-2">
           <h2 className="text-3xl font-bold uppercase">{product.name}</h2>
           <div className="flex py-5">
             {hasDiscount ? (
@@ -90,13 +65,57 @@ export default async function ProductPage({ params }: PageProps) {
           </div>
           <ProductActions product={product} discountedPrice={discountedPrice} />
         </div>
+
+        {/* Акордіон з інформацією - змінює позицію через order */}
+        <div className="w-full mt-10 lg:w-1/2 order-4 lg:order-3">
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Details</AccordionTrigger>
+              <AccordionContent>
+                <ReactMarkdown>
+                  {product.details.replace(/\.\s*([^.:]*):/g, '.\n\n**$1:**')}
+                </ReactMarkdown>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>sustainability</AccordionTrigger>
+              <AccordionContent>
+                <ReactMarkdown>
+                  {product.sustainability
+                    .replace(/\.\s*/g, '.\n\n• ')
+                    .replace(/([^:\n]+):/g, '**$1:**\n')}
+                </ReactMarkdown>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>Care Guide</AccordionTrigger>
+              <AccordionContent>
+                <ReactMarkdown>
+                  {product.careGuide.replace(/(\d+\.)\s*/g, '\n\n$1')}
+                </ReactMarkdown>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+
+        {/* Пустий елемент для симетрії в десктопному режимі */}
+        <div className="hidden lg:block lg:w-1/2 order-3 lg:order-4"></div>
       </div>
-      <div className="mb-10 flex gap-4">
+
+      <div className="mb-10 flex flex-col md:flex-row gap-4">
         {product.otherInfo.map((info, i) => (
-          <div key={i} className="flex w-1/3 flex-col">
-            <Image src={info.img} alt="shoes photo" width={500} height={700} />
-            <h5 className="py-4 text-2xl font-bold">{info.title}</h5>
-            <p className="pb-16">{info.text}</p>
+          <div key={i} className="flex w-full md:w-1/3 flex-col">
+            <div className="relative w-full aspect-[3/4]">
+              <Image
+                src={info.img}
+                alt="shoes photo"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+              />
+            </div>
+            <h5 className="py-4 text-xl md:text-2xl font-bold">{info.title}</h5>
+            <p className="pb-10 md:pb-16">{info.text}</p>
           </div>
         ))}
       </div>

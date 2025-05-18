@@ -33,15 +33,26 @@ export default async function CheckoutPage() {
       {/* Клієнтський компонент для перевірки локальної корзини незареєстрованих користувачів */}
       <CartCheck />
 
-      <div className="mx-auto my-2 max-w-screen-xl">
-        <div className="border-b-2 border-black px-5 pb-5">
-          <Link href="/" aria-label="Home" className="flex w-fit items-center">
-            <House size={32} />
-            <Image src="/logo.svg" alt="logo" width={200} height={100} />
+      <div className="mx-auto my-2 max-w-screen-xl px-2 sm:px-6">
+        <div className="border-b border-black sm:border-b-2 sm:border-black px-2 sm:px-5 py-3 sm:pb-5">
+          <Link
+            href="/"
+            aria-label="Home"
+            className="flex w-fit items-center gap-2"
+          >
+            <House size={20} className="sm:w-8 sm:h-8" />
+            <Image
+              src="/logo.svg"
+              alt="logo"
+              width={150}
+              height={75}
+              className="w-32 sm:w-40 md:w-[200px] h-auto"
+              priority
+            />
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 sm:mt-0">
           <CheckoutForm />
           <OrderSummary />
         </div>

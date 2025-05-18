@@ -21,14 +21,14 @@ const OrderSummary = () => {
   }
 
   return (
-    <div className="p-10 bg-gray-50">
+    <div className="sm:p-10 p-5">
       <h2 className="mb-6 text-xl font-bold">Order Summary</h2>
 
       <div className="max-h-[400px] overflow-y-auto">
         {cartItems.map(item => (
           <div
             key={item.id}
-            className="mb-4 flex gap-4 border-b border-gray-200 pb-4"
+            className="mb-4 flex gap-4 border-b border-gray-200 pb-4 pr-4"
           >
             <div className="relative h-24 w-24 flex-shrink-0">
               <Image

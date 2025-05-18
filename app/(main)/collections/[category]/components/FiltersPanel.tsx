@@ -8,7 +8,6 @@ import {
   TitleCategories,
 } from './Filters'
 import MobileFiltersDrawer from './MobileFiltersDrawer'
-import { SyncFiltersClient } from '@/components/shared/SyncFiltersClient'
 
 const FiltersPanel = () => {
   return (
@@ -20,7 +19,6 @@ const FiltersPanel = () => {
 
       {/* Десктопна версія */}
       <aside className="hidden w-full md:block md:w-1/5 md:pr-6 lg:pr-8">
-        <SyncFiltersClient />
         <Breadcrumbs />
         <TitleCategories />
         <div className="flex flex-wrap items-center justify-between">

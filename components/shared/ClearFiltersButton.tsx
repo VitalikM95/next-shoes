@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Trash2 } from 'lucide-react'
+import { useFiltersStore } from '@/lib/store/filters-store'
 
 const ClearFiltersButton = () => {
   const pathname = usePathname()
@@ -10,7 +11,13 @@ const ClearFiltersButton = () => {
   const segments = pathname.split('/').filter(Boolean)
   const lastSegment = segments[segments.length - 1]
 
+  const resetFilters = useFiltersStore(state => state.resetFilters)
+
   const handleResetFilters = () => {
+    // Скидаємо всі фільтри в сторі
+    resetFilters()
+
+    // Перенаправляємо на сторінку без параметрів
     router.push(`/collections/${lastSegment}`, { scroll: false })
   }
 

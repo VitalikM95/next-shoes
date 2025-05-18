@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { Filter, X, Trash2 } from 'lucide-react'
+import { Filter, X } from 'lucide-react'
 import { Breadcrumbs } from './BreadCrumbs'
 import { useBodyLock } from '@/lib/hooks/useBodyLock'
-import { usePathname, useRouter } from 'next/navigation'
 import {
   BestForSelector,
   ColorSelector,
@@ -13,14 +12,9 @@ import {
   SizeSelector,
   TitleCategories,
 } from './Filters'
-import { useSyncFiltersFromURL } from '@/lib/hooks/useSyncFiltersFromURL'
+import ClearFiltersButton from '@/components/shared/ClearFiltersButton'
 
 const MobileFiltersDrawer = () => {
-  // useSyncFiltersFromURL()
-  const pathname = usePathname()
-  const router = useRouter()
-  const segments = pathname.split('/').filter(Boolean)
-  const lastSegment = segments[segments.length - 1]
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
 
@@ -33,22 +27,12 @@ const MobileFiltersDrawer = () => {
   // Блокуємо прокрутку body коли дравер фільтрів відкритий
   useBodyLock(isOpen && mounted)
 
-  const handleResetFilters = (category: string) => {
-    router.push(`/collections/${category}`, { scroll: false })
-  }
-
   // Рендеримо компоненти фільтрів тільки якщо дравер відкритий
   const FiltersContent = () => (
     <>
       <div className="flex flex-wrap items-center justify-between">
         <span className="mb-4 mt-5 font-bold">Filter By:</span>
-        <Button
-          variant="destructive"
-          onClick={() => handleResetFilters(lastSegment)}
-        >
-          Clear All
-          <Trash2 className="ml-1 h-4 w-4" />
-        </Button>
+        <ClearFiltersButton />
       </div>
       <hr />
       {isOpen && mounted && (

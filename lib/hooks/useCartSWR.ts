@@ -7,11 +7,11 @@ import { useCartStore } from '@/lib/store/cart-store'
 import { Product, Variant } from '@/types/product.types'
 import useSWR from 'swr'
 
-const fetcher = async (url: string) => {
-  const res = await fetch(url)
-  if (!res.ok) throw new Error('Failed to fetch cart data')
-  return res.json()
-}
+const fetcher = (url: string) =>
+  fetch(url).then(res => {
+    if (!res.ok) throw new Error('Failed to fetch cart data')
+    return res.json()
+  })
 
 export const useCartSWR = () => {
   const { data: session } = useSession()
@@ -33,7 +33,7 @@ export const useCartSWR = () => {
 
   // Отримуємо дані корзини з сервера для авторизованого користувача
   const { data, mutate } = useSWR(isLoggedIn ? '/api/cart' : null, fetcher, {
-    onSuccess: (data) => {
+    onSuccess: data => {
       if (data?.items) {
         setServerItems(data.items)
       }
@@ -48,7 +48,7 @@ export const useCartSWR = () => {
       size: string,
       product: Product,
       variant: Variant,
-      price: number
+      price: number,
     ) => {
       if (isLoggedIn) {
         // Додаємо товар до серверної корзини
@@ -97,7 +97,7 @@ export const useCartSWR = () => {
         addLocalItem(newItem)
       }
     },
-    [isLoggedIn, addLocalItem, setLoading, mutate]
+    [isLoggedIn, addLocalItem, setLoading, mutate],
   )
 
   // Видалення товару з корзини
@@ -125,7 +125,7 @@ export const useCartSWR = () => {
         removeLocalItem(itemId)
       }
     },
-    [isLoggedIn, removeLocalItem, setLoading, mutate]
+    [isLoggedIn, removeLocalItem, setLoading, mutate],
   )
 
   // Оновлення кількості товару в корзині
@@ -159,7 +159,7 @@ export const useCartSWR = () => {
         updateLocalItemQuantity(itemId, quantity)
       }
     },
-    [isLoggedIn, updateLocalItemQuantity, setLoading, mutate]
+    [isLoggedIn, updateLocalItemQuantity, setLoading, mutate],
   )
 
   // Очищення корзини

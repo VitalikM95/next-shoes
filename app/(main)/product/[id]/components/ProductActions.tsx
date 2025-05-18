@@ -37,7 +37,7 @@ const ProductActions = ({ product, discountedPrice }: ProductActionsProps) => {
         size,
         product,
         product.variants[colorIndex],
-        discountedPrice
+        discountedPrice,
       )
 
       toast.success('Product added to cart')
@@ -58,7 +58,7 @@ const ProductActions = ({ product, discountedPrice }: ProductActionsProps) => {
           </div>
           <RadioGroupCustom
             defaultValue={'0'}
-            onValueChange={(value) => setColorIndex(parseInt(value))}
+            onValueChange={value => setColorIndex(parseInt(value))}
           >
             {product.variants.map((variant, i) => {
               const colorHash = variant.colorHash
@@ -87,7 +87,7 @@ const ProductActions = ({ product, discountedPrice }: ProductActionsProps) => {
             {SIZE_RANGES[product.male as keyof typeof SIZE_RANGES].map(
               (availableSize: number) => {
                 const isAvailable = product.variants[colorIndex].sizes.includes(
-                  availableSize.toString()
+                  availableSize.toString(),
                 )
                 return (
                   <RadioGroupItemSquare
@@ -99,7 +99,7 @@ const ProductActions = ({ product, discountedPrice }: ProductActionsProps) => {
                     disabled={!isAvailable}
                   />
                 )
-              }
+              },
             )}
           </RadioGroupCustom>
         </div>

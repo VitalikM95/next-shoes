@@ -20,44 +20,25 @@ import { ProductListItem } from '@/types/product.types'
 import { calculatePrice } from '@/lib/utils'
 
 const BackgroundCarousel = () => {
-  const [carouselRef] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 5000, stopOnInteraction: false }),
+  const [carouselRef] = useEmblaCarousel({ loop: true, duration: 100 }, [
+    Autoplay({ delay: 7000, stopOnInteraction: false }),
   ])
   return (
     <div ref={carouselRef} className="overflow-hidden">
       <div className="flex">
-        <div className="relative h-[650px] w-screen flex-shrink-0">
-          <Image
-            src="/images/wide-bg1.avif"
-            alt="bg-image"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="relative h-[650px] w-screen flex-shrink-0">
-          <Image
-            src="/images/wide-bg2.avif"
-            alt="bg-image"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="relative h-[650px] w-screen flex-shrink-0">
-          <Image
-            src="/images/wide-bg3.avif"
-            alt="bg-image"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="relative h-[650px] w-screen flex-shrink-0">
-          <Image
-            src="/images/wide-bg4.avif"
-            alt="bg-image"
-            fill
-            className="object-cover"
-          />
-        </div>
+        {[
+          '/images/wide-bg1.avif',
+          '/images/wide-bg2.avif',
+          '/images/wide-bg3.avif',
+          '/images/wide-bg4.avif',
+        ].map((imgSrc, index) => (
+          <div
+            key={index}
+            className="relative h-[650px] w-screen flex-shrink-0"
+          >
+            <Image src={imgSrc} alt="bg-image" fill className="object-cover" />
+          </div>
+        ))}
       </div>
     </div>
   )
@@ -127,8 +108,8 @@ const BigCarousel = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-0 md:-left-2 h-16 md:h-24 w-10 md:w-14 bg-white/30 hover:bg-white/70 backdrop-blur-sm border-0 rounded-r-xl shadow-lg text-black transition-all duration-100 hover:scale-110 z-10" />
-        <CarouselNext className="right-0 md:-right-2 h-16 md:h-24 w-10 md:w-14 bg-white/30 hover:bg-white/70 backdrop-blur-sm border-0 rounded-l-xl shadow-lg text-black transition-all duration-100 hover:scale-110 z-10" />
+        <CarouselPrevious className="left-0 md:-left-2 h-12 md:h-20 w-8 md:w-10 bg-none hover:bg-white/30 backdrop-blur-sm border-0 text-black transition-all duration-100 hover:scale-110 z-10" />
+        <CarouselNext className="right-0 md:-right-2 h-12 md:h-20 w-8 md:w-10 bg-none hover:bg-white/30 backdrop-blur-sm border-0 text-black transition-all duration-100 hover:scale-110 z-10" />
       </Carousel>
     </div>
   )
@@ -209,8 +190,8 @@ const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
               )
             })}
           </CarouselContent>
-          <CarouselPrevious className="left-0 md:-left-2 top-[40%] h-14 md:h-20 w-10 md:w-12 bg-white/30 hover:bg-white/70 backdrop-blur-sm border-0 rounded-r-xl shadow-lg text-black transition-all duration-100 hover:scale-110 z-10" />
-          <CarouselNext className="right-0 md:-right-2 top-[40%] h-14 md:h-20 w-10 md:w-12 bg-white/30 hover:bg-white/70 backdrop-blur-sm border-0 rounded-l-xl shadow-lg text-black transition-all duration-100 hover:scale-110 z-10" />
+          <CarouselPrevious className="left-0 md:-left-2 h-12 md:h-20 w-8 md:w-10 bg-none hover:bg-white/30 backdrop-blur-sm border-0 text-gray-600 hover:text-gray-600 transition-all duration-100 hover:scale-110 z-10 -translate-y-20" />
+          <CarouselNext className="right-0 md:-right-2 h-12 md:h-20 w-8 md:w-10 bg-none hover:bg-white/30 backdrop-blur-sm border-0 text-gray-600 hover:text-gray-600 transition-all duration-100 hover:scale-110 z-10 -translate-y-20" />
         </Carousel>
       </div>
     </>
