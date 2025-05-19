@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Loader2, X } from 'lucide-react'
 import { useBodyLock } from '@/lib/hooks/useBodyLock'
 
 interface IProps {
@@ -25,7 +25,6 @@ const ImageModal: FC<IProps> = ({
   const [prevImageSrc, setPrevImageSrc] = useState<string | null>(null)
   useBodyLock(active)
 
-  // Скидаємо стан завантаження при зміні зображення
   useEffect(() => {
     if (imageSrc !== prevImageSrc) {
       setImageLoaded(false)
@@ -48,7 +47,6 @@ const ImageModal: FC<IProps> = ({
     }
   }, [active, setActive, onNext, onPrev])
 
-  // Змінюємо логіку завантаження: показуємо лоадер тільки якщо це початкове завантаження
   const showLoader = isLoading || (imageSrc && !imageLoaded && !prevImageSrc)
 
   return (
@@ -77,15 +75,15 @@ const ImageModal: FC<IProps> = ({
         <div className="relative flex flex-grow flex-col items-center justify-center">
           <div className="relative h-full w-full">
             {showLoader ? (
-              <div className="absolute inset-0 flex h-full w-full animate-pulse items-center justify-center">
-                <span className="text-gray-500">Завантаження...</span>
+              <div className="absolute inset-0 flex h-full w-full items-center justify-center">
+                <Loader2 className="h-12 w-12 animate-spin text-gray-400" />
               </div>
             ) : null}
 
             {imageSrc ? (
               <Image
                 src={imageSrc}
-                alt="Обране зображення товару"
+                alt="product image"
                 width={800}
                 height={800}
                 className={`image-bg absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md transition-opacity duration-300 ease-in-out md:h-full md:w-full md:inset-0 md:translate-x-0 md:translate-y-0 ${
@@ -96,12 +94,10 @@ const ImageModal: FC<IProps> = ({
               />
             ) : !showLoader ? (
               <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-gray-100">
-                <span className="text-gray-500">Зображення не знайдено</span>
+                <span className="text-gray-500">Image not found :(</span>
               </div>
             ) : null}
           </div>
-
-          {/* Завжди показуємо кнопки навігації, незалежно від стану завантаження */}
           <Button
             variant="outline"
             size="icon"

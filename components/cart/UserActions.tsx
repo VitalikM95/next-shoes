@@ -1,18 +1,18 @@
 'use client'
 
-import { useCartDrawerStore } from '@/lib/store/cart-drawer-store'
-import { Button } from '../ui/button'
+import { FC, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ShoppingCart, User } from 'lucide-react'
-import { useCartSWR } from '@/lib/hooks/useCartSWR'
-import { useState, useEffect } from 'react'
 
-const UserActions = () => {
+import { Button } from '@/components/ui/button'
+import { useCartDrawerStore } from '@/lib/store/cart-drawer-store'
+import { useCartSWR } from '@/lib/hooks/useCartSWR'
+
+const UserActions: FC = () => {
   const { openDrawer } = useCartDrawerStore()
   const { totalItems } = useCartSWR()
   const [hasMounted, setHasMounted] = useState(false)
 
-  // Handle hydration mismatch by rendering only after client-side hydration
   useEffect(() => {
     setHasMounted(true)
   }, [])
@@ -31,7 +31,7 @@ const UserActions = () => {
       >
         <div className="relative bg-white">
           <ShoppingCart strokeWidth={1} className="!h-8 !w-8" />
-          <span className="absolute -right-2 -top-2 z-40 text-sm font-bold">
+          <span className="absolute -right-2 -top-2 z-40 text-sm bg-black rounded-full text-white px-1.5 py-0 text-center ">
             {hasMounted ? totalItems : 0}
           </span>
         </div>

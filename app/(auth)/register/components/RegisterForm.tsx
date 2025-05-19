@@ -6,12 +6,7 @@ import { signIn } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-
-type FormData = {
-  fullName: string
-  email: string
-  password: string
-}
+import { RegisterFormData } from '@/types/auth.types'
 
 export default function RegisterForm() {
   const router = useRouter()
@@ -22,7 +17,7 @@ export default function RegisterForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<RegisterFormData>({
     defaultValues: {
       fullName: '',
       email: '',
@@ -30,7 +25,7 @@ export default function RegisterForm() {
     },
   })
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: RegisterFormData) => {
     setError(null)
     setIsLoading(true)
 
@@ -48,7 +43,6 @@ export default function RegisterForm() {
         throw new Error(responseData.error || 'Registration error')
       }
 
-      // Після успішної реєстрації авторизуємо користувача та перенаправляємо на профіль
       await signIn('credentials', {
         email: data.email,
         password: data.password,

@@ -12,12 +12,9 @@ import MobileFiltersDrawer from './MobileFiltersDrawer'
 const FiltersPanel = () => {
   return (
     <>
-      {/* Мобільна версія */}
       <div className="mb-4 w-full md:hidden">
         <MobileFiltersDrawer />
       </div>
-
-      {/* Десктопна версія */}
       <aside className="hidden w-full md:block md:w-1/5 md:pr-6 lg:pr-8">
         <Breadcrumbs />
         <TitleCategories />

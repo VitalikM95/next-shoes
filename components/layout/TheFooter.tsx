@@ -1,10 +1,10 @@
-import { Facebook, Instagram, Twitter } from 'lucide-react'
 import Image from 'next/image'
+import { Facebook, Instagram, Twitter } from 'lucide-react'
 
-const TheFooter = () => {
+export const TheFooter = () => {
   return (
-    <footer className="bg-zinc-800 lg:p-12 sm:p-5 p-0">
-      <div className="mx-auto text-sm py-5 font-light text-white">
+    <footer className="bg-zinc-800 lg:px-12 lg:py-5 sm:px-5 px-0">
+      <div className="mx-auto text-sm pt-5 font-light text-white">
         <div className="flex flex-col sm:gap-5 gap-2 items-center px-4 md:flex-row md:justify-between">
           <div className="xs:w-1/2 md:w-1/3">
             <div className="py-2 text-base font-bold uppercase">Help</div>
@@ -44,7 +44,7 @@ const TheFooter = () => {
             />
           </div>
         </div>
-        <div className="text-center text-xs">
+        <div className="text-center text-xs pt-10">
           © 2025 NextShoes, Inc. All Rights Reserved. Terms, Privacy &
           Accessibility
         </div>
@@ -52,5 +52,3 @@ const TheFooter = () => {
     </footer>
   )
 }
-
-export { TheFooter }

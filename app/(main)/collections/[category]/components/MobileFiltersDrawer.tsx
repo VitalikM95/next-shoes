@@ -18,16 +18,13 @@ const MobileFiltersDrawer = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
 
-  // Перевіряємо, чи компонент змонтований
   useEffect(() => {
     setMounted(true)
     return () => setMounted(false)
   }, [])
 
-  // Блокуємо прокрутку body коли дравер фільтрів відкритий
   useBodyLock(isOpen && mounted)
 
-  // Рендеримо компоненти фільтрів тільки якщо дравер відкритий
   const FiltersContent = () => (
     <>
       <div className="flex flex-wrap items-center justify-between">
@@ -49,10 +46,8 @@ const MobileFiltersDrawer = () => {
     </>
   )
 
-  // Дравер фільтрів для мобільних пристроїв
   const closeDrawer = () => setIsOpen(false)
 
-  // Не рендеримо дравер до повного монтування компонента
   if (!mounted) return null
 
   return (
@@ -68,8 +63,6 @@ const MobileFiltersDrawer = () => {
           Filters
         </Button>
       </div>
-
-      {/* Дравер фільтрів (як в корзині) */}
       <div
         className={`${
           isOpen
@@ -96,7 +89,6 @@ const MobileFiltersDrawer = () => {
                 <X strokeWidth={1} className="!h-7 !w-7" />
               </Button>
             </div>
-
             <div className="flex flex-grow flex-col overflow-y-auto overflow-x-hidden p-4">
               <TitleCategories />
               <FiltersContent />

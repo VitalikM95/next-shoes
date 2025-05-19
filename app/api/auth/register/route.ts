@@ -1,20 +1,14 @@
-import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
-import { z } from 'zod'
 import bcrypt from 'bcrypt'
-import { handleApiError, apiErrors } from '@/lib/db/error-handler'
 
-const registerSchema = z.object({
-  email: z.string().email('Invalid email format'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  fullName: z.string().min(2, 'Name must be at least 2 characters'),
-})
+import { prisma } from '@/prisma/prisma-client'
+import { handleApiError, apiErrors } from '@/lib/db/error-handler'
+import { registerSchema } from '@/types/api.types'
 
 const registerUser = async (req: NextRequest) => {
   const data = await req.json()
   const validatedData = registerSchema.parse(data)
 
-  // Перевірка чи користувач вже існує
   const existingUser = await prisma.user.findUnique({
     where: { email: validatedData.email },
   })
@@ -23,10 +17,8 @@ const registerUser = async (req: NextRequest) => {
     throw apiErrors.validation('User with this email already exists')
   }
 
-  // Хешування паролю
   const hashedPassword = await bcrypt.hash(validatedData.password, 10)
 
-  // Створення користувача
   const user = await prisma.user.create({
     data: {
       ...validatedData,
@@ -40,7 +32,7 @@ const registerUser = async (req: NextRequest) => {
       email: user.email,
       fullName: user.fullName,
     },
-    { status: 201 }
+    { status: 201 },
   )
 }
 

@@ -1,11 +1,11 @@
+import { FC, memo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
 import { Trash2, Minus, Plus } from 'lucide-react'
-import { FC, memo } from 'react'
-import { CartItemType } from '@/types/cart.types'
-import { useCartSWR } from '@/lib/hooks/useCartSWR'
 
+import { Button } from '@/components/ui/button'
+import { useCartSWR } from '@/lib/hooks/useCartSWR'
+import { CartItemType } from '@/types/cart.types'
 interface CartItemProps {
   item: CartItemType
 }

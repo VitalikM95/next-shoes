@@ -1,24 +1,5 @@
 import { create } from 'zustand'
-
-export type FiltersState = {
-  sizes: string[]
-  bestFor: string[]
-  materials: string[]
-  colorType: string[]
-  toggleFilter: (
-    key: keyof Omit<
-      FiltersState,
-      'resetFilters' | 'toggleFilter' | 'setFilters'
-    >,
-    value: string,
-  ) => void
-  setFilters: (
-    filters: Partial<
-      Omit<FiltersState, 'resetFilters' | 'toggleFilter' | 'setFilters'>
-    >,
-  ) => void
-  resetFilters: () => void
-}
+import { FiltersState } from '@/types/store.types'
 
 export const useFiltersStore = create<FiltersState>(set => ({
   sizes: [],

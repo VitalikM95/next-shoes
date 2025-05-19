@@ -5,6 +5,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { ProductListItem } from '@/types/product.types'
 import { ProductCard } from './ProductCard'
 import { useProductsSWR } from '@/lib/hooks/useProductsSWR'
+import Image from 'next/image'
+import { ListProductSkeleton } from '@/components/shared/Skeletons'
 
 interface ProductsListProps {
   initialProducts: ProductListItem[]
@@ -19,20 +21,17 @@ export const ProductsList = ({
   const searchParams = useSearchParams()
   const [hasMounted, setHasMounted] = useState(false)
 
-  // Просто отримуємо всі параметри з URL
   const params = useMemo(
     () => new URLSearchParams(searchParams.toString()),
     [searchParams],
   )
 
-  // Отримуємо всі потрібні значення для фільтрів
   const type = params.get('type') || ''
   const bestFor = params.getAll('bestFor')
   const materials = params.getAll('materials')
   const colorType = params.getAll('colorType')
   const sizes = params.getAll('sizes')
 
-  // Запускаємо запит тільки після монтування на клієнті
   useEffect(() => {
     setHasMounted(true)
   }, [])
@@ -49,19 +48,32 @@ export const ProductsList = ({
     materials,
     colorType,
     sizes,
-    hasMounted, // Виконуємо запит тільки після монтування компонента
+    hasMounted,
   )
 
   return (
     <>
       {isLoading ? (
-        <div className="w-full py-8 text-center">Завантаження...</div>
-      ) : isError ? (
-        <div className="w-full py-8 text-center">
-          Помилка завантаження товарів
+        <div className="w-full flex justify-around flex-wrap">
+          {[...Array(9)].map((_, i) => (
+            <ListProductSkeleton key={i} />
+          ))}
         </div>
-      ) : !products?.length ? (
-        <div className="w-full py-8 text-center">Товари не знайдені</div>
+      ) : isError ? (
+        <div className="w-full py-8 text-center">Something went wrong :(</div>
+      ) : !products?.length ||
+        products.every(
+          (product: ProductListItem) => !product.variants?.length,
+        ) ? (
+        <div className="w-full pt-16">
+          <Image
+            src="/no-products-found.png"
+            alt="No products found"
+            width={250}
+            height={250}
+            className="mx-auto"
+          />
+        </div>
       ) : (
         <div className="grid auto-cols-[360px] grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,360px)] justify-center">
           {products.map((product: ProductListItem) => (

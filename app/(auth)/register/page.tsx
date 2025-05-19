@@ -1,6 +1,7 @@
+import { Suspense } from 'react'
+
 import { GoogleButton } from '@/components/shared/GoogleButton'
 import RegisterForm from './components/RegisterForm'
-import { Suspense } from 'react'
 
 export default function RegisterPage() {
   return (

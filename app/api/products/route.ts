@@ -3,30 +3,26 @@ import { NextRequest, NextResponse } from 'next/server'
 import { handleApiError, apiErrors } from '@/lib/db/error-handler'
 import { Prisma } from '@prisma/client'
 
-// GET /api/products - отримати список продуктів
 const getProducts = async (request: NextRequest) => {
   const { searchParams } = new URL(request.url)
 
-  // Отримуємо параметри фільтрації
   const male = searchParams.get('male')
   const type = searchParams.get('type')
   const bestForRaw = searchParams.getAll('bestFor')
-  const bestFor: string[] = bestForRaw.flatMap((val) => val.split(','))
+  const bestFor: string[] = bestForRaw.flatMap(val => val.split(','))
   const materialsRaw = searchParams.getAll('materials')
-  const materials: string[] = materialsRaw.flatMap((val) => val.split(','))
+  const materials: string[] = materialsRaw.flatMap(val => val.split(','))
   const sizesRaw = searchParams.getAll('sizes')
-  const sizes: string[] = sizesRaw.flatMap((val) => val.split(','))
+  const sizes: string[] = sizesRaw.flatMap(val => val.split(','))
   const colorTypeRaw = searchParams.getAll('colorType')
-  const colorType: string[] = colorTypeRaw.flatMap((val) => val.split(','))
+  const colorType: string[] = colorTypeRaw.flatMap(val => val.split(','))
 
-  // Перевіряємо наявність обов'язкового параметру male
   if (!male || !['man', 'woman'].includes(male)) {
     throw apiErrors.validation('The male parameter is required')
   }
 
   const isSale = type === "Men's Sale" || type === "Women's Sale"
 
-  // Формуємо умови фільтрації
   const where: Prisma.ProductWhereInput = {
     male,
     ...(isSale
@@ -77,7 +73,6 @@ const getProducts = async (request: NextRequest) => {
   return NextResponse.json(products)
 }
 
-// Export functions for Next.js API routes
 export const GET = async (req: NextRequest) => {
   try {
     return await getProducts(req)

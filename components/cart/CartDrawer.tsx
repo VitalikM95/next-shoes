@@ -1,30 +1,29 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { ShoppingCart, X, Loader2 } from 'lucide-react'
-import { useBodyLock } from '@/lib/hooks/useBodyLock'
+import { FC, useState, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { ShoppingCart, X, ArrowRight } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
+import { CartItem } from './CartItem'
+import { CartProductSkeleton } from '@/components/shared/Skeletons'
+import { useBodyLock } from '@/lib/hooks/useBodyLock'
 import { useCartSWR } from '@/lib/hooks/useCartSWR'
 import { useCartDrawerStore } from '@/lib/store/cart-drawer-store'
-import { CartItem } from './CartItem'
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
 
-const CartDrawer = () => {
+export const CartDrawer: FC = () => {
   const { cartItems, isLoading, totalItems, totalPrice } = useCartSWR()
   const { isOpen, closeDrawer } = useCartDrawerStore()
   const [mounted, setMounted] = useState(false)
 
-  // Перевіряємо, чи компонент змонтований
   useEffect(() => {
     setMounted(true)
     return () => setMounted(false)
   }, [])
 
-  // Блокуємо прокрутку body коли дравер відкритий
   useBodyLock(isOpen && mounted)
 
-  // Не рендеримо нічого до повного монтування компонента
   if (!mounted) return null
 
   return (
@@ -63,12 +62,20 @@ const CartDrawer = () => {
 
           <div className="flex flex-grow flex-col gap-5 overflow-y-auto overflow-x-hidden p-4 pt-4">
             {isLoading ? (
-              <div className="flex h-64 items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin" />
+              <div className="w-full flex justify-around flex-wrap">
+                {[...Array(3)].map((_, i) => (
+                  <CartProductSkeleton key={i} />
+                ))}
               </div>
             ) : cartItems.length === 0 ? (
               <div className="py-10 text-center">
-                <p className="text-lg">Cart is empty :(</p>
+                <Image
+                  src="/empty-cart.webp"
+                  alt="No products found"
+                  width={250}
+                  height={250}
+                  className="mx-auto"
+                />
               </div>
             ) : (
               <div className="space-y-4">
@@ -88,6 +95,7 @@ const CartDrawer = () => {
               <Link href="/checkout">
                 <Button variant="default" className="w-full font-semibold">
                   Make an order
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
@@ -97,5 +105,3 @@ const CartDrawer = () => {
     </div>
   )
 }
-
-export { CartDrawer }

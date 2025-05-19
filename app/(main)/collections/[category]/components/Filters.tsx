@@ -6,9 +6,7 @@ import {
   CheckboxStandard,
 } from '@/components/ui/checkbox-custom'
 import { HUE, TITLES, SIZE_RANGES, BEST_FOR, MATERIAL } from '@/lib/constants'
-// import { useDebouncedFilters } from '@/lib/hooks/useDebouncedFilters'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
-import { useFiltersStore } from '@/lib/store/filters-store'
 import { useFilters } from '@/lib/hooks/useFilters'
 
 type Gender = 'man' | 'woman'

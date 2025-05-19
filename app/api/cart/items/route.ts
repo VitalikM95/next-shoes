@@ -1,99 +1,92 @@
-import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
+
+import { prisma } from '@/prisma/prisma-client'
 import { authConfig } from '@/lib/auth/config'
 import { handleApiError, apiErrors } from '@/lib/db/error-handler'
+import { AddCartItemData } from '@/types/api.types'
 
-// POST /api/cart/items - додати товар до корзини
-export const POST = async (req: NextRequest) => {
+const addCartItem = async (req: NextRequest) => {
   const session = await getServerSession(authConfig)
 
   if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    throw apiErrors.unauthorized()
   }
 
-  try {
-    const {
+  const {
+    variantId,
+    size,
+    quantity,
+    price,
+    productName,
+    productId,
+    colorName,
+    image,
+  } = (await req.json()) as AddCartItemData
+
+  if (!variantId || !size || !quantity || price === undefined) {
+    throw apiErrors.validation('Missing required fields')
+  }
+
+  const userExists = await prisma.user.findUnique({
+    where: { id: session.user.id },
+  })
+
+  if (!userExists) {
+    throw apiErrors.notFound('User')
+  }
+
+  let cart = await prisma.cart.findUnique({
+    where: { userId: session.user.id },
+  })
+
+  if (!cart) {
+    cart = await prisma.cart.create({
+      data: { userId: session.user.id },
+    })
+  }
+
+  const existingItem = await prisma.cartItem.findFirst({
+    where: {
+      cartId: cart.id,
       variantId,
       size,
-      quantity,
-      price,
-      productName,
-      productId,
-      colorName,
-      image,
-    } = await req.json()
+    },
+  })
 
-    if (!variantId || !size || !quantity || price === undefined) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      )
-    }
-
-    // Перевіряємо, чи існує користувач
-    const userExists = await prisma.user.findUnique({
-      where: { id: session.user.id },
+  if (existingItem) {
+    await prisma.cartItem.update({
+      where: { id: existingItem.id },
+      data: { quantity: existingItem.quantity + quantity },
     })
-
-    if (!userExists) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
-    }
-
-    // Знаходимо корзину користувача або створюємо нову
-    let cart = await prisma.cart.findUnique({
-      where: { userId: session.user.id },
-    })
-
-    if (!cart) {
-      cart = await prisma.cart.create({
-        data: { userId: session.user.id },
-      })
-    }
-
-    // Перевіряємо чи є вже такий товар в корзині
-    const existingItem = await prisma.cartItem.findFirst({
-      where: {
+  } else {
+    await prisma.cartItem.create({
+      data: {
         cartId: cart.id,
         variantId,
         size,
+        quantity,
+        price,
+        productName,
+        productId,
+        colorName,
+        image,
       },
     })
+  }
 
-    // Оновлюємо або створюємо товар
-    if (existingItem) {
-      await prisma.cartItem.update({
-        where: { id: existingItem.id },
-        data: { quantity: existingItem.quantity + quantity },
-      })
-    } else {
-      await prisma.cartItem.create({
-        data: {
-          cartId: cart.id,
-          variantId,
-          size,
-          quantity,
-          price,
-          productName,
-          productId,
-          colorName,
-          image,
-        },
-      })
-    }
+  const updatedCart = await prisma.cart.findUnique({
+    where: { id: cart.id },
+    include: { items: true },
+  })
 
-    // Повертаємо оновлену корзину
-    const updatedCart = await prisma.cart.findUnique({
-      where: { id: cart.id },
-      include: { items: true },
-    })
+  return NextResponse.json(updatedCart)
+}
 
-    return NextResponse.json(updatedCart)
+export const POST = async (req: NextRequest) => {
+  try {
+    return await addCartItem(req)
   } catch (error) {
-    console.error('Error adding item to cart:', error)
-    return NextResponse.json(
-      { error: 'Failed to add item to cart' },
-      { status: 500 }
-    )
+    return handleApiError(error)
   }
 }

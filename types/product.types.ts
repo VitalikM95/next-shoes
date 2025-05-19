@@ -43,3 +43,12 @@ export interface ProductListItem {
   discountPercent: number
   variants: Variant[]
 }
+
+export interface ProductCardProps {
+  item: ProductListItem
+}
+
+export interface ProductActionsProps {
+  product: Product
+  discountedPrice: number
+}

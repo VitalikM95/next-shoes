@@ -6,25 +6,21 @@ import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-
-type FormData = {
-  email: string
-  password: string
-}
+import { LoginFormData } from '@/types/auth.types'
 
 export default function LoginForm() {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  const { register, handleSubmit } = useForm<FormData>({
+  const { register, handleSubmit } = useForm<LoginFormData>({
     defaultValues: {
       email: '',
       password: '',
     },
   })
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     setError(null)
     setIsLoading(true)
 

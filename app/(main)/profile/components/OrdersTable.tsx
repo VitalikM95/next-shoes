@@ -13,7 +13,6 @@ interface OrdersTableProps {
 }
 
 const OrderStatusLabel = ({ status }: { status: Order['status'] }) => {
-  // Визначаємо кольори безпосередньо в компоненті
   const statusColors = {
     PROCESSING: 'bg-blue-100 text-blue-800',
     CONFIRMED: 'bg-indigo-100 text-indigo-800',
@@ -23,8 +22,6 @@ const OrderStatusLabel = ({ status }: { status: Order['status'] }) => {
     CANCELED: 'bg-red-100 text-red-800',
     RETURNED: 'bg-orange-100 text-orange-800',
   }
-
-  // Перетворюємо статус на рядок і отримуємо відповідний колір
   const statusStr = String(status)
   const colorClass =
     statusColors[statusStr as keyof typeof statusColors] ||
@@ -37,7 +34,6 @@ const OrderStatusLabel = ({ status }: { status: Order['status'] }) => {
   )
 }
 
-// Функція для форматування дати в потрібний формат
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)
   return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getFullYear()).slice(2)}`

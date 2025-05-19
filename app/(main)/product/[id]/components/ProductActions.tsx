@@ -1,6 +1,9 @@
 'use client'
 
 import { useEffect } from 'react'
+import { toast } from 'sonner'
+import { ShoppingCart } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import {
   RadioGroupCustom,
@@ -9,14 +12,8 @@ import {
 } from '@/components/ui/radio-group-custom'
 import { useProductSelectionStore } from '@/lib/store/product-selection-store'
 import { SIZE_RANGES } from '@/lib/constants'
-import { Product } from '@/types/product.types'
 import { useCartSWR } from '@/lib/hooks/useCartSWR'
-import { toast } from 'sonner'
-
-interface ProductActionsProps {
-  product: Product
-  discountedPrice: number
-}
+import { ProductActionsProps } from '@/types/product.types'
 
 const ProductActions = ({ product, discountedPrice }: ProductActionsProps) => {
   const { colorIndex, setColorIndex, size, setSize } =
@@ -117,6 +114,7 @@ const ProductActions = ({ product, discountedPrice }: ProductActionsProps) => {
           {product.variants[colorIndex].sizes.length > 0
             ? 'Add to Cart'
             : 'No sizes available :('}
+          <ShoppingCart className="h-8 w-8" />
         </Button>
       </div>
     </>

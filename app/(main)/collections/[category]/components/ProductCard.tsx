@@ -1,6 +1,10 @@
 'use client'
 
+import { FC, useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { toast } from 'sonner'
+
 import {
   Card,
   CardContent,
@@ -17,17 +21,14 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import { Button } from '@/components/ui/button'
-import { FC, useEffect, useState } from 'react'
 import { SIZE_RANGES } from '@/lib/constants'
 import { calculatePrice } from '@/lib/utils'
-import { Product, ProductListItem } from '@/types/product.types'
-import Link from 'next/link'
 import { useCartSWR } from '@/lib/hooks/useCartSWR'
-import { toast } from 'sonner'
-
-interface ProductCardProps {
-  item: ProductListItem
-}
+import {
+  Product,
+  ProductListItem,
+  ProductCardProps,
+} from '@/types/product.types'
 
 const ProductCard: FC<ProductCardProps> = ({ item }) => {
   const { name, price, discountPercent, variants = [], male } = item
@@ -58,8 +59,6 @@ const ProductCard: FC<ProductCardProps> = ({ item }) => {
   const handleSizeClick = (size: number) => {
     const activeVariant = variants[activeVariantIndex]
 
-    // Використовуємо правильне приведення типів через unknown
-    // Фактично з об'єкта product використовуються лише поля id та name
     addToCart(
       activeVariant.id,
       size.toString(),

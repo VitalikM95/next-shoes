@@ -14,10 +14,8 @@ const ClearFiltersButton = () => {
   const resetFilters = useFiltersStore(state => state.resetFilters)
 
   const handleResetFilters = () => {
-    // Скидаємо всі фільтри в сторі
     resetFilters()
 
-    // Перенаправляємо на сторінку без параметрів
     router.push(`/collections/${lastSegment}`, { scroll: false })
   }
 

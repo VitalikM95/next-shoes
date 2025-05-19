@@ -1,13 +1,20 @@
+import { NextRequest, NextResponse } from 'next/server'
 import { withAuth } from 'next-auth/middleware'
-import { NextResponse } from 'next/server'
+
+import { UserRole } from '@/types/auth.types'
+
+interface AuthToken {
+  role?: UserRole
+  name?: string
+  email?: string
+  id?: string
+}
 
 export default withAuth(
   function middleware(req) {
-    // Перевірка ролі користувача
-    const token = req.nextauth.token
-    const isAdmin = token?.role === 'admin'
+    const token = req.nextauth.token as AuthToken | null
+    const isAdmin = token?.role === 'ADMIN'
 
-    // Захист адмін роутів
     if (req.nextUrl.pathname.startsWith('/admin') && !isAdmin) {
       return NextResponse.redirect(new URL('/login', req.url))
     }
@@ -18,10 +25,9 @@ export default withAuth(
     callbacks: {
       authorized: ({ token }) => !!token,
     },
-  }
+  },
 )
 
-// Захищені роути
 export const config = {
   matcher: ['/profile/:path*', '/admin/:path*', '/api/protected/:path*'],
 }

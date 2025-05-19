@@ -20,7 +20,6 @@ if (process.env.NODE_ENV !== 'production') {
   global.prisma = prisma
 }
 
-// Реєструємо обробник події тільки один раз
 if (!global.isBeforeExitHandlerRegistered) {
   process.on('beforeExit', async () => {
     await prisma.$disconnect()

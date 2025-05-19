@@ -1,5 +1,6 @@
 import useSWR from 'swr'
 import { ProductListItem } from '@/types/product.types'
+import { UseProductsSWRProps } from '@/types/hook.types'
 
 const fetcher = (url: string) =>
   fetch(url)
@@ -8,7 +9,6 @@ const fetcher = (url: string) =>
       return response.json()
     })
     .then(data => {
-      // Зберігаємо дані в localStorage
       if (typeof window !== 'undefined') {
         localStorage.setItem(
           `products_${url}`,
@@ -21,12 +21,10 @@ const fetcher = (url: string) =>
       return data
     })
     .catch(error => {
-      // Спробуємо отримати дані з localStorage при помилці
       if (typeof window !== 'undefined') {
         const cached = localStorage.getItem(`products_${url}`)
         if (cached) {
           const { data, timestamp } = JSON.parse(cached)
-          // Використовуємо кешовані дані, якщо вони не старіші за 1 годину
           if (Date.now() - timestamp < 3600000) {
             return data
           }
@@ -44,7 +42,7 @@ export const useProductsSWR = (
   colorType?: string[],
   sizes?: string[],
   shouldFetch: boolean = true,
-) => {
+): UseProductsSWRProps => {
   const query = [`male=${male}`]
   if (type) query.push(`type=${type}`)
   if (bestFor && bestFor.length > 0) query.push(`bestFor=${bestFor.join(',')}`)
@@ -62,8 +60,8 @@ export const useProductsSWR = (
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     revalidateIfStale: true,
-    dedupingInterval: 10000, // 10 секунд
-    refreshInterval: 300000, // 5 хвилин
+    dedupingInterval: 10000, // 10 seconds
+    refreshInterval: 300000, // 5 minutes
     errorRetryCount: 3,
     onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
       if (error.status === 404) return

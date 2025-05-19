@@ -1,8 +1,9 @@
 import { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { prisma } from '@/prisma/prisma-client'
 import bcrypt from 'bcrypt'
+
+import { prisma } from '@/prisma/prisma-client'
 
 export const authConfig: AuthOptions = {
   providers: [
@@ -33,7 +34,7 @@ export const authConfig: AuthOptions = {
 
         const isPasswordValid = await bcrypt.compare(
           credentials.password,
-          user.password
+          user.password,
         )
 
         if (!isPasswordValid) {
@@ -85,7 +86,7 @@ export const authConfig: AuthOptions = {
               }
 
               console.log(
-                `Successfully created new user via Google auth: ${googleUser.id}`
+                `Successfully created new user via Google auth: ${googleUser.id}`,
               )
             } catch (createError) {
               console.error('Error creating user via Google auth:', createError)
@@ -104,13 +105,13 @@ export const authConfig: AuthOptions = {
                   data: { userId: existingUser.id },
                 })
                 console.log(
-                  `Created cart for existing Google user: ${existingUser.id}`
+                  `Created cart for existing Google user: ${existingUser.id}`,
                 )
               }
             } catch (cartError) {
               console.error(
                 'Error checking/creating cart for existing user:',
-                cartError
+                cartError,
               )
             }
           }

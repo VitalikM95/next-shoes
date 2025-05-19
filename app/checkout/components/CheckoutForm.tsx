@@ -2,26 +2,17 @@
 
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { CreditCard, Truck } from 'lucide-react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
+import { CreditCard, Truck } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { useCartSWR } from '@/lib/hooks/useCartSWR'
 import { useFormState } from '@/lib/store/checkout-form-store'
 import { cn } from '@/lib/utils'
-
-type FormData = {
-  fullName: string
-  email: string
-  phone: string
-  address: string
-  city: string
-  postCode: string
-  country: string
-  paymentMethod: string
-}
+import { CheckoutFormData, CheckoutOrderData } from '@/types/checkout.types'
 
 const CheckoutForm = () => {
   const { cartItems, totalPrice, clearCart } = useCartSWR()
@@ -31,7 +22,6 @@ const CheckoutForm = () => {
   const { data: session, status: authStatus } = useSession()
   const { setSubmitting, setValid } = useFormState()
 
-  // Для уникнення помилок гідратації
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -40,7 +30,7 @@ const CheckoutForm = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<FormData>({
+  } = useForm<CheckoutFormData>({
     defaultValues: {
       fullName: session?.user?.name || '',
       email: session?.user?.email || '',
@@ -51,20 +41,18 @@ const CheckoutForm = () => {
       country: 'Ukraine',
       paymentMethod: 'card',
     },
-    mode: 'onChange', // Валідація при кожній зміні для активації кнопки
+    mode: 'onChange',
   })
 
-  // Оновлюємо стан валідації в сховищі при зміні isValid
   useEffect(() => {
     setValid(isValid)
   }, [isValid, setValid])
 
-  // Оновлюємо стан відправки форми в сховищі
   useEffect(() => {
     setSubmitting(isSubmitting)
   }, [isSubmitting, setSubmitting])
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: CheckoutFormData) => {
     if (cartItems.length === 0) {
       toast.error('Your cart is empty')
       return
@@ -73,12 +61,9 @@ const CheckoutForm = () => {
     setIsSubmitting(true)
 
     try {
-      // Створюємо структурований формат адреси з розділювачами для можливості парсингу в майбутньому
-      // Формат: address|city|postCode|country
       const structuredAddress = `${data.address}|${data.city}|${data.postCode}|${data.country}`
 
-      // Формуємо дані для відправки на сервер
-      const orderData = {
+      const orderData: CheckoutOrderData = {
         address: structuredAddress,
         phone: data.phone,
         totalPrice: totalPrice,
@@ -88,11 +73,10 @@ const CheckoutForm = () => {
           size: item.size,
           quantity: item.quantity,
           priceAtPurchase: item.price,
-          discountAtPurchase: 0, // За замовчуванням, якщо немає знижки
+          discountAtPurchase: 0,
         })),
       }
 
-      // Для авторизованих користувачів відправляємо замовлення на сервер
       if (authStatus === 'authenticated') {
         const response = await fetch('/api/orders', {
           method: 'POST',
@@ -107,15 +91,10 @@ const CheckoutForm = () => {
           throw new Error(errorData.message || 'Error during checkout')
         }
       } else {
-        // Для неавторизованих користувачів просто імітуємо обробку замовлення
-        // В реальності тут могла б бути відправка на інший API ендпоінт, який не вимагає авторизації
         console.log('Guest order placed:', orderData)
-
-        // Імітуємо невелику затримку для кращого UX
         await new Promise(resolve => setTimeout(resolve, 1000))
       }
 
-      // Очищаємо корзину після успішного оформлення замовлення
       clearCart()
 
       toast.success('Your order has been placed successfully!')
@@ -132,7 +111,6 @@ const CheckoutForm = () => {
     <div className="lg:border-r-2 border-r-0 border-black bg-gray-50 sm:px-10 px-5 pt-5">
       <h1 className="mb-5 text-2xl font-bold">Checkout</h1>
 
-      {/* Express checkout кнопки */}
       <div className="mb-8">
         <p className="mb-4 font-semibold">Express checkout</p>
         <div className="grid grid-cols-3 gap-2">
@@ -149,7 +127,6 @@ const CheckoutForm = () => {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate id="checkout-form">
-        {/* Shipping Information */}
         <div className="mb-6">
           <div className="mb-4 flex items-center font-bold">
             <Truck className="mr-2 h-5 w-5" />
@@ -308,11 +285,13 @@ const CheckoutForm = () => {
           </div>
         </div>
 
-        {/* Payment Method */}
         <div className="mb-6">
           <div className="mb-4 flex items-center font-bold">
             <CreditCard className="mr-2 h-5 w-5" />
-            <span>Payment Method</span>
+            <span>
+              Payment Method
+              <span className="text-xs text-gray-500 pl-2">(for testing)</span>
+            </span>
           </div>
 
           <div className="space-y-4">

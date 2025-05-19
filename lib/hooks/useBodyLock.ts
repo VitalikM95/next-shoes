@@ -1,7 +1,11 @@
 'use client'
 import { useEffect } from 'react'
 
-export function useBodyLock(active: boolean) {
+/**
+ * Hook for locking body scroll when a modal is active
+ * @param active Whether to lock the body scroll
+ */
+export function useBodyLock(active: boolean): void {
   useEffect(() => {
     const getScrollbarWidth = () => {
       return window.innerWidth - document.documentElement.clientWidth

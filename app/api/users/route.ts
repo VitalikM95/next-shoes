@@ -1,29 +1,11 @@
-import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
-import { z } from 'zod'
-import bcrypt from 'bcrypt'
-import { handleApiError, apiErrors } from '@/lib/db/error-handler'
 import { getServerSession } from 'next-auth'
+import bcrypt from 'bcrypt'
+
+import { prisma } from '@/prisma/prisma-client'
+import { handleApiError, apiErrors } from '@/lib/db/error-handler'
 import { authConfig } from '@/lib/auth/config'
-
-// Схема валідації для створення користувача
-const createUserSchema = z.object({
-  fullName: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email format'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  role: z.enum(['USER', 'ADMIN']).default('USER'),
-})
-
-// Схема валідації для оновлення користувача
-const updateUserSchema = z.object({
-  fullName: z.string().min(2, 'Name must be at least 2 characters').optional(),
-  email: z.string().email('Invalid email format').optional(),
-  password: z
-    .string()
-    .min(6, 'Password must be at least 6 characters')
-    .optional(),
-  role: z.enum(['USER', 'ADMIN']).optional(),
-})
+import { createUserSchema, updateUserSchema } from '@/types/api.types'
 
 const getUser = async (req: NextRequest) => {
   const session = await getServerSession(authConfig)
@@ -56,10 +38,8 @@ const getUser = async (req: NextRequest) => {
 const createUser = async (req: NextRequest) => {
   const data = await req.json()
 
-  // Валідація даних
   const validatedData = createUserSchema.parse(data)
 
-  // Перевірка чи користувач з таким email вже існує
   const existingUser = await prisma.user.findUnique({
     where: { email: validatedData.email },
   })
@@ -68,7 +48,6 @@ const createUser = async (req: NextRequest) => {
     throw apiErrors.validation('User with this email already exists')
   }
 
-  // Хешування паролю перед збереженням
   const hashedPassword = await bcrypt.hash(validatedData.password, 10)
 
   const user = await prisma.user.create({
@@ -99,15 +78,12 @@ const updateUser = async (req: NextRequest) => {
   const data = await req.json()
   const { id, ...updateData } = data
 
-  // Перевіряємо чи користувач намагається оновити свої дані
   if (id !== session.user.id) {
     throw apiErrors.forbidden('You can only update your own profile')
   }
 
-  // Валідація даних оновлення
   const validatedData = updateUserSchema.parse(updateData)
 
-  // Якщо оновлюється email, перевіряємо чи він вже існує
   if (validatedData.email) {
     const existingUser = await prisma.user.findFirst({
       where: {
@@ -121,7 +97,6 @@ const updateUser = async (req: NextRequest) => {
     }
   }
 
-  // Отримуємо поточного користувача для перевірки
   const currentUser = await prisma.user.findUnique({
     where: { id },
     select: {
@@ -133,13 +108,11 @@ const updateUser = async (req: NextRequest) => {
     throw apiErrors.notFound('User')
   }
 
-  // Перевіряємо чи є пароль у користувача (для тих, хто зареєстрований через Google)
   const hasPassword =
     currentUser.password !== null &&
     currentUser.password !== undefined &&
     currentUser.password.length > 0
 
-  // Якщо оновлюється пароль, хешуємо його
   if (validatedData.password) {
     validatedData.password = await bcrypt.hash(validatedData.password, 10)
   }
@@ -156,7 +129,6 @@ const updateUser = async (req: NextRequest) => {
     },
   })
 
-  // Додаємо інформацію про наявність пароля
   const responseUser = {
     ...user,
     hasPassword: validatedData.password ? true : hasPassword,
@@ -165,7 +137,6 @@ const updateUser = async (req: NextRequest) => {
   return NextResponse.json(responseUser)
 }
 
-// Експорт функцій для Next.js API роутів
 export const GET = async (req: NextRequest) => {
   try {
     return await getUser(req)

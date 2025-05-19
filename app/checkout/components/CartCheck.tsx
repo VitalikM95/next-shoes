@@ -2,21 +2,19 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useCartSWR } from '@/lib/hooks/useCartSWR'
 import { useSession } from 'next-auth/react'
 
-/**
- * Компонент для перевірки наявності товарів у локальній корзині
- * та перенаправлення на головну сторінку, якщо корзина порожня
- */
+import { useCartSWR } from '@/lib/hooks/useCartSWR'
+
+//  Component for checking the availability of products in the local cart for UNAUTHORIZED users
+//  and redirect to the main page if the cart is empty
+
 const CartCheck = () => {
   const router = useRouter()
   const { cartItems, isLoading } = useCartSWR()
   const { status } = useSession()
 
   useEffect(() => {
-    // Перевіряємо корзину лише для незареєстрованих користувачів
-    // Для зареєстрованих користувачів перевірка вже відбулась на сервері
     if (status === 'unauthenticated' && !isLoading) {
       if (cartItems.length === 0) {
         router.push('/')
@@ -24,7 +22,7 @@ const CartCheck = () => {
     }
   }, [cartItems.length, isLoading, router, status])
 
-  return null // Компонент не рендерить нічого в DOM
+  return null
 }
 
 export default CartCheck

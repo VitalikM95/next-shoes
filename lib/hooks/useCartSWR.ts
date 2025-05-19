@@ -2,10 +2,29 @@
 
 import { useCallback } from 'react'
 import { useSession } from 'next-auth/react'
-import { CartItemType } from '@/types/cart.types'
-import { useCartStore } from '@/lib/store/cart-store'
-import { Product, Variant } from '@/types/product.types'
 import useSWR from 'swr'
+
+import { CartItemType } from '@/types/cart.types'
+import { Product, Variant } from '@/types/product.types'
+import { useCartStore } from '@/lib/store/cart-store'
+
+interface UseCartSWRReturn {
+  cartItems: CartItemType[]
+  isLoading: boolean
+  totalItems: number
+  totalPrice: number
+  addToCart: (
+    variantId: string,
+    size: string,
+    product: Product,
+    variant: Variant,
+    price: number,
+  ) => Promise<void>
+  removeFromCart: (itemId: string) => Promise<void>
+  updateQuantity: (itemId: string, quantity: number) => Promise<void>
+  clearCart: () => Promise<void>
+  isLoggedIn: boolean
+}
 
 const fetcher = (url: string) =>
   fetch(url).then(res => {
@@ -13,11 +32,10 @@ const fetcher = (url: string) =>
     return res.json()
   })
 
-export const useCartSWR = () => {
+export const useCartSWR = (): UseCartSWRReturn => {
   const { data: session } = useSession()
   const isLoggedIn = !!session?.user
 
-  // Зустосовуємо Zustand для роботи з локальною та серверною корзинами
   const {
     localItems,
     serverItems,
@@ -31,7 +49,6 @@ export const useCartSWR = () => {
     getCartTotal,
   } = useCartStore()
 
-  // Отримуємо дані корзини з сервера для авторизованого користувача
   const { data, mutate } = useSWR(isLoggedIn ? '/api/cart' : null, fetcher, {
     onSuccess: data => {
       if (data?.items) {
@@ -41,7 +58,6 @@ export const useCartSWR = () => {
     revalidateOnFocus: false,
   })
 
-  // Додавання товару в корзину
   const addToCart = useCallback(
     async (
       variantId: string,
@@ -49,9 +65,8 @@ export const useCartSWR = () => {
       product: Product,
       variant: Variant,
       price: number,
-    ) => {
+    ): Promise<void> => {
       if (isLoggedIn) {
-        // Додаємо товар до серверної корзини
         setLoading(true)
         try {
           const response = await fetch('/api/cart/items', {
@@ -73,7 +88,6 @@ export const useCartSWR = () => {
 
           if (!response.ok) throw new Error('Failed to add item to cart')
 
-          // Оновлюємо дані корзини
           mutate()
         } catch (error) {
           console.error('Error adding to cart:', error)
@@ -81,30 +95,44 @@ export const useCartSWR = () => {
           setLoading(false)
         }
       } else {
-        // Додаємо товар в локальну корзину
-        const newItem: CartItemType = {
-          id: `${variantId}-${size}-${Date.now()}`,
-          variantId,
-          size,
-          quantity: 1,
-          price: price || 0, // Додаємо перевірку на випадок, якщо price не передано
-          productName: product.name,
-          productId: product.id,
-          colorName: variant.colorName,
-          image: variant.images[0] || '',
-        }
+        const existingItem = localItems.find(
+          item => item.variantId === variantId && item.size === size,
+        )
 
-        addLocalItem(newItem)
+        if (existingItem) {
+          if (existingItem.quantity < 9) {
+            updateLocalItemQuantity(existingItem.id, existingItem.quantity + 1)
+          }
+        } else {
+          const newItem: CartItemType = {
+            id: `${variantId}-${size}-${Date.now()}`,
+            variantId,
+            size,
+            quantity: 1,
+            price: price || 0,
+            productName: product.name,
+            productId: product.id,
+            colorName: variant.colorName,
+            image: variant.images[0] || '',
+          }
+
+          addLocalItem(newItem)
+        }
       }
     },
-    [isLoggedIn, addLocalItem, setLoading, mutate],
+    [
+      isLoggedIn,
+      addLocalItem,
+      updateLocalItemQuantity,
+      setLoading,
+      mutate,
+      localItems,
+    ],
   )
 
-  // Видалення товару з корзини
   const removeFromCart = useCallback(
-    async (itemId: string) => {
+    async (itemId: string): Promise<void> => {
       if (isLoggedIn) {
-        // Видаляємо товар з серверної корзини
         setLoading(true)
         try {
           const response = await fetch(`/api/cart/items/${itemId}`, {
@@ -113,7 +141,6 @@ export const useCartSWR = () => {
 
           if (!response.ok) throw new Error('Failed to remove item from cart')
 
-          // Оновлюємо дані корзини
           mutate()
         } catch (error) {
           console.error('Error removing from cart:', error)
@@ -121,20 +148,17 @@ export const useCartSWR = () => {
           setLoading(false)
         }
       } else {
-        // Видаляємо товар з локальної корзини
         removeLocalItem(itemId)
       }
     },
     [isLoggedIn, removeLocalItem, setLoading, mutate],
   )
 
-  // Оновлення кількості товару в корзині
   const updateQuantity = useCallback(
-    async (itemId: string, quantity: number) => {
+    async (itemId: string, quantity: number): Promise<void> => {
       if (quantity < 1 || quantity > 9) return
 
       if (isLoggedIn) {
-        // Оновлюємо кількість товару в серверній корзині
         setLoading(true)
         try {
           const response = await fetch(`/api/cart/items/${itemId}`, {
@@ -147,7 +171,6 @@ export const useCartSWR = () => {
 
           if (!response.ok) throw new Error('Failed to update item quantity')
 
-          // Оновлюємо дані корзини
           mutate()
         } catch (error) {
           console.error('Error updating quantity:', error)
@@ -155,25 +178,20 @@ export const useCartSWR = () => {
           setLoading(false)
         }
       } else {
-        // Оновлюємо кількість товару в локальній корзині
         updateLocalItemQuantity(itemId, quantity)
       }
     },
     [isLoggedIn, updateLocalItemQuantity, setLoading, mutate],
   )
 
-  // Очищення корзини
-  const clearCart = useCallback(async () => {
+  const clearCart = useCallback(async (): Promise<void> => {
     if (isLoggedIn) {
-      // Просто оновлюємо дані корзини з бекенду
       await mutate()
     }
 
-    // Очищаємо локальну корзину
     clearLocalCart()
   }, [isLoggedIn, clearLocalCart, mutate])
 
-  // Отримуємо поточні товари корзини та статистику
   const cartItems = isLoggedIn ? serverItems : localItems
   const { totalItems, totalPrice } = getCartTotal(isLoggedIn)
 

@@ -1,28 +1,11 @@
-import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
-import { z } from 'zod'
 import { getServerSession } from 'next-auth'
+
+import { prisma } from '@/prisma/prisma-client'
 import { authConfig } from '@/lib/auth/config'
 import { handleApiError, apiErrors } from '@/lib/db/error-handler'
+import { createOrderSchema } from '@/types/api.types'
 
-// Схема валідації для створення замовлення
-const createOrderSchema = z.object({
-  address: z.string().min(1, 'Address is required'),
-  phone: z.string().min(1, 'Phone number is required'),
-  totalPrice: z.number().min(0, 'Total price must be positive'),
-  country: z.string().default('Ukraine'),
-  items: z.array(
-    z.object({
-      variantId: z.string(),
-      size: z.string(),
-      quantity: z.number().min(1),
-      priceAtPurchase: z.number(),
-      discountAtPurchase: z.number(),
-    }),
-  ),
-})
-
-// Отримання замовлень користувача
 const getUserOrders = async (req: NextRequest) => {
   const session = await getServerSession(authConfig)
 
@@ -53,7 +36,6 @@ const getUserOrders = async (req: NextRequest) => {
   return NextResponse.json(orders)
 }
 
-// Створення нового замовлення
 const createOrder = async (req: NextRequest) => {
   const session = await getServerSession(authConfig)
 
@@ -64,7 +46,6 @@ const createOrder = async (req: NextRequest) => {
   const data = await req.json()
   const validatedData = createOrderSchema.parse(data)
 
-  // Отримуємо корзину користувача для перевірки
   const cart = await prisma.cart.findUnique({
     where: { userId: session.user.id },
     include: {
@@ -76,13 +57,10 @@ const createOrder = async (req: NextRequest) => {
     throw apiErrors.validation('Cart is empty')
   }
 
-  // Створюємо замовлення
   const order = await prisma.order.create({
     data: {
       userId: session.user.id,
       totalPrice: validatedData.totalPrice,
-      // Використовуємо приведення типу до any для обходу обмежень типізації
-      // поки не відбудеться оновлення типів Prisma Client
       ...(validatedData.country
         ? ({ country: validatedData.country } as any)
         : {}),
@@ -109,16 +87,14 @@ const createOrder = async (req: NextRequest) => {
     },
   })
 
-  // Оновлюємо дані користувача зі структурованою адресою
   await prisma.user.update({
     where: { id: session.user.id },
     data: {
-      address: validatedData.address, // Форматована адреса з розділювачами вже передана з клієнта
+      address: validatedData.address,
       phone: validatedData.phone,
     },
   })
 
-  // Очищаємо корзину
   await prisma.cartItem.deleteMany({
     where: { cartId: cart.id },
   })
@@ -126,7 +102,6 @@ const createOrder = async (req: NextRequest) => {
   return NextResponse.json(order, { status: 201 })
 }
 
-// Експорт функцій для Next.js API роутів
 export const GET = async (req: NextRequest) => {
   try {
     return await getUserOrders(req)

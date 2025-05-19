@@ -2,31 +2,32 @@
 
 import { useEffect } from 'react'
 
+/**
+ * Component that initializes client-side functionality
+ * - Cleans local storage from old cached data
+ * - Runs every 6 hours to maintain clean storage
+ */
 const ClientInit = () => {
   useEffect(() => {
-    // Очищення кешу продуктів
     const cleanLocalStorage = () => {
-      Object.keys(localStorage).forEach((key) => {
+      Object.keys(localStorage).forEach(key => {
         if (key.startsWith('products_')) {
           const cached = localStorage.getItem(key)
           if (cached) {
             const { timestamp } = JSON.parse(cached)
-            if (Date.now() - timestamp > 3600000 * 6) {
-              // 6 годин
+            const sixHoursInMs = 3600000 * 6 // 6 hours
+
+            if (Date.now() - timestamp > sixHoursInMs) {
               localStorage.removeItem(key)
             }
           }
         }
       })
     }
-
-    // Очищуємо localStorage при першому рендері
     cleanLocalStorage()
+    const sixHoursInMs = 3600000 * 6
+    const interval = setInterval(cleanLocalStorage, sixHoursInMs)
 
-    // Очищуємо кожні 6 годин
-    const interval = setInterval(cleanLocalStorage, 3600000 * 6)
-
-    // Очищення інтервалу при демонтовані компонента
     return () => {
       clearInterval(interval)
     }

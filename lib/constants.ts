@@ -3,7 +3,7 @@ export const TITLES: Record<string, { label: string; value?: string }[]> = {
     { label: 'Trainers', value: 'Trainers' },
     { label: 'Active Shoes', value: 'Active Shoes' },
     { label: 'Water-Repellent Shoes', value: 'Water-Repellent Shoes' },
-    { label: "Men's Sale" }, // буде фільтр по discount
+    { label: "Men's Sale" },
   ],
   woman: [
     { label: 'Trainers', value: 'Trainers' },
@@ -62,3 +62,77 @@ export const HUE: Record<'man' | 'woman', ColorOption[]> = {
     { text: 'Purple', color: '#BBB9D5' },
   ],
 }
+
+export const HOME_IMAGES = [
+  {
+    img: '/images/big-img1.avif',
+    title: 'Trail Runner',
+    subtitle: 'Tough, Grippy, Ready To Explore',
+    link_man: '/product/cm9n1mpb8001z4n74tik5gzb3',
+    link_woman: '/product/cm9n1msm900734n74uw76teg0',
+  },
+  {
+    img: '/images/big-img2.avif',
+    title: 'Wool Piper Go',
+    subtitle: 'Reimagined Classic, Elevated Comfort',
+    link_man: '/product/cm9n1mq19002s4n74twtltj3c',
+    link_woman: '/product/cm9n1mqwr003q4n7470taajon',
+  },
+]
+
+export const SHOE_ITEMS = [
+  {
+    image: '/images/sample-shoes1.avif',
+    title: 'Tree Runner Go',
+    description: 'Light, Breezy, Ready For Anything',
+    link_man: '/product/cm9n1mobw00024n74r5aybp03',
+    link_woman: '/product/cm9n1mr9400484n74rowduv1x',
+  },
+  {
+    image: '/images/sample-shoes2.avif',
+    title: 'Tree Dasher 2',
+    description: 'Bouncy, Everyday Active Sneaker',
+    link_man: '/product/cm9n1mool000s4n740qh5lng9',
+    link_woman: '/product/cm9n1mrik00504n745shnddu0',
+  },
+  {
+    image: '/images/sample-shoes3.avif',
+    title: 'Tree Toppers',
+    description: 'Water-Repellent, High Top Style',
+    link_man: '/product/cm9n1mq19002s4n74twtltj3c',
+    link_woman: '/product/cm9n1mtx100944n74fsmjqf0x',
+  },
+]
+
+export const BIG_CAROUSEL_CONTENT = [
+  {
+    img: '/images/slider-img2.avif',
+    title: "Men's Trainer Family",
+    link: '/collections/man?type=Trainers',
+  },
+  {
+    img: '/images/slider-img1.avif',
+    title: "Women's Trainer Family",
+    link: '/collections/woman?type=Trainers',
+  },
+  {
+    img: '/images/slider-img3.avif',
+    title: "Men's Weather-Ready Collection",
+    link: '/collections/man?type=Water-Repellent+Shoes',
+  },
+  {
+    img: '/images/slider-img4.avif',
+    title: "Women's Weather-Ready Collection",
+    link: '/collections/woman?type=Water-Repellent+Shoes',
+  },
+  {
+    img: '/images/slider-img5.avif',
+    title: "Men's Active Shoes",
+    link: '/collections/man?type=Active+Shoes',
+  },
+  {
+    img: '/images/slider-img6.avif',
+    title: "Women's Active Shoes",
+    link: '/collections/woman?type=Active+Shoes',
+  },
+]

@@ -1,9 +1,8 @@
 import { TITLES } from '@/lib/constants'
-
-type Gender = 'man' | 'woman'
+import { Gender, NavigationCategory } from '@/types/hook.types'
 
 export const useNavigationCategories = () => {
-  const getCategories = (gender: Gender) => {
+  const getCategories = (gender: Gender): NavigationCategory => {
     const categories = TITLES[gender] || []
     const basePath = `/collections/${gender}`
     const saleLabel = gender === 'man' ? "Men's Sale" : "Women's Sale"

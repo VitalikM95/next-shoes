@@ -1,4 +1,6 @@
+import { FC } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import {
   NavigationMenu,
@@ -7,19 +9,18 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu'
-import Image from 'next/image'
 import { useNavigationCategories } from '@/lib/hooks/useNavigationCategories'
+import { NavigationItem } from '@/types/component.types'
 
 interface NavigationProps {
   isMobile?: boolean
 }
 
-const Navigation = ({ isMobile = false }: NavigationProps) => {
+const Navigation: FC<NavigationProps> = ({ isMobile = false }) => {
   const { getCategories } = useNavigationCategories()
   const men = getCategories('man')
   const women = getCategories('woman')
 
-  // Мобільна версія меню
   if (isMobile) {
     return (
       <div className="flex justify-between px-4">
@@ -74,7 +75,6 @@ const Navigation = ({ isMobile = false }: NavigationProps) => {
     )
   }
 
-  // Десктопна версія меню
   return (
     <NavigationMenu>
       <NavigationMenuList>

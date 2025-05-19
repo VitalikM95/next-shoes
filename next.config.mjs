@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-// Збільшуємо ліміт слухачів подій для вирішення попередження EventEmitter
 import { EventEmitter } from 'events'
 EventEmitter.defaultMaxListeners = 20
 
@@ -22,9 +21,7 @@ const nextConfig = {
     },
   },
   webpack: (config, { isServer, dev }) => {
-    // Додаткові оптимізації для EventEmitter
     if (dev) {
-      // Увімкнення відстеження витоків пам'яті в режимі розробки
       config.optimization = {
         ...config.optimization,
         nodeEnv: 'development',

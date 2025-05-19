@@ -1,12 +1,9 @@
 import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
 import { handleApiError, apiErrors } from '@/lib/db/error-handler'
+import { ProductParams } from '@/types/api.types'
 
-// GET /api/products/[id] - отримати конкретний товар
-const getProduct = async (
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) => {
+const getProduct = async (request: NextRequest, { params }: ProductParams) => {
   const { id } = params
 
   if (!id) {
@@ -25,12 +22,9 @@ const getProduct = async (
   return NextResponse.json(product)
 }
 
-export const GET = async (
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) => {
+export const GET = async (request: NextRequest, context: ProductParams) => {
   try {
-    return await getProduct(request, { params })
+    return await getProduct(request, context)
   } catch (error) {
     return handleApiError(error)
   }

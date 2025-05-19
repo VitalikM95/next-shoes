@@ -1,11 +1,12 @@
+import { getProducts } from '@/lib/db/products'
+
 import { ProductsList } from './components/ProductsList'
 import { SwitchButton } from './components/SwitchButton'
 import FiltersPanel from './components/FiltersPanel'
-import { getProducts } from '@/lib/db/products'
 
 export const dynamic = 'force-dynamic'
 
-interface PageProps {
+interface CollectionPageProps {
   params: { category: string }
   searchParams?: { type?: string }
 }
@@ -13,7 +14,7 @@ interface PageProps {
 export default async function CollectionPage({
   params,
   searchParams,
-}: PageProps) {
+}: CollectionPageProps) {
   const category = params.category
   const type = searchParams?.type
 

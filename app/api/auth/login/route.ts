@@ -13,7 +13,6 @@ const login = async (req: NextRequest) => {
   const data = await req.json()
   const validatedData = loginSchema.parse(data)
 
-  // Пошук користувача
   const user = await prisma.user.findUnique({
     where: { email: validatedData.email },
   })
@@ -22,17 +21,15 @@ const login = async (req: NextRequest) => {
     throw apiErrors.unauthorized('Invalid email or password')
   }
 
-  // Перевірка паролю
   const isPasswordValid = await bcrypt.compare(
     validatedData.password,
-    user.password
+    user.password,
   )
 
   if (!isPasswordValid) {
     throw apiErrors.unauthorized('Invalid email or password')
   }
 
-  // Повертаємо дані користувача (без паролю)
   return NextResponse.json({
     id: user.id,
     email: user.email,

@@ -1,8 +1,9 @@
-import { Button } from '@/components/ui/button'
-import SignOutButton from './components/SignOutButton'
+import Image from 'next/image'
+
 import { getCurrentUser } from '@/lib/db/user'
 import { getUserOrders } from '@/lib/db/orders'
-import Image from 'next/image'
+
+import SignOutButton from './components/SignOutButton'
 import ProfileForm from './components/ProfileForm'
 import OrdersTable from './components/OrdersTable'
 

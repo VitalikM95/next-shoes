@@ -3,22 +3,15 @@
 import { useEffect, useCallback } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { useFiltersStore } from '@/lib/store/filters-store'
+import { FilterKey, UseFiltersReturn } from '@/types/hook.types'
 
-type FilterKey = 'sizes' | 'bestFor' | 'materials' | 'colorType'
-
-/**
- * Хук для роботи з фільтрами
- * @param key Ключ фільтра (sizes, bestFor, materials, colorType)
- * @returns Об'єкт з вибраними значеннями та функцією для перемикання фільтра
- */
-export const useFilters = (key: FilterKey) => {
+export const useFilters = (key: FilterKey): UseFiltersReturn => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const selected = useFiltersStore(state => state[key])
   const setFilters = useFiltersStore(state => state.setFilters)
 
-  // Синхронізуємо фільтри при зміні URL
   useEffect(() => {
     const value = searchParams.get(key)
     if (value) {
@@ -29,7 +22,6 @@ export const useFilters = (key: FilterKey) => {
     }
   }, [searchParams, key, setFilters])
 
-  // Функція для перемикання фільтра
   const toggle = useCallback(
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString())
@@ -38,10 +30,8 @@ export const useFilters = (key: FilterKey) => {
         ? selected.filter(item => item !== value)
         : [...selected, value]
 
-      // Оновлюємо стан у Zustand
       setFilters({ [key]: newSelected })
 
-      // Оновлюємо URL
       if (newSelected.length > 0) {
         params.set(key, newSelected.join(','))
       } else {

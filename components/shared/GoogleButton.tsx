@@ -2,11 +2,19 @@
 
 import { signIn } from 'next-auth/react'
 import { useSearchParams } from 'next/navigation'
+
 import { Button } from '@/components/ui/button'
 
-const GoogleButton = () => {
+interface GoogleButtonProps {
+  callbackUrl?: string
+}
+
+export const GoogleButton = ({
+  callbackUrl: externalCallbackUrl,
+}: GoogleButtonProps = {}) => {
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callbackUrl') || '/profile'
+  const callbackUrl =
+    externalCallbackUrl || searchParams.get('callbackUrl') || '/profile'
 
   return (
     <div className="flex justify-center">
@@ -42,5 +50,3 @@ const GoogleButton = () => {
     </div>
   )
 }
-
-export { GoogleButton }

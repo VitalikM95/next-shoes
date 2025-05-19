@@ -8,53 +8,13 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getProducts } from '@/lib/db/products'
+import { HOME_IMAGES, SHOE_ITEMS } from '@/lib/constants'
 
 const libre = Libre_Baskerville({
   subsets: ['latin'],
   weight: ['700', '400'],
   display: 'swap',
 })
-
-const shoeItems = [
-  {
-    image: '/images/sample-shoes1.avif',
-    title: 'Tree Runner Go',
-    description: 'Light, Breezy, Ready For Anything',
-    link_man: '/product/cm9n1mobw00024n74r5aybp03',
-    link_woman: '/product/cm9n1mr9400484n74rowduv1x',
-  },
-  {
-    image: '/images/sample-shoes2.avif',
-    title: 'Tree Dasher 2',
-    description: 'Bouncy, Everyday Active Sneaker',
-    link_man: '/product/cm9n1mool000s4n740qh5lng9',
-    link_woman: '/product/cm9n1mrik00504n745shnddu0',
-  },
-  {
-    image: '/images/sample-shoes3.avif',
-    title: 'Tree Toppers',
-    description: 'Water-Repellent, High Top Style',
-    link_man: '/product/cm9n1mq19002s4n74twtltj3c',
-    link_woman: '/product/cm9n1mtx100944n74fsmjqf0x',
-  },
-]
-
-const images = [
-  {
-    img: '/images/big-img1.avif',
-    title: 'Trail Runner',
-    subtitle: 'Tough, Grippy, Ready To Explore',
-    link_man: '/product/cm9n1mpb8001z4n74tik5gzb3',
-    link_woman: '/product/cm9n1msm900734n74uw76teg0',
-  },
-  {
-    img: '/images/big-img2.avif',
-    title: 'Wool Piper Go',
-    subtitle: 'Reimagined Classic, Elevated Comfort',
-    link_man: '/product/cm9n1mq19002s4n74twtltj3c',
-    link_woman: '/product/cm9n1mqwr003q4n7470taajon',
-  },
-]
 
 export default async function HomePage() {
   const [woman, man] = await Promise.all([
@@ -119,7 +79,7 @@ export default async function HomePage() {
         </div>
       </div>
       <div className="m-4 md:m-10 flex flex-col md:flex-row gap-2">
-        {shoeItems.map((item, index) => (
+        {SHOE_ITEMS.map((item, index) => (
           <div key={index} className="group relative overflow-hidden">
             <Image
               src={item.image}
@@ -254,7 +214,7 @@ export default async function HomePage() {
         </div>
       </div>
       <div className="flex flex-col md:flex-row w-full gap-2">
-        {images.map((item, i) => (
+        {HOME_IMAGES.map((item, i) => (
           <div
             key={i}
             className="group relative h-[400px] md:h-[500px] lg:h-[700px] w-full md:w-1/2 overflow-hidden"

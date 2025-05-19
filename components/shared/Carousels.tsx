@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import {
@@ -18,6 +18,7 @@ import {
 } from '../ui/carousel'
 import { ProductListItem } from '@/types/product.types'
 import { calculatePrice } from '@/lib/utils'
+import { BIG_CAROUSEL_CONTENT } from '@/lib/constants'
 
 const BackgroundCarousel = () => {
   const [carouselRef] = useEmblaCarousel({ loop: true, duration: 100 }, [
@@ -44,51 +45,24 @@ const BackgroundCarousel = () => {
   )
 }
 
-const BigCarouselContent = [
-  {
-    img: '/images/slider-img2.avif',
-    title: "Men's Trainer Family",
-    link: '/collections/man?type=Trainers',
-  },
-  {
-    img: '/images/slider-img1.avif',
-    title: "Women's Trainer Family",
-    link: '/collections/woman?type=Trainers',
-  },
-  {
-    img: '/images/slider-img3.avif',
-    title: "Men's Weather-Ready Collection",
-    link: '/collections/man?type=Water-Repellent+Shoes',
-  },
-  {
-    img: '/images/slider-img4.avif',
-    title: "Women's Weather-Ready Collection",
-    link: '/collections/woman?type=Water-Repellent+Shoes',
-  },
-  {
-    img: '/images/slider-img5.avif',
-    title: "Men's Active Shoes",
-    link: '/collections/man?type=Active+Shoes',
-  },
-  {
-    img: '/images/slider-img6.avif',
-    title: "Women's Active Shoes",
-    link: '/collections/woman?type=Active+Shoes',
-  },
-]
-
 const BigCarousel = () => {
+  const [slidesToScroll, setSlidesToScroll] = useState(2)
+
+  useEffect(() => {
+    setSlidesToScroll(window.innerWidth < 768 ? 1 : 2)
+  }, [])
+
   return (
     <div className="relative ">
       <Carousel
         opts={{
           align: 'start',
-          slidesToScroll: window?.innerWidth && window.innerWidth < 768 ? 1 : 2,
+          slidesToScroll,
         }}
         className="w-full overflow-hidden"
       >
         <CarouselContent className="gap-2">
-          {BigCarouselContent.map((item, i) => (
+          {BIG_CAROUSEL_CONTENT.map((item, i) => (
             <CarouselItem
               key={i}
               className="group relative h-[620px] basis-full md:basis-1/2 overflow-hidden"

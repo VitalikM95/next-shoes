@@ -7,23 +7,10 @@ import { Settings, Save, X } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
-
-type User = {
-  id: string
-  fullName: string
-  email: string
-  role: string
-  hasPassword?: boolean
-}
+import { User, ProfileFormData } from '@/types/user.types'
 
 type ProfileFormProps = {
   user: User
-}
-
-type FormData = {
-  fullName: string
-  email: string
-  password: string
 }
 
 export default function ProfileForm({ user }: ProfileFormProps) {
@@ -37,7 +24,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
     reset,
     watch,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<ProfileFormData>({
     defaultValues: {
       fullName: user.fullName,
       email: user.email,
@@ -45,33 +32,26 @@ export default function ProfileForm({ user }: ProfileFormProps) {
     },
   })
 
-  // Відстежуємо поточні значення форми
-  const formValues = watch()
-
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ProfileFormData) => {
     setIsLoading(true)
     try {
-      // Перевіряємо, чи є зміни в даних
       const hasChanges =
         data.fullName !== user.fullName ||
         data.email !== user.email ||
         (data.password && data.password.trim() !== '')
 
-      // Якщо немає змін, просто закриваємо режим редагування
       if (!hasChanges) {
         setIsEditing(false)
         setIsLoading(false)
         return
       }
 
-      // Створюємо об'єкт з даними для оновлення
       const updateData = {
         id: user.id,
         fullName: data.fullName,
         email: data.email,
       }
 
-      // Додаємо пароль, тільки якщо він був введений
       if (data.password && data.password.trim() !== '') {
         Object.assign(updateData, { password: data.password })
       }
@@ -91,7 +71,6 @@ export default function ProfileForm({ user }: ProfileFormProps) {
 
       const updatedUser = await response.json()
 
-      // Якщо користувач встановив пароль, оновлюємо локальний стан
       if (data.password && data.password.trim() !== '') {
         setHasPassword(true)
       }
@@ -99,7 +78,6 @@ export default function ProfileForm({ user }: ProfileFormProps) {
       toast.success('Profile successfully updated')
       setIsEditing(false)
 
-      // Оновлюємо форму новими даними
       reset({
         fullName: updatedUser.fullName,
         email: updatedUser.email,
@@ -115,7 +93,6 @@ export default function ProfileForm({ user }: ProfileFormProps) {
 
   const cancelEditing = () => {
     setIsEditing(false)
-    // Скидаємо форму до початкових значень
     reset({
       fullName: user.fullName,
       email: user.email,

@@ -1,4 +1,5 @@
-import ProductGallery from './components/ImagesGallery'
+import { notFound } from 'next/navigation'
+import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 
 import {
@@ -7,17 +8,17 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import Image from 'next/image'
 import { calculatePrice } from '@/lib/utils'
-import ProductActions from './components/ProductActions'
 import { getProductById } from '@/lib/db/products'
-import { notFound } from 'next/navigation'
 
-interface PageProps {
+import ProductGallery from './components/ImagesGallery'
+import ProductActions from './components/ProductActions'
+
+interface ProductPageProps {
   params: { id: string }
 }
 
-export default async function ProductPage({ params }: PageProps) {
+export default async function ProductPage({ params }: ProductPageProps) {
   const product = await getProductById(params.id)
   if (!product) return notFound()
 
@@ -28,12 +29,9 @@ export default async function ProductPage({ params }: PageProps) {
   return (
     <div className="mx-auto max-w-screen-xl px-5">
       <div className="my-10 flex lg:flex-row flex-col flex-wrap">
-        {/* Галерея продукту */}
         <div className="flex lg:w-1/2 w-full flex-col order-1">
           <ProductGallery variants={product.variants} />
         </div>
-
-        {/* Інформація про продукт */}
         <div className="flex lg:w-1/2 w-full flex-col sm:pl-10 px-0 lg:pr-5 lg:pt-0 pt-10 sm:pr-10 order-2">
           <h2 className="text-3xl font-bold uppercase">{product.name}</h2>
           <div className="flex py-5">
@@ -65,8 +63,6 @@ export default async function ProductPage({ params }: PageProps) {
           </div>
           <ProductActions product={product} discountedPrice={discountedPrice} />
         </div>
-
-        {/* Акордіон з інформацією - змінює позицію через order */}
         <div className="w-full mt-10 lg:w-1/2 order-4 lg:order-3">
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
@@ -97,8 +93,6 @@ export default async function ProductPage({ params }: PageProps) {
             </AccordionItem>
           </Accordion>
         </div>
-
-        {/* Пустий елемент для симетрії в десктопному режимі */}
         <div className="hidden lg:block lg:w-1/2 order-3 lg:order-4"></div>
       </div>
 
