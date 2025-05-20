@@ -53,7 +53,7 @@ export const ProductsList = ({
 
   return (
     <>
-      {isLoading ? (
+      {!isLoading ? (
         <div className="w-full flex justify-around flex-wrap">
           {[...Array(9)].map((_, i) => (
             <ListProductSkeleton key={i} />

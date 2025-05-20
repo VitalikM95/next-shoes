@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export function ListProductSkeleton() {
   return (
-    <div className="flex flex-col space-y-3 mt-10">
+    <div className="flex flex-col space-y-3 mt-10 mx-8">
       <Skeleton className="h-[300px] w-[300px]" />
       <div className="space-y-4 pt-4">
         <Skeleton className="h-10 w-[300px]" />

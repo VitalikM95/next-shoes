@@ -1,4 +1,5 @@
 import { getProducts } from '@/lib/db/products'
+import { Metadata } from 'next'
 
 import { ProductsList } from './components/ProductsList'
 import { SwitchButton } from './components/SwitchButton'
@@ -9,6 +10,22 @@ export const dynamic = 'force-dynamic'
 interface CollectionPageProps {
   params: { category: string }
   searchParams?: { type?: string }
+}
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: CollectionPageProps): Promise<Metadata> {
+  const category = params.category
+  const type = searchParams?.type
+
+  const categoryTitle = category === 'man' ? "Men's Shoes" : "Women's Shoes"
+  const typeTitle = type ? ` - ${type}` : ''
+
+  return {
+    title: `${categoryTitle}${typeTitle}`,
+    description: `Collection of ${categoryTitle.toLowerCase()}${typeTitle.toLowerCase()} in our store. Wide selection of models and sizes.`,
+  }
 }
 
 export default async function CollectionPage({

@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Order } from '@/lib/db/orders'
+import { Order } from '@/types/order.types'
 
 interface OrdersTableProps {
   orders: Order[]

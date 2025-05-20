@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
+import { Metadata } from 'next'
 
 import {
   Accordion,
@@ -16,6 +17,24 @@ import ProductActions from './components/ProductActions'
 
 interface ProductPageProps {
   params: { id: string }
+}
+
+export async function generateMetadata({
+  params,
+}: ProductPageProps): Promise<Metadata> {
+  const product = await getProductById(params.id)
+
+  if (!product) {
+    return {
+      title: 'Product not found',
+      description: 'This product does not exist or has been removed',
+    }
+  }
+
+  return {
+    title: product.name,
+    description: `${product.name} - ${product.type}. ${product.highlights.split('.')[0]}.`,
+  }
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {

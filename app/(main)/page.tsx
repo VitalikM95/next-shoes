@@ -9,6 +9,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getProducts } from '@/lib/db/products'
 import { HOME_IMAGES, SHOE_ITEMS } from '@/lib/constants'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Home',
+  description: 'Welcome to Next Shoes - the best footwear for any season',
+}
 
 const libre = Libre_Baskerville({
   subsets: ['latin'],

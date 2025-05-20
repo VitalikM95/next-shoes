@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { Providers } from './providers'
 import { Inter } from 'next/font/google'
@@ -6,8 +6,19 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Next Shoes',
-  description: 'Created as a test project',
+  title: {
+    template: '%s | Next Shoes',
+    default: 'Next Shoes',
+  },
+  description: 'Comfortable shoe store with a wide range of products',
+  keywords: ['shoes', 'store', 'sneakers', 'online shopping'],
+  authors: [{ name: 'Next Shoes Team' }],
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#ffffff',
 }
 
 export default function RootLayout({
