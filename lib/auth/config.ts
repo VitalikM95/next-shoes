@@ -3,8 +3,6 @@ import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'
 
-import { prisma } from '@/prisma/prisma-client'
-
 export const authConfig: AuthOptions = {
   providers: [
     GoogleProvider({
@@ -18,6 +16,8 @@ export const authConfig: AuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
+        const { prisma } = await import('@/prisma/prisma-client')
+
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Invalid credentials')
         }
@@ -59,6 +59,8 @@ export const authConfig: AuthOptions = {
   },
   callbacks: {
     async signIn({ user, account }) {
+      const { prisma } = await import('@/prisma/prisma-client')
+
       if (account && account.provider === 'google' && user.email) {
         try {
           const existingUser = await prisma.user.findUnique({
@@ -133,6 +135,8 @@ export const authConfig: AuthOptions = {
 
       if (token.email && !token.id) {
         try {
+          const { prisma } = await import('@/prisma/prisma-client')
+
           const dbUser = await prisma.user.findUnique({
             where: { email: token.email as string },
           })
