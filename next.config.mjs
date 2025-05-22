@@ -20,6 +20,9 @@ const nextConfig = {
       transform: 'lucide-react/dist/esm/icons/{{ kebabCase member }}',
     },
   },
+  experimental: {
+    appDir: true,
+  },
   webpack: (config, { isServer, dev }) => {
     if (dev) {
       config.optimization = {
@@ -28,11 +31,6 @@ const nextConfig = {
       }
     }
     return config
-  },
-  experimental: {
-    logging: {
-      level: 'debug',
-    },
   },
 }
 
