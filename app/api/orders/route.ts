@@ -6,6 +6,9 @@ import { authConfig } from '@/lib/auth/config'
 import { handleApiError, apiErrors } from '@/lib/db/error-handler'
 import { createOrderSchema } from '@/types/api.types'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 const getUserOrders = async (req: NextRequest) => {
   const session = await getServerSession(authConfig)
 

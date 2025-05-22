@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { handleApiError, apiErrors } from '@/lib/db/error-handler'
 import { Prisma } from '@prisma/client'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 const getProducts = async (request: NextRequest) => {
   const { searchParams } = new URL(request.url)
 

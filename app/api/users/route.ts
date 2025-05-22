@@ -160,3 +160,6 @@ export const PUT = async (req: NextRequest) => {
     return handleApiError(error)
   }
 }
+
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
