@@ -85,22 +85,22 @@ export const SHOE_ITEMS = [
     image: '/images/sample-shoes1.avif',
     title: 'Tree Runner Go',
     description: 'Light, Breezy, Ready For Anything',
-    link_man: '/product/cm9n1mobw00024n74r5aybp03',
-    link_woman: '/product/cm9n1mr9400484n74rowduv1x',
+    link_man: '/product/cmamj7l5y00024ni04t6xndvf',
+    link_woman: '/product/cmamj7ofm00484ni0ns69iin2',
   },
   {
     image: '/images/sample-shoes2.avif',
     title: 'Tree Dasher 2',
     description: 'Bouncy, Everyday Active Sneaker',
-    link_man: '/product/cm9n1mool000s4n740qh5lng9',
-    link_woman: '/product/cm9n1mrik00504n745shnddu0',
+    link_man: '/product/cmamj7li5000s4ni082eehcqx',
+    link_woman: '/product/cmamj7opf00504ni0urvibt6u',
   },
   {
     image: '/images/sample-shoes3.avif',
     title: 'Tree Toppers',
     description: 'Water-Repellent, High Top Style',
-    link_man: '/product/cm9n1mq19002s4n74twtltj3c',
-    link_woman: '/product/cm9n1mtx100944n74fsmjqf0x',
+    link_man: '/product/cmamj7n0t002s4ni0oyhmtyi3',
+    link_woman: '/product/cmamj7rij00944ni0l03q9obd',
   },
 ]
 
