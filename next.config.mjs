@@ -29,6 +29,11 @@ const nextConfig = {
     }
     return config
   },
+  experimental: {
+    logging: {
+      level: 'debug',
+    },
+  },
 }
 
 export default nextConfig
