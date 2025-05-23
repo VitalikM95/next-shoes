@@ -104,7 +104,7 @@ const ProductActions = ({ product, discountedPrice }: ProductActionsProps) => {
       <div className="my-6 flex justify-between">
         <Button
           onClick={handleAddToCart}
-          className={`mr-6 h-12 w-full border-2 font-bold ${
+          className={`h-12 w-full border-2 font-bold ${
             product.variants[colorIndex].sizes.length > 0
               ? ''
               : 'cursor-not-allowed border-gray-300 bg-gray-300 text-gray-500'

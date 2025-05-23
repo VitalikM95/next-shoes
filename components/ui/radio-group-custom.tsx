@@ -26,7 +26,7 @@ const RadioGroupItemRound = React.forwardRef<
       ref={ref}
       className={cn(
         'aspect-square h-10 w-10 rounded-full text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30',
-        className
+        className,
       )}
       {...props}
     >
@@ -52,7 +52,7 @@ const RadioGroupItemSquare = React.forwardRef<
         'flex h-12 w-12 flex-col items-center justify-center rounded-none border border-black bg-transparent font-bold text-black transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-30',
         'data-[state=checked]:border-black data-[state=checked]:bg-black data-[state=checked]:text-white',
         'data-[disabled]:border-muted-foreground data-[disabled]:text-muted-foreground',
-        className
+        className,
       )}
       {...props}
     >
@@ -75,7 +75,7 @@ const RadioGroupItemUnderline = React.forwardRef<
       className={cn(
         'relative cursor-pointer select-none text-lg font-medium text-black transition-colors',
         'after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:scale-x-0 after:bg-black after:transition-transform',
-        'hover:after:scale-x-100 data-[state=checked]:after:scale-x-100'
+        'hover:after:scale-x-100 data-[state=checked]:after:scale-x-100',
       )}
       {...props}
     >
@@ -96,7 +96,7 @@ const RadioGroupItemSwitch = React.forwardRef<
       ref={ref}
       className={cn(
         'relative cursor-pointer select-none rounded-none px-3 py-1 text-sm font-semibold text-black',
-        'transition-all duration-300 data-[state=checked]:bg-black data-[state=checked]:text-white'
+        'transition-all duration-300 data-[state=checked]:bg-black data-[state=checked]:text-white',
       )}
       {...props}
     >

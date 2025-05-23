@@ -68,15 +68,15 @@ export const HOME_IMAGES = [
     img: '/images/big-img1.avif',
     title: 'Trail Runner',
     subtitle: 'Tough, Grippy, Ready To Explore',
-    link_man: '/product/cm9n1mpb8001z4n74tik5gzb3',
-    link_woman: '/product/cm9n1msm900734n74uw76teg0',
+    link_man: '/product/cmamj7m9y001z4ni0g6lm2wrz',
+    link_woman: '/product/cmamj7pzs00734ni078v3axqo',
   },
   {
     img: '/images/big-img2.avif',
     title: 'Wool Piper Go',
     subtitle: 'Reimagined Classic, Elevated Comfort',
-    link_man: '/product/cm9n1mq19002s4n74twtltj3c',
-    link_woman: '/product/cm9n1mqwr003q4n7470taajon',
+    link_man: '/product/cmamj7o2y003q4ni08wr0sxpc',
+    link_woman: '/product/cmamj7r53008m4ni0b1b6med5',
   },
 ]
 

@@ -20,7 +20,7 @@ const BreadcrumbList = React.forwardRef<
     ref={ref}
     className={cn(
       'flex flex-wrap items-center gap-1 break-words text-sm',
-      className
+      className,
     )}
     {...props}
   />
@@ -35,7 +35,7 @@ const BreadcrumbItem = React.forwardRef<
     ref={ref}
     className={cn(
       'inline-flex cursor-pointer items-center gap-1.5 hover:underline',
-      className
+      className,
     )}
     {...props}
   />

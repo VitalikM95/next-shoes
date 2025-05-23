@@ -14,7 +14,7 @@ const Breadcrumbs = () => {
   const router = useRouter()
   const segments = pathname
     .split('/')
-    .filter((segment) => segment !== '' && segment !== 'collections')
+    .filter(segment => segment !== '' && segment !== 'collections')
 
   const handleResetFilters = (category: string) => {
     router.push(`/collections/${category}`, { scroll: false })

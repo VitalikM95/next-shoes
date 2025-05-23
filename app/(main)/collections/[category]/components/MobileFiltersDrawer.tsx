@@ -68,13 +68,13 @@ const MobileFiltersDrawer = () => {
           isOpen
             ? 'pointer-events-auto opacity-100'
             : 'pointer-events-none opacity-0'
-        } fixed left-0 top-0 z-30 h-screen w-screen bg-black/60 transition-all duration-300 ease-out`}
+        } fixed left-0 top-0 z-30 h-[100dvh] w-screen bg-black/60 transition-all duration-300 ease-out`}
         onClick={closeDrawer}
       >
         <div
           className={`${
             isOpen ? 'translate-x-0' : '-translate-x-full'
-          } fixed left-0 top-0 h-screen w-[375px] transform bg-white shadow-lg transition-transform duration-300 ease-out`}
+          } fixed left-0 top-0 h-[100dvh] w-full max-w-[375px] transform bg-white shadow-lg transition-transform duration-300 ease-out`}
           onClick={e => e.stopPropagation()}
         >
           <div className="flex h-full flex-col">
@@ -89,7 +89,7 @@ const MobileFiltersDrawer = () => {
                 <X strokeWidth={1} className="!h-7 !w-7" />
               </Button>
             </div>
-            <div className="flex flex-grow flex-col overflow-y-auto overflow-x-hidden p-4">
+            <div className="flex flex-grow flex-col overflow-y-auto overflow-x-hidden p-4 max-h-[calc(100dvh-80px)]">
               <TitleCategories />
               <FiltersContent />
             </div>

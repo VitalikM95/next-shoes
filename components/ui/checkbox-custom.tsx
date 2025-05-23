@@ -20,7 +20,7 @@ const CheckboxStandard = React.forwardRef<
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
         'disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
         'hover:bg-primary/10',
-        className
+        className,
       )}
       {...props}
     >
@@ -49,7 +49,7 @@ const CheckboxSquare = React.forwardRef<
       'data-[state=checked]:border-black data-[state=checked]:bg-black data-[state=checked]:text-white',
       'data-[disabled]:border-muted-foreground data-[disabled]:text-muted-foreground',
       'hover:bg-black/10',
-      className
+      className,
     )}
     {...props}
   >
@@ -79,7 +79,7 @@ const CheckboxRound = React.forwardRef<
           'hover:ring-2 hover:ring-gray-200 hover:ring-offset-2',
           'data-[state=checked]:ring-2 data-[state=checked]:ring-gray-500 data-[state=checked]:ring-offset-2',
           'data-[state=checked]:border-transparent',
-          className
+          className,
         )}
         style={{ backgroundColor: color }}
         {...props}

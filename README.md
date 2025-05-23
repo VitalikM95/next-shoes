@@ -1,6 +1,6 @@
 # Next Shoes - Online Shoe Store
 
-![Next Shoes Banner](/public/logo.svg)
+![Next Shoes Banner](/public/favicon.svg)
 
 Next Shoes is a modern e-commerce platform built with Next.js, showcasing a collection of stylish and comfortable footwear for men and women.
 
@@ -11,8 +11,6 @@ Next Shoes is a modern e-commerce platform built with Next.js, showcasing a coll
 - **Product Browsing**: Browse shoes by category, filter by size, color, material, etc.
 - **Shopping Cart**: Add products, manage quantities, and proceed to checkout
 - **Order Management**: Track orders and view order history
-- **Admin Panel**: Product and user management for administrators
-- **Dark/Light Mode**: Choose your preferred theme
 
 ## 💻 Tech Stack
 
@@ -38,18 +36,12 @@ Next Shoes is a modern e-commerce platform built with Next.js, showcasing a coll
   - [Prisma](https://www.prisma.io/) for database ORM
   - RESTful API endpoints with Next.js API routes
 
-## 📋 Prerequisites
-
-- Node.js 18.17 or later
-- npm, yarn, or pnpm
-- A database (PostgreSQL recommended)
-
 ## 🔧 Installation
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/next-shoes.git
+   git clone https://github.com/VitalikM95/next-shoes.git
    cd next-shoes
    ```
 
@@ -85,50 +77,9 @@ Next Shoes is a modern e-commerce platform built with Next.js, showcasing a coll
    npm run seed
    ```
 
-## 🏃‍♂️ Development
-
-Start the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Visit [http://localhost:3000](http://localhost:3000) to view the application.
-
-## 🏗️ Project Structure
-
-```
-/
-├── app/                    # Next.js App Router routes
-│   ├── (auth)/             # Authentication pages (login, register, etc.)
-│   ├── (main)/             # Main application pages
-│   ├── api/                # API routes
-│   ├── admin/              # Admin panel (protected routes)
-│   └── checkout/           # Checkout process
-├── components/             # React components
-│   ├── cart/               # Cart-related components
-│   ├── layout/             # Layout components (header, footer, etc.)
-│   ├── shared/             # Shared components
-│   └── ui/                 # UI components
-├── lib/                    # Utility functions and custom hooks
-│   ├── auth/               # Authentication utilities
-│   ├── db/                 # Database utilities
-│   ├── hooks/              # Custom hooks
-│   └── store/              # Zustand stores
-├── prisma/                 # Prisma schema and migrations
-├── public/                 # Static assets
-└── types/                  # TypeScript types
-```
-
 ## 🚢 Deployment
 
-This project is ready to be deployed on [Vercel](https://vercel.com/).
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Fnext-shoes)
+This project is deployed on [Vercel](https://vercel.com/) and is available at [https://next-shoes-azure.vercel.app/](https://next-shoes-azure.vercel.app/)
 
 ## 🙏 Acknowledgements
 
@@ -137,4 +88,4 @@ This project is ready to be deployed on [Vercel](https://vercel.com/).
 
 ---
 
-This is a test project created for demonstration purposes and will be deployed on Vercel.
+This is a test project created for demonstration purposes.

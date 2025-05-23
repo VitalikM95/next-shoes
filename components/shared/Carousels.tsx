@@ -129,23 +129,27 @@ const SaleCarousel = ({ shoes }: SaleCarouselProps) => {
               return (
                 <CarouselItem
                   key={i}
-                  className="group relative h-[350px] sm:h-[400px] md:h-[450px] basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 overflow-hidden"
+                  className="group relative basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 overflow-hidden"
                 >
                   <Link
                     href={`/product/${item.id}`}
-                    className="absolute left-0 top-0 flex h-full w-full flex-col justify-end"
+                    className="flex h-full flex-col"
                   >
-                    <Image
-                      src={item.variants[0].images[0]}
-                      alt="shoes"
-                      fill
-                      className="max-h-fit bg-[#F6F6F6] object-contain object-top transition-transform duration-200 group-hover:scale-105"
-                    />
-                    <div className="bg-white/80 px-2 py-1">
-                      <div className="text-base md:text-lg font-bold">
+                    <div className="relative aspect-square w-full overflow-hidden bg-[#F6F6F6]">
+                      <Image
+                        src={item.variants[0].images[0]}
+                        alt="shoes"
+                        fill
+                        className="object-contain object-top transition-transform duration-200 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="mt-2 bg-white px-2 py-1">
+                      <div className="text-base md:text-lg font-bold line-clamp-1">
                         {item.name}
                       </div>
-                      <div className="text-sm md:text-base">{item.type[0]}</div>
+                      <div className="text-sm md:text-base line-clamp-1">
+                        {item.type[0]}
+                      </div>
                       {hasDiscount ? (
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-red-600">

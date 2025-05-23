@@ -5,7 +5,7 @@ import { createApiError } from './error-handler'
 export const getProducts = async (
   male: string,
   type?: string,
-  limit?: number
+  limit?: number,
 ): Promise<ProductListItem[]> => {
   try {
     const isSale = type === "Men's Sale" || type === "Women's Sale"
@@ -44,9 +44,9 @@ export const getProducts = async (
       },
     })
 
-    return products.map((product) => ({
+    return products.map(product => ({
       ...product,
-      variants: product.variants.map((variant) => ({
+      variants: product.variants.map(variant => ({
         id: variant.id,
         colorType: variant.colorType,
         colorName: variant.colorName,
@@ -74,7 +74,7 @@ export const getProductById = async (id: string) => {
   return {
     ...product,
     otherInfo: (product.otherInfo as unknown as OtherInfo[]) || [],
-    variants: product.variants.map((variant) => ({
+    variants: product.variants.map(variant => ({
       id: variant.id,
       colorType: variant.colorType,
       colorName: variant.colorName,

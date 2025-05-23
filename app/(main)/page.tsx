@@ -42,7 +42,7 @@ export default async function HomePage() {
     <>
       <div>
         <nav>
-          <ul className="flex h-14 items-center justify-center gap-4 pl-24">
+          <ul className="flex h-14 items-center justify-center gap-6 pl-24">
             <li className="navlink-animation min-w-20 md:min-w-24 text-center">
               <Link href="/collections/man">Shop Men</Link>
             </li>
@@ -66,20 +66,24 @@ export default async function HomePage() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-0">
-              <Button
-                variant="secondary"
-                className="mr-0 sm:mr-4 min-w-0 sm:min-w-40"
-                size="lg"
-              >
-                <Link href="/collections/man">Shop Men</Link>
-              </Button>
-              <Button
-                variant="secondary"
-                className="mr-0 sm:mr-4 min-w-0 sm:min-w-40"
-                size="lg"
-              >
-                <Link href="/collections/woman">Shop Women</Link>
-              </Button>
+              <Link href="/collections/man">
+                <Button
+                  variant="secondary"
+                  className="mr-0 sm:mr-4 min-w-0 sm:min-w-40"
+                  size="lg"
+                >
+                  Shop Men
+                </Button>
+              </Link>
+              <Link href="/collections/woman">
+                <Button
+                  variant="secondary"
+                  className="mr-0 sm:mr-4 min-w-0 sm:min-w-40"
+                  size="lg"
+                >
+                  Shop Women
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -104,20 +108,24 @@ export default async function HomePage() {
                 </p>
               </div>
               <div className="space-x-2 sm:invisible sm:opacity-0 transition-all duration-200 sm:group-hover:visible sm:group-hover:opacity-100">
-                <Button
-                  variant="secondary"
-                  className="min-w-28 sm:min-w-40"
-                  size="lg"
-                >
-                  <Link href={item.link_man}>Shop Men</Link>
-                </Button>
-                <Button
-                  variant="secondary"
-                  className="min-w-28 sm:min-w-40"
-                  size="lg"
-                >
-                  <Link href={item.link_woman}>Shop Women</Link>
-                </Button>
+                <Link href={item.link_man}>
+                  <Button
+                    variant="secondary"
+                    className="min-w-28 sm:min-w-40"
+                    size="lg"
+                  >
+                    Shop Men
+                  </Button>
+                </Link>
+                <Link href={item.link_woman}>
+                  <Button
+                    variant="secondary"
+                    className="min-w-28 sm:min-w-40"
+                    size="lg"
+                  >
+                    Shop Women
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -165,22 +173,24 @@ export default async function HomePage() {
               </p>
             </div>
             <div className="mt-4 md:mt-7 flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
-              <Button
-                variant="secondary"
-                className="min-w-0 sm:min-w-40"
-                size="lg"
-              >
-                <Link href="/collections/man?type=Men%27s+Sale">Shop Men</Link>
-              </Button>
-              <Button
-                variant="secondary"
-                className="min-w-0 sm:min-w-40"
-                size="lg"
-              >
-                <Link href="/collections/woman?type=Women%27s+Sale">
+              <Link href="/collections/man?type=Men%27s+Sale">
+                <Button
+                  variant="secondary"
+                  className="min-w-0 sm:min-w-40"
+                  size="lg"
+                >
+                  Shop Men
+                </Button>
+              </Link>
+              <Link href="/collections/woman?type=Women%27s+Sale">
+                <Button
+                  variant="secondary"
+                  className="min-w-0 sm:min-w-40"
+                  size="lg"
+                >
                   Shop Women
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -206,13 +216,15 @@ export default async function HomePage() {
               </div>
               <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-0 transition-all duration-200 group-hover:bg-opacity-15">
                 <div className="invisible flex flex-col space-y-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                  <Button
-                    variant="secondary"
-                    className="min-w-24 sm:min-w-40"
-                    size="lg"
-                  >
-                    <Link href={`/product/${item.id}`}>Check it!</Link>
-                  </Button>
+                  <Link href={`/product/${item.id}`}>
+                    <Button
+                      variant="secondary"
+                      className="min-w-24 sm:min-w-40"
+                      size="lg"
+                    >
+                      Check it!
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -237,20 +249,24 @@ export default async function HomePage() {
                 <p className="text-sm md:text-base">{item.subtitle}</p>
               </div>
               <div className="flex space-x-2 sm:invisible sm:opacity-0 transition-all duration-200 sm:group-hover:visible sm:group-hover:opacity-100">
-                <Button
-                  variant="secondary"
-                  className="min-w-28 sm:min-w-40"
-                  size="lg"
-                >
-                  <Link href={item.link_man}>Shop Men</Link>
-                </Button>
-                <Button
-                  variant="secondary"
-                  className="min-w-28 sm:min-w-40"
-                  size="lg"
-                >
-                  <Link href={item.link_woman}>Shop Women</Link>
-                </Button>
+                <Link href={item.link_man}>
+                  <Button
+                    variant="secondary"
+                    className="min-w-28 sm:min-w-40"
+                    size="lg"
+                  >
+                    Shop Men
+                  </Button>
+                </Link>
+                <Link href={item.link_woman}>
+                  <Button
+                    variant="secondary"
+                    className="min-w-28 sm:min-w-40"
+                    size="lg"
+                  >
+                    Shop Women
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
