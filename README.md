@@ -1,6 +1,6 @@
 # Next Shoes - Online Shoe Store
 
-![Next Shoes Banner](/public/favicon.svg)
+<img src="/public/favicon.svg" alt="Next Shoes Banner" width="200" height="200" />
 
 Next Shoes is a modern e-commerce platform built with Next.js, showcasing a collection of stylish and comfortable footwear for men and women.
 
